@@ -14,7 +14,7 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 
 **产品思考**：从"做测试"到"做体验"——每次迭代都围绕用户心理模型做减法，降低认知负荷，让用户在对话中自然"被看见"。
 
-- **代码仓库**：[点击查看源码](这里替换为 mbti-deeper 文件夹的 GitHub 链接)
+- **代码仓库**：(https://raw.githubusercontent.com/CCss67/Sasha67.github.io/refs/heads/main/0-1how-to-apply-in-uk%3Aindex.html)
 
 ### 2. english-practice · 英语口语陪练
 
