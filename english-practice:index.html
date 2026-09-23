@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sasha · 英语口语陪练</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f7fb;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .app {
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: 0 0 24px rgba(0,0,0,.08);
+  }
+  header {
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #6a8dff, #9b6aff);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: #fff; color: #6a8dff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+  header .info h1 { font-size: 16px; }
+  header .info p { font-size: 12px; opacity: .85; }
+
+  .stage-bar {
+    display: flex; gap: 4px; padding: 8px 12px;
+    background: #f0f3fa; font-size: 11px; color: #667;
+  }
+  .stage-bar span {
+    flex: 1; text-align: center; padding: 4px 0;
+    border-radius: 6px;
+  }
+  .stage-bar span.active {
+    background: #6a8dff; color: #fff; font-weight: 600;
+  }
+
+  .chat {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .msg { max-width: 82%; padding: 10px 14px; border-radius: 14px; line-height: 1.5; font-size: 15px; }
+  .msg.bot { background: #eef1f8; color: #222; align-self: flex-start; border-bottom-left-radius: 4px; }
+  .msg.user { background: #6a8dff; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .msg .en { color: #4a6cf7; font-weight: 600; }
+  .msg.bot .en { color: #4a6cf7; }
+  .msg .zh { color: #888; font-size: 13px; }
+
+  .options { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .options button {
+    text-align: left; padding: 10px 12px; border-radius: 10px;
+    border: 1px solid #d6ddf0; background: #fff; cursor: pointer;
+    font-size: 14px; transition: .15s;
+  }
+  .options button:hover { background: #eef1f8; border-color: #6a8dff; }
+
+  .input-area {
+    padding: 10px 12px; border-top: 1px solid #eee;
+    display: flex; gap: 8px; align-items: center; background: #fafbff;
+  }
+  .input-area input {
+    flex: 1; padding: 10px 12px; border-radius: 20px;
+    border: 1px solid #d6ddf0; font-size: 14px; outline: none;
+  }
+  .input-area input:focus { border-color: #6a8dff; }
+  .input-area button {
+    width: 42px; height: 42px; border-radius: 50%; border: none;
+    cursor: pointer; font-size: 18px; color: #fff;
+    background: #6a8dff; transition: .15s;
+  }
+  .input-area button:hover { background: #4a6cf7; }
+  .input-area button.mic { background: #ff8a5c; }
+  .input-area button.mic.recording { background: #e74c3c; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.1)} 100%{transform:scale(1)} }
+
+  .memory-panel {
+    font-size: 11px; color: #667; padding: 6px 12px;
+    background: #f7f9ff; border-top: 1px solid #eee;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .memory-panel b { color: #4a6cf7; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="avatar">S</div>
+    <div class="info">
+      <h1>Sasha</h1>
+      <p>陪你练英语口语 · 轻松开口</p>
+    </div>
+  </header>
+
+  <div class="stage-bar">
+    <span data-stage="S0">打招呼</span>
+    <span data-stage="S1">前置测试</span>
+    <span data-stage="S2">评估</span>
+    <span data-stage="S3">场景对话</span>
+    <span data-stage="S4">复盘</span>
+  </div>
+
+  <div class="chat" id="chat"></div>
+
+  <div class="memory-panel" id="memory"></div>
+
+  <div class="input-area">
+    <input id="input" placeholder="输入英文，或点右侧麦克风说话…" />
+    <button class="mic" id="micBtn" title="语音输入">🎤</button>
+    <button id="sendBtn" title="发送">➤</button>
+  </div>
+</div>
+
+<script>
+/* ================= 记忆系统 ================= */
+const memory = {
+  name: null,
+  level: null,          // 起步 / 基础 / 进阶
+  goal: null,           // 旅行 / 工作 / 交朋友 / 其他
+  practiced: [],        // 用户真正说过/跟读过的句子
+  errors: {},           // { 错误类型: 次数 }
+  rounds: 0
+};
+
+/* ================= 状态机 ================= */
+let stage = 'S0';
+let subStep = 0;
+let pendingOptions = [];
+
+const chat = document.getElementById('chat');
+const input = document.getElementById('input');
+const memoryEl = document.getElementById('memory');
+const stageBar = document.querySelectorAll('.stage-bar span');
+
+/* ================= 工具 ================= */
+function addMsg(text, who = 'bot', opts = null) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + who;
+  div.innerHTML = text;
+  chat.appendChild(div);
+
+  if (opts && opts.length) {
+    const wrap = document.createElement('div');
+    wrap.className = 'options';
+    opts.forEach(o => {
+      const btn = document.createElement('button');
+      btn.textContent = o.label;
+      btn.onclick = () => {
+        handleUserInput(o.value, o.label);
+        wrap.remove();
+      };
+      wrap.appendChild(btn);
+    });
+    chat.appendChild(wrap);
+    pendingOptions = opts;
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function setStage(s) {
+  stage = s;
+  stageBar.forEach(el => el.classList.toggle('active', el.dataset.stage === s));
+}
+
+function updateMemoryUI() {
+  memoryEl.innerHTML = `
+    <span><b>名字</b> ${memory.name || '—'}</span>
+    <span><b>水平</b> ${memory.level || '—'}</span>
+    <span><b>目标</b> ${memory.goal || '—'}</span>
+    <span><b>轮数</b> ${memory.rounds}</span>
+  `;
+}
+
+/* ================= 语音 ================= */
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+
+  const micBtn = document.getElementById('micBtn');
+  micBtn.onclick = () => {
+    try {
+      recognition.start();
+      micBtn.classList.add('recording');
+    } catch (e) {}
+  };
+  recognition.onresult = (e) => {
+    const text = e.results[0][0].transcript;
+    input.value = text;
+    micBtn.classList.remove('recording');
+    handleUserInput(text, text);
+  };
+  recognition.onerror = () => micBtn.classList.remove('recording');
+  recognition.onend = () => micBtn.classList.remove('recording');
+} else {
+  document.getElementById('micBtn').style.display = 'none';
+}
+
+/* 朗读英文（慢速 + 常速） */
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  const clean = text.replace(/<[^>]+>/g, '');
+  const u1 = new SpeechSynthesisUtterance(clean);
+  u1.lang = 'en-US'; u1.rate = 0.75;
+  const u2 = new SpeechSynthesisUtterance(clean);
+  u2.lang = 'en-US'; u2.rate = 1.0;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u1);
+  speechSynthesis.onend = () => speechSynthesis.speak(u2);
+}
+
+/* ================= 核心：生成回复 ================= */
+function handleUserInput(raw, display) {
+  const text = raw.trim();
+  if (!text) return;
+
+  addMsg(display, 'user');
+  input.value = '';
+
+  // 记录用户真正说过的句子
+  if (stage !== 'S0' && text) memory.practiced.push(text);
+
+  // 中文 → 翻译 + 跟读
+  if (/[\u4e00-\u9fa5]/.test(text) && stage !== 'S0') {
+    const en = translateSimple(text);
+    addMsg(`没关系，我们从这句开始学 🙂<br>
+      <span class="en">${en}</span><br>
+      Repeat: <span class="en">${en}</span>`);
+    speak(en);
+    setTimeout(() => nextStep(null), 1500);
+    return;
+  }
+
+  nextStep(text);
+}
+
+/* 简单中文翻译（可替换为大模型 API） */
+function translateSimple(zh) {
+  const map = {
+    '我不会': "I can't speak English.",
+    '我不会说': "I can't speak English.",
+    '我不知道': "I don't know.",
+    '我想买一杯咖啡': "I'd like a coffee.",
+    '这个多少钱': "How much is this?",
+    '你好': "Hello.",
+    '谢谢': "Thank you.",
+    '我不知道怎么说': "I don't know how to say it."
+  };
+  for (const k in map) if (zh.includes(k)) return map[k];
+  return "Let me try. " + zh;
+}
+
+/* ================= 流程推进 ================= */
+function nextStep(userText) {
+  switch (stage) {
+    case 'S0': return stepS0(userText);
+    case 'S1': return stepS1(userText);
+    case 'S2': return stepS2(userText);
+    case 'S3': return stepS3(userText);
+    case 'S4': return stepS4(userText);
+  }
+}
+
+/* ---------- S0 打招呼 ---------- */
+function stepS0(userText) {
+  if (subStep === 0) {
+    addMsg(`Hi! 我是 Sasha，陪你练英语口语的伙伴<br>
+      <span class="en">I'm Sasha. Nice to meet you!</span>`);
+    speak("I'm Sasha. Nice to meet you!");
+    subStep = 1;
+    setTimeout(() => {
+      addMsg(`你叫什么名字？<br><span class="en">What's your name?</span>`, 'bot', [
+        { label: 'A. My name is...  我叫...', value: 'My name is' },
+        { label: 'B. I\'m...         我是...', value: "I'm" },
+        { label: 'C. 其他（直接说也行）', value: 'other' }
+      ]);
+    }, 800);
+    return;
+  }
+
+  if (subStep === 1) {
+    let name = userText || '朋友';
+    if (name === 'other') name = '朋友';
+    if (/my name is/i.test(name)) name = name.replace(/my name is/i, '').trim();
+    if (/i'?m/i.test(name)) name = name.replace(/i'?m/i, '').trim();
+    memory.name = name || '朋友';
+    updateMemoryUI();
+
+    addMsg(`Nice to meet you, ${memory.name}! 🙂`);
+    speak(`Nice to meet you, ${memory.name}!`);
+
+    setTimeout(() => {
+      addMsg(`先聊几句，看看你现在在哪个阶段，后面练得更合适 😊`);
+      setStage('S1');
+      subStep = 0;
+      setTimeout(() => stepS1(null), 900);
+    }, 700);
+  }
+}
+
+/* ---------- S1 前置测试 ---------- */
+function stepS1(userText) {
+  if (subStep === 0) {
+    addMsg(`来，试一句翻译 😊<br>
+      我想买一杯咖啡。<br>
+      <span class="zh">用英语怎么说？</span>`);
+    subStep = 1;
+    return;
+  }
+
+  if (subStep === 1) {
+    if (userText) {
+      const ok = /coffee/i.test(userText) && /(want|like|buy|have)/i.test(userText);
+      if (ok) {
+        addMsg(`很棒！👏 <span class="en">I'd like a coffee.</span>`);
+        speak("I'd like a coffee.");
+      } else {
+        addMsg(`不错，能开口就很好！我们微调一下 👇<br>
+          <span class="en">I'd like a coffee.</span><br>
+          Repeat: <span class="en">I'd like a coffee.</span>`);
+        speak("I'd like a coffee.");
+      }
+    }
+    subStep = 2;
+    setTimeout(() => stepS1(null), 1200);
+    return;
+  }
+
+  if (subStep === 2) {
+    addMsg(`现在，用英语介绍一下你自己吧 😊<br>
+      说 1~2 句就行。<br>
+      <span class="zh">关键词：name / job / hobby / city</span>`);
+    subStep = 3;
+    return;
+  }
+
+  if (subStep === 3) {
+    // 判定水平
+    if (userText) {
+      const words = userText.split(/\s+/).length;
+      const sentences = userText.split(/[.!?]/).filter(s => s.trim()).length;
+      if (words <= 2) memory.level = '起步';
+      else if (sentences >= 2 || words >= 10) memory.level = '进阶';
+      else memory.level = '基础';
+      updateMemoryUI();
+    }
+    subStep = 4;
+    setTimeout(() => stepS1(null), 800);
+    return;
+  }
+
+  if (subStep === 4) {
+    addMsg(`最后一个问题 😊<br>
+      你为什么想练英语？<br>
+      <span class="en">Why do you want to practice English?</span>`, 'bot', [
+        { label: 'A. 为了旅行。  For travel.', value: '为了旅行' },
+        { label: 'B. 为了工作。  For work.', value: '为了工作' },
+        { label: 'C. 为了交朋友。 To make friends.', value: '为了交朋友' },
+        { label: 'D. 其他（中文说也行）', value: '其他' }
+      ]);
+    subStep = 5;
+    return;
+  }
+
+  if (subStep === 5) {
+    memory.goal = userText || '其他';
+    updateMemoryUI();
+    addMsg(`谢谢你告诉我 😊`);
+    setStage('S2');
+    subStep = 0;
+    setTimeout(() => stepS2(null), 900);
+  }
+}
+
+/* ---------- S2 评估 ---------- */
+function stepS2() {
+  if (!memory.level) memory.level = '基础';
+  const map = {
+    '起步': `我看了一下，你现在在<b>起步阶段</b> 🌱<br>
+      完全正常，我们从最简单的句子开始，一步一步来。<br>
+      后面我会多给你选项，多带你读，不着急。`,
+    '基础': `你现在在<b>基础阶段</b> 🌿<br>
+      已经能开口说了，很棒！<br>
+      后面我们练完整一点的句子，慢慢加长。`,
+    '进阶': `你现在在<b>进阶阶段</b> 🌳<br>
+      表达挺流畅的！<br>
+      后面我们少给选项，多聊开放话题。`
+  };
+  addMsg(map[memory.level]);
+  updateMemoryUI();
+
+  setTimeout(() => {
+    addMsg(`好，现在我们开始今天的场景练习 📸<br>
+      你上传一张照片（比如商场、咖啡店、街上），我根据照片和你聊。<br>
+      <span class="zh">（也可以直接打字告诉我：咖啡店 / 商场 / 街上）</span>`);
+    setStage('S3');
+    subStep = 0;
+  }, 1400);
+}
+
+/* ---------- S3 场景对话 ---------- */
+const SCENES = {
+  '咖啡店': '点单', '餐厅': '点单', '点单': '点单',
+  '商场': '购物', '商店': '购物', '购物': '购物',
+  '街': '问路', '路口': '问路', '问路': '问路',
+  '酒店': '入住', '机场': '值机', '入住': '入住', '值机': '值机'
+};
+
+const QFLOW = [
+  { q: 'What are you doing?', opts: [
+    { label: "A. I'm shopping.              我在逛街", value: "I'm shopping." },
+    { label: "B. I'm just looking.          我随便看看", value: "I'm just looking." },
+    { label: "C. I'm waiting for a friend.  我在等朋友", value: "I'm waiting for a friend." },
+    { label: 'D. 其他（中文说也行）', value: '其他' }
+  ]},
+  { q: 'What exactly are you doing?', opts: [
+    { label: "A. I'm buying a coffee.    我在买咖啡", value: "I'm buying a coffee." },
+    { label: "B. I'm looking at clothes. 我在看衣服", value: "I'm looking at clothes." },
+    { label: 'C. 其他', value: '其他' }
+  ]},
+  { q: 'Do you do this often?', opts: [
+    { label: 'A. Yes, every day.      是的，每天', value: 'Yes, every day.' },
+    { label: 'B. Sometimes.           有时候', value: 'Sometimes.' },
+    { label: 'C. No, rarely.          不，很少', value: 'No, rarely.' }
+  ]},
+  { q: 'Are you alone or with someone?', opts: [
+    { label: "A. I'm alone.           我一个人", value: "I'm alone." },
+    { label: "B. With a friend.       和朋友一起", value: 'With a friend.' },
+    { label: 'C. With my family.      和家人一起', value: 'With my family.' }
+  ]},
+  { q: 'How do you feel?', opts: [
+    { label: 'A. I feel happy.        我很开心', value: 'I feel happy.' },
+    { label: 'B. I feel tired.        我有点累', value: 'I feel tired.' },
+    { label: 'C. I feel relaxed.      我很放松', value: 'I feel relaxed.' }
+  ]},
+  { q: 'Why?', opts: [
+    { label: 'A. Because I like it.  因为我喜欢', value: 'Because I like it.' },
+    { label: 'B. Because I need it.  因为我需要', value: 'Because I need it.' },
+    { label: 'C. 其他', value: '其他' }
+  ]},
+  { q: 'Can you say a little more?', opts: [
+    { label: 'A. Sure.  Let me try.  好的，我试试', value: 'Sure, let me try.' },
+    { label: 'B. 跳过', value: 'skip' }
+  ]}
+];
+
+let qIndex = 0;
+
+function stepS3(userText) {
+  // 识别场景
+  if (qIndex === 0 && userText) {
+    for (const k in SCENES) {
+      if (userText.includes(k)) {
+        addMsg(`好的，${SCENES[k]}场景 👌 我们开始。`);
+        break;
+      }
+    }
+  }
+
+  if (qIndex >= QFLOW.length || qIndex >= 8) {
+    setStage('S4');
+    subStep = 0;
+    setTimeout(() => stepS4(null), 800);
+    return;
+  }
+
+  const item = QFLOW[qIndex];
+  addMsg(`<span class="en">${item.q}</span>`, 'bot', item.opts);
+  qIndex++;
+}
+
+/* ---------- S4 复盘 ---------- */
+function stepS4() {
+  const practiced = memory.practiced.slice(-8);
+  const practicedHtml = practiced.length
+    ? practiced.map(s => `<span class="en">• ${s}</span>`).join('<br>')
+    : '（今天还没有完整句子，下次继续加油 💪）';
+
+  addMsg(`今天练了这几句 👇<br>${practicedHtml}<br><br>
+    你现在的阶段：<b>${memory.level || '基础'}</b><br>
+    下次我们继续 💪`);
+  updateMemoryUI();
+}
+
+/* ================= 发送 ================= */
+document.getElementById('sendBtn').onclick = () => handleUserInput(input.value, input.value);
+input.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('sendBtn').click(); });
+
+/* ================= 启动 ================= */
+updateMemoryUI();
+setStage('S0');
+stepS0(null);
+</script>
+</body>
+</html>
