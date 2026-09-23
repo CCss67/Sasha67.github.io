@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Companion</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, "PingFang SC", sans-serif;
+    background: #f5f5f5; max-width: 430px; margin: 0 auto; min-height: 100vh;
+  }
+  .nav {
+    background: #fff; padding: 16px 20px; display: flex;
+    justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 10;
+  }
+  .nav h1 { font-size: 18px; }
+  .nav-tabs { display: flex; gap: 16px; }
+  .nav-tab {
+    font-size: 14px; color: #999; cursor: pointer;
+    padding: 4px 0; border-bottom: 2px solid transparent; position: relative;
+  }
+  .nav-tab.active { color: #333; border-bottom-color: #333; }
+  .badge {
+    background: #FF4444; color: #fff; font-size: 11px;
+    padding: 1px 6px; border-radius: 10px;
+    position: absolute; top: -4px; right: -8px;
+  }
+  .page { display: none; padding-bottom: 80px; }
+  .page.active { display: block; }
+
+  /* ===== 首页发布 ===== */
+  .post-input-area { background: #fff; margin: 12px; border-radius: 12px; padding: 16px; }
+  .post-input-area textarea {
+    width: 100%; border: none; outline: none; font-size: 16px;
+    resize: none; min-height: 60px; font-family: inherit;
+  }
+  .post-actions {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0f0f0;
+  }
+  .post-hint { font-size: 12px; color: #999; }
+  .btn-post {
+    background: #333; color: #fff; border: none;
+    padding: 8px 24px; border-radius: 20px; font-size: 14px; cursor: pointer;
+  }
+  .btn-post:disabled { background: #ccc; }
+
+  /* ===== 帖子 ===== */
+  .post-list { padding: 0 12px; }
+  .post-card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  .post-content { font-size: 15px; line-height: 1.6; color: #333; word-break: break-word; }
+  .post-time { font-size: 12px; color: #bbb; margin-top: 8px; }
+  .post-reply-count { font-size: 12px; color: #4CAF50; margin-top: 6px; }
+
+  /* ===== 回复卡片 ===== */
+  .reply-card {
+    background: #fff; border-radius: 12px; padding: 16px;
+    margin: 8px 12px; cursor: pointer;
+    display: flex; gap: 12px; align-items: flex-start; transition: .15s;
+  }
+  .reply-card:hover { background: #fafafa; }
+  .reply-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: #fff; font-weight: 600; flex-shrink: 0;
+  }
+  .reply-body { flex: 1; min-width: 0; }
+  .reply-name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .reply-bio { font-size: 12px; color: #999; margin-bottom: 6px; }
+  .reply-text { font-size: 14px; color: #444; line-height: 1.6; white-space: pre-line; word-break: break-word; }
+  .reply-unread-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #FF4444; flex-shrink: 0; margin-top: 20px;
+  }
+
+  /* ===== 发现列表 ===== */
+  .char-list { padding: 12px; }
+  .char-card {
+    background: #fff; border-radius: 16px; padding: 16px;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 14px;
+    cursor: pointer; transition: .15s;
+  }
+  .char-card:hover { background: #fafafa; transform: translateY(-1px); }
+  .char-card-avatar {
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; color: #fff; font-weight: 600; flex-shrink: 0;
+  }
+  .char-card-info { flex: 1; min-width: 0; }
+  .char-card-name { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+  .char-card-bio { font-size: 13px; color: #999; margin-bottom: 4px; }
+  .char-card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .char-tag {
+    font-size: 11px; padding: 2px 8px; border-radius: 10px;
+    background: #f5f5f5; color: #666;
+  }
+
+  /* ===== 个人主页 ===== */
+  .profile-cover { height: 120px; border-radius: 0 0 16px 16px; }
+  .profile-body { padding: 0 16px; margin-top: -40px; }
+  .profile-avatar-big {
+    width: 80px; height: 80px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px; color: #fff; font-weight: 600; border: 4px solid #fff;
+  }
+  .profile-name { font-size: 22px; font-weight: 700; margin-top: 10px; }
+  .profile-bio { font-size: 14px; color: #666; margin-top: 6px; line-height: 1.6; }
+  .profile-stats {
+    display: flex; gap: 28px; margin-top: 16px;
+    padding: 16px 0; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;
+  }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 18px; font-weight: 600; }
+  .stat-label { font-size: 12px; color: #999; margin-top: 2px; }
+  .profile-section { margin-top: 20px; }
+  .profile-section h3 { font-size: 14px; color: #999; margin-bottom: 10px; font-weight: 500; }
+  .profile-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .profile-tag {
+    font-size: 13px; padding: 6px 14px; border-radius: 20px;
+    background: #f5f5f5; color: #666;
+  }
+  .profile-prompt { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+  .profile-prompt-q { font-size: 12px; color: #999; margin-bottom: 4px; }
+  .profile-prompt-a { font-size: 14px; color: #333; line-height: 1.6; }
+  .btn-chat-big {
+    display: block; width: 100%; margin: 20px 0;
+    padding: 14px; background: #333; color: #fff; border: none;
+    border-radius: 12px; font-size: 16px; font-weight: 500; cursor: pointer;
+  }
+  .btn-chat-big:hover { background: #555; }
+
+  /* ===== 聊天 ===== */
+  .chat-header {
+    background: #fff; padding: 12px 16px; display: flex; align-items: center;
+    gap: 12px; border-bottom: 1px solid #eee;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .btn-back { font-size: 20px; background: none; border: none; cursor: pointer; padding: 4px 8px; color: #333; }
+  .chat-header-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: #fff; font-weight: 600;
+  }
+  .chat-header-name { font-size: 15px; font-weight: 600; }
+
+  /* ✅ 聊天消息区：左右留白更舒服，底部留出输入框空间 */
+  .chat-messages {
+    padding: 16px 14px 96px;
+    min-height: calc(100vh - 140px);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ✅ 单条消息：占满整行 */
+  .msg {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    align-items: flex-end;
+  }
+  .msg.user { flex-direction: row-reverse; }
+
+  .msg-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: #fff; flex-shrink: 0;
+  }
+
+  /* ✅ 气泡：给足宽度，最多占 78% */
+  .msg-bubble {
+    max-width: 78%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 15px;
+    line-height: 1.65;
+    white-space: pre-line;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+  .msg.bot .msg-bubble { background: #fff; color: #333; border-bottom-left-radius: 6px; }
+  .msg.user .msg-bubble { background: #333; color: #fff; border-bottom-right-radius: 6px; }
+
+  .msg-time {
+    font-size: 11px; color: #bbb;
+    margin-top: 4px;
+    padding: 0 4px;
+  }
+  .msg.user .msg-time { text-align: right; }
+
+  /* ✅ 输入框区域 */
+  .chat-input-area {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px;
+    background: #fff;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    display: none; gap: 8px; align-items: center;
+    border-top: 1px solid #eee;
+    z-index: 20;
+  }
+  .chat-input-area.active { display: flex; }
+  .chat-input {
+    flex: 1; min-width: 0;
+    border: 1px solid #eee; border-radius: 22px;
+    padding: 11px 16px; font-size: 15px; outline: none;
+    background: #fafafa;
+  }
+  .chat-input:focus { border-color: #333; background: #fff; }
+  .btn-send {
+    width: 42px; height: 42px; flex-shrink: 0;
+    border-radius: 50%; background: #333;
+    color: #fff; border: none; cursor: pointer;
+    font-size: 16px;
+  }
+
+  /* ===== 消息列表 ===== */
+  .msg-item {
+    background: #fff; border-radius: 12px;
+    padding: 14px 16px;
+    margin: 8px 14px;
+    display: flex; gap: 12px; align-items: center; cursor: pointer;
+  }
+  .msg-item-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: #fff; font-weight: 600;
+  }
+  .msg-item-body { flex: 1; min-width: 0; }
+  .msg-item-top { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .msg-item-name { font-size: 15px; font-weight: 600; }
+  .msg-item-time { font-size: 12px; color: #bbb; }
+  .msg-item-preview {
+    font-size: 13px; color: #999;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .empty { text-align: center; padding: 48px 20px; color: #bbb; font-size: 14px; }
+
+  .toast {
+    position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,.8); color: #fff; padding: 10px 20px;
+    border-radius: 20px; font-size: 13px; z-index: 100;
+    opacity: 0; transition: opacity .3s; pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <h1>Companion</h1>
+  <div class="nav-tabs">
+    <div class="nav-tab active" data-page="home" onclick="switchPage('home')">首页</div>
+    <div class="nav-tab" data-page="chars" onclick="switchPage('chars')">发现</div>
+    <div class="nav-tab" data-page="messages" onclick="switchPage('messages')">
+      消息<span class="badge" id="msgBadge" style="display:none">0</span>
+    </div>
+  </div>
+</div>
+
+<div class="page active" id="page-home">
+  <div class="post-input-area">
+    <textarea id="postInput" placeholder="分享点什么..."></textarea>
+    <div class="post-actions">
+      <span class="post-hint">发出去后，会有人主动来找你</span>
+      <button class="btn-post" id="btnPost" onclick="publishPost()">发布</button>
+    </div>
+  </div>
+  <div id="postList" class="post-list"></div>
+</div>
+
+<div class="page" id="page-chars">
+  <div class="char-list" id="charList"></div>
+</div>
+
+<div class="page" id="page-profile">
+  <div class="profile-cover" id="profileCover"></div>
+  <div class="profile-body">
+    <div class="profile-avatar-big" id="profileAvatar"></div>
+    <div class="profile-name" id="profileName"></div>
+    <div class="profile-bio" id="profileBio"></div>
+    <div class="profile-stats" id="profileStats"></div>
+    <div class="profile-section">
+      <h3>兴趣标签</h3>
+      <div class="profile-tags" id="profileTags"></div>
+    </div>
+    <div class="profile-section">
+      <h3>关于我</h3>
+      <div id="profilePrompts"></div>
+    </div>
+    <button class="btn-chat-big" id="btnChatBig" onclick="startChatFromProfile()">和她聊天</button>
+  </div>
+</div>
+
+<div class="page" id="page-chat">
+  <div class="chat-header">
+    <button class="btn-back" onclick="switchPage('messages')">‹</button>
+    <div class="chat-header-avatar" id="chatHeaderAvatar"></div>
+    <div class="chat-header-name" id="chatHeaderName"></div>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+</div>
+
+<div class="page" id="page-messages">
+  <div id="messageList"></div>
+</div>
+
+<div class="chat-input-area" id="chatInputArea">
+  <input class="chat-input" id="chatInput" placeholder="说点什么..."
+    onkeydown="if(event.key==='Enter')sendMessage()">
+  <button class="btn-send" onclick="sendMessage()">↑</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   人设数据
+   ============================================================ */
+const characters = {
+  luna: {
+    key: 'luna', name: 'Luna', avatar: 'L', color: '#FF9A9E',
+    cover: 'linear-gradient(135deg, #FFE0E6, #FFB8C6)',
+    age: 27, city: '上海', job: '心理咨询师',
+    bio: '不追问，不分析。累了就歇一会儿，想说的时候我都在。',
+    tags: ['不追问', '温柔', '轻陪伴', '情绪稳定', '话少'],
+    prompts: [
+      { q: '最近让我放松的事', a: '下班后一个人散步，什么都不想。' },
+      { q: '我希望遇到的你', a: '不用完美，真实的就好。' },
+      { q: '我的日常', a: '养了一只叫"豆子"的猫。' }
+    ],
+    stats: { followers: 1280, likes: 3560 },
+    replies: {
+      tired: '辛苦啦\n累的话就先歇一会儿\n不想说也没关系\n想聊的时候我都在',
+      sad: '我在呢\n难过就难过一会儿\n不用急着好起来\n我陪着你',
+      happy: '真好呀\n看到你开心我也开心\n继续保持哦',
+      anxious: '别急，慢慢来\n事情一件一件做\n你已经很努力了\n我陪着你',
+      default: '我在呢\n想说什么都可以\n不着急，慢慢说'
+    },
+    chatReplies: ['嗯嗯，我在听', '辛苦啦，歇一会儿吧', '不想说也没关系的', '想聊的时候我都在', '你已经做得很好了']
+  },
+  kai: {
+    key: 'kai', name: 'Kai', avatar: 'K', color: '#2C3E50',
+    cover: 'linear-gradient(135deg, #3A4A5C, #1A252F)',
+    age: 32, city: '北京', job: '创业者',
+    bio: '不多问，但句句在点上。你值得被好好对待。',
+    tags: ['话少', '直接', '护短', '行动派', '有安全感'],
+    prompts: [
+      { q: '我的日常', a: '早上六点跑步，晚上十点下班。' },
+      { q: '我欣赏的品质', a: '说到做到。' },
+      { q: '周末去哪', a: '山里，没信号的那种。' }
+    ],
+    stats: { followers: 960, likes: 4120 },
+    replies: {
+      tired: '别硬撑。\n去休息。\n公司的事明天再说。',
+      sad: '谁让你难过了？\n告诉我。\n这事我来处理。',
+      happy: '不错。\n你笑起来很好看。\n继续保持。',
+      anxious: '焦虑解决不了问题。\n深呼吸。\n一步一步来，我在。',
+      default: '说吧。\n我在听。'
+    },
+    chatReplies: ['嗯。', '继续。', '这事交给我。', '你做得很好。', '别多想。', '我在。']
+  },
+  yeye: {
+    key: 'yeye', name: '叶叶', avatar: '叶', color: '#FFB347',
+    cover: 'linear-gradient(135deg, #FFE5C2, #FFC978)',
+    age: 55, city: '成都', job: '退休教师',
+    bio: '不管你变成什么样，我都爱你。',
+    tags: ['无条件的爱', '直白', '温暖', '唠叨', '心疼你'],
+    prompts: [
+      { q: '我的日常', a: '早上买菜，下午跳广场舞。' },
+      { q: '我最想说的', a: '孩子，记得好好吃饭。' },
+      { q: '我的愿望', a: '希望你每天都开心。' }
+    ],
+    stats: { followers: 1560, likes: 5280 },
+    replies: {
+      tired: '宝贝辛苦啦\n心疼你\n快去歇一会儿\n饭吃了没？',
+      sad: '宝贝别哭\n我在呢\n谁欺负你了？\n我替你做主',
+      happy: '哎呀真棒\n我就知道你行\n今天吃点好的庆祝一下',
+      anxious: '别怕别怕\n有我在\n天塌下来我顶着\n你只管好好吃饭睡觉',
+      default: '宝贝\n我一直爱你\n想说什么都可以\n我听着呢'
+    },
+    chatReplies: ['宝贝，我在呢', '饭吃了没？', '别累着自己', '想你了', '有什么事跟我说', '我永远站你这边']
+  }
+};
+
+const MOOD_KEYWORDS = {
+  tired: ['累', '疲惫', '困', '加班', '熬夜', '撑不住', '好累', '不想动'],
+  sad: ['难过', '伤心', '哭', '委屈', '失落', '不开心', '崩溃', '分手'],
+  happy: ['开心', '高兴', '快乐', '兴奋', '太好了', '棒', '成功', '升职'],
+  anxious: ['焦虑', '紧张', '压力', '担心', '害怕', '慌', '烦躁', '睡不']
+};
+
+function detectMood(text) {
+  if (!text) return 'default';
+  for (const mood in MOOD_KEYWORDS) {
+    if (MOOD_KEYWORDS[mood].some(k => text.includes(k))) return mood;
+  }
+  return 'default';
+}
+
+/* ============================================================
+   存储
+   ============================================================ */
+const STORAGE_KEY = 'companion_v2';
+let store = {
+  posts: [],
+  chats: {},
+  unread: {},
+  unreadDay: null,
+  weights: {},
+  ignored: {},
+  currentChar: null
+};
+
+function initWeights() {
+  Object.keys(characters).forEach(k => {
+    if (store.weights[k] === undefined) store.weights[k] = 1.0;
+    if (store.ignored[k] === undefined) store.ignored[k] = 0;
+  });
+}
+
+function load() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) store = Object.assign(store, JSON.parse(raw));
+  } catch (e) {}
+  initWeights();
+  checkUnreadExpiry();
+}
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); } catch (e) {}
+}
+
+/* ============================================================
+   未读次日清空
+   ============================================================ */
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+}
+
+function checkUnreadExpiry() {
+  const today = todayStr();
+  if (store.unreadDay && store.unreadDay !== today) {
+    store.unread = {};
+    store.unreadDay = null;
+    save();
+  }
+}
+
+function markUnread(charKey) {
+  store.unreadDay = todayStr();
+  store.unread[charKey] = (store.unread[charKey] || 0) + 1;
+  save();
+}
+
+function clearUnread(charKey) {
+  if (store.unread[charKey]) {
+    delete store.unread[charKey];
+    save();
+    updateBadge();
+  }
+}
+
+function updateBadge() {
+  const total = Object.values(store.unread || {}).reduce(function(a, b) { return a + b; }, 0);
+  const badge = document.getElementById('msgBadge');
+  if (total > 0) {
+    badge.textContent = total;
+    badge.style.display = 'inline-block';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+/* ============================================================
+   权重系统
+   ============================================================ */
+function weightedPick(keys, count) {
+  const pool = keys.map(function(k) { return { key: k, w: store.weights[k] || 1.0 }; });
+  const picked = [];
+  for (let i = 0; i < count && pool.length; i++) {
+    const total = pool.reduce(function(s, p) { return s + p.w; }, 0);
+    let r = Math.random() * total;
+    let idx = 0;
+    for (let j = 0; j < pool.length; j++) {
+      r -= pool[j].w;
+      if (r <= 0) { idx = j; break; }
+    }
+    picked.push(pool[idx].key);
+    pool.splice(idx, 1);
+  }
+  return picked;
+}
+
+function penalize(charKey) {
+  store.ignored[charKey] = (store.ignored[charKey] || 0) + 1;
+  store.weights[charKey] = Math.max(0.1, (store.weights[charKey] || 1.0) * 0.6);
+  save();
+}
+
+function reward(charKey) {
+  store.weights[charKey] = Math.min(2.0, (store.weights[charKey] || 1.0) * 1.2);
+  save();
+}
+
+/* ============================================================
+   工具
+   ============================================================ */
+function now() { return Date.now(); }
+function fmtTime(ts) {
+  const d = new Date(ts);
+  return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+}
+function fmtRelative(ts) {
+  const diff = now() - ts;
+  if (diff < 60000) return '刚刚';
+  if (diff < 3600000) return Math.floor(diff / 60000) + ' 分钟前';
+  if (diff < 86400000) return Math.floor(diff / 3600000) + ' 小时前';
+  return fmtTime(ts);
+}
+function uid() { return Date.now() + '_' + Math.random().toString(36).slice(2, 6); }
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, function(m) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+  });
+}
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(function() { el.classList.remove('show'); }, 1800);
+}
+
+/* ============================================================
+   页面切换
+   ============================================================ */
+let currentPage = 'home';
+function switchPage(page) {
+  currentPage = page;
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+  const tab = document.querySelector('.nav-tab[data-page="' + page + '"]');
+  if (tab) tab.classList.add('active');
+  document.getElementById('chatInputArea').classList.toggle('active', page === 'chat');
+
+  if (page === 'home') renderPosts();
+  if (page === 'chars') renderChars();
+  if (page === 'messages') renderMessages();
+}
+
+/* ============================================================
+   发布 + 10 秒内 3 条回复
+   ============================================================ */
+function publishPost() {
+  const input = document.getElementById('postInput');
+  const content = input.value.trim();
+  if (!content) { toast('说点什么再发吧'); return; }
+
+  const post = {
+    id: uid(),
+    content: content,
+    mood: detectMood(content),
+    time: now(),
+    replies: []
+  };
+  store.posts.unshift(post);
+  save();
+  input.value = '';
+  renderPosts();
+  toast('已发布');
+
+  const allKeys = Object.keys(characters);
+  const picked = weightedPick(allKeys, 3);
+
+  picked.forEach(function(key, i) {
+    const delay = 1000 + i * 2500 + Math.random() * 1500;
+    setTimeout(function() {
+      const c = characters[key];
+      const text = c.replies[post.mood] || c.replies.default;
+      post.replies.push({ charKey: key, text: text, time: now(), read: false });
+      markUnread(key);
+      save();
+      renderPosts();
+      updateBadge();
+    }, delay);
+  });
+}
+
+function renderPosts() {
+  const list = document.getElementById('postList');
+  if (!store.posts.length) {
+    list.innerHTML = '<div class="empty">还没有动态<br>说一句话，会有人主动来找你</div>';
+    return;
+  }
+
+  let html = store.posts.map(function(p) {
+    return '<div class="post-card">' +
+      '<div class="post-content">' + escapeHtml(p.content) + '</div>' +
+      '<div class="post-time">' + fmtRelative(p.time) + '</div>' +
+      (p.replies.length ? '<div class="post-reply-count">' + p.replies.length + ' 人回复了你</div>' : '') +
+      '</div>';
+  }).join('');
+
+  const allReplies = [];
+  store.posts.forEach(function(p) {
+    p.replies.forEach(function(r) {
+      allReplies.push(Object.assign({}, r, { postContent: p.content }));
+    });
+  });
+  allReplies.sort(function(a, b) { return b.time - a.time; });
+
+  html += allReplies.map(function(r) {
+    const c = characters[r.charKey];
+    return '<div class="reply-card" onclick="openReply(\'' + r.charKey + '\')">' +
+      '<div class="reply-avatar" style="background:' + c.color + '">' + c.avatar + '</div>' +
+      '<div class="reply-body">' +
+        '<div class="reply-name">' + c.name + '</div>' +
+        '<div class="reply-bio">' + c.age + ' · ' + c.city + ' · ' + c.job + '</div>' +
+        '<div class="reply-text">' + escapeHtml(r.text) + '</div>' +
+      '</div>' +
+      (!r.read ? '<div class="reply-unread-dot"></div>' : '') +
+      '</div>';
+  }).join('');
+
+  list.innerHTML = html;
+}
+
+function openReply(charKey) {
+  store.posts.forEach(function(p) {
+    p.replies.forEach(function(r) {
+      if (r.charKey === charKey) r.read = true;
+    });
+  });
+  clearUnread(charKey);
+  save();
+  renderPosts();
+  openChat(charKey);
+}
+
+/* ============================================================
+   发现：人设列表
+   ============================================================ */
+function renderChars() {
+  document.getElementById('charList').innerHTML = Object.keys(characters).map(function(k) {
+    const c = characters[k];
+    return '<div class="char-card" onclick="showProfile(\'' + c.key + '\')">' +
+      '<div class="char-card-avatar" style="background:' + c.color + '">' + c.avatar + '</div>' +
+      '<div class="char-card-info">' +
+        '<div class="char-card-name">' + c.name + '</div>' +
+        '<div class="char-card-bio">' + c.age + ' · ' + c.city + ' · ' + c.job + '</div>' +
+        '<div class="char-card-tags">' +
+          c.tags.slice(0, 3).map(function(t) { return '<span class="char-tag">' + t + '</span>'; }).join('') +
+        '</div>' +
+      '</div>' +
+      '</div>';
+  }).join('');
+}
+
+/* ============================================================
+   个人主页
+   ============================================================ */
+let profileCharKey = null;
+
+function showProfile(key) {
+  const c = characters[key];
+  profileCharKey = key;
+
+  document.getElementById('profileCover').style.background = c.cover;
+  const av = document.getElementById('profileAvatar');
+  av.style.background = c.color;
+  av.textContent = c.avatar;
+
+  document.getElementById('profileName').textContent = c.name;
+  document.getElementById('profileBio').textContent = c.bio;
+
+  document.getElementById('profileStats').innerHTML =
+    '<div class="stat-item"><div class="stat-num">' + c.stats.followers + '</div><div class="stat-label">关注</div></div>' +
+    '<div class="stat-item"><div class="stat-num">' + c.stats.likes + '</div><div class="stat-label">获赞</div></div>' +
+    '<div class="stat-item"><div class="stat-num">' + c.age + '</div><div class="stat-label">岁</div></div>';
+
+  document.getElementById('profileTags').innerHTML =
+    c.tags.map(function(t) { return '<span class="profile-tag">' + t + '</span>'; }).join('');
+
+  document.getElementById('profilePrompts').innerHTML = c.prompts.map(function(p) {
+    return '<div class="profile-prompt">' +
+      '<div class="profile-prompt-q">' + p.q + '</div>' +
+      '<div class="profile-prompt-a">' + p.a + '</div>' +
+      '</div>';
+  }).join('');
+
+  document.getElementById('btnChatBig').textContent = '和 ' + c.name + ' 聊天';
+  switchPage('profile');
+}
+
+function startChatFromProfile() {
+  if (profileCharKey) openChat(profileCharKey);
+}
+
+/* ============================================================
+   聊天
+   ============================================================ */
+function openChat(key) {
+  store.currentChar = key;
+  save();
+  const c = characters[key];
+
+  document.getElementById('chatHeaderAvatar').style.background = c.color;
+  document.getElementById('chatHeaderAvatar').textContent = c.avatar;
+  document.getElementById('chatHeaderName').textContent = c.name;
+
+  if (!store.chats[key]) store.chats[key] = [];
+  if (!store.chats[key].length) {
+    store.chats[key].push({ role: 'bot', text: c.replies.default, time: now() });
+    save();
+  }
+  renderChat(key);
+  switchPage('chat');
+
+  store.posts.forEach(function(p) {
+    p.replies.forEach(function(r) {
+      if (r.charKey === key) r.read = true;
+    });
+  });
+  clearUnread(key);
+  save();
+}
+
+function renderChat(key) {
+  const c = characters[key];
+  const msgs = store.chats[key] || [];
+  const el = document.getElementById('chatMessages');
+  if (!msgs.length) {
+    el.innerHTML = '<div class="empty">还没有对话</div>';
+    return;
+  }
+  el.innerHTML = msgs.map(function(m) {
+    const isBot = m.role === 'bot';
+    return '<div class="msg ' + (isBot ? 'bot' : 'user') + '">' +
+      '<div class="msg-avatar" style="background:' + (isBot ? c.color : '#666') + '">' + (isBot ? c.avatar : '我') + '</div>' +
+      '<div>' +
+        '<div class="msg-bubble">' + escapeHtml(m.text) + '</div>' +
+        '<div class="msg-time">' + fmtTime(m.time) + '</div>' +
+      '</div>' +
+      '</div>';
+  }).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  const key = store.currentChar || 'luna';
+  const c = characters[key];
+
+  if (!store.chats[key]) store.chats[key] = [];
+  store.chats[key].push({ role: 'user', text: text, time: now() });
+  input.value = '';
+  save();
+  renderChat(key);
+  reward(key);
+
+  setTimeout(function() {
+    const mood = detectMood(text);
+    const reply = (mood !== 'default' && c.replies[mood])
+      ? c.replies[mood]
+      : c.chatReplies[Math.floor(Math.random() * c.chatReplies.length)];
+    store.chats[key].push({ role: 'bot', text: reply, time: now() });
+    save();
+    renderChat(key);
+  }, 1200 + Math.random() * 1500);
+}
+
+/* ============================================================
+   消息列表
+   ============================================================ */
+function renderMessages() {
+  const el = document.getElementById('messageList');
+  el.innerHTML = Object.keys(characters).map(function(k) {
+    const c = characters[k];
+    const msgs = store.chats[k] || [];
+    const last = msgs[msgs.length - 1];
+    const unread = store.unread[k] || 0;
+    return '<div class="msg-item" onclick="openChat(\'' + k + '\')">' +
+      '<div class="msg-item-avatar" style="background:' + c.color + '">' + c.avatar + '</div>' +
+      '<div class="msg-item-body">' +
+        '<div class="msg-item-top">' +
+          '<span class="msg-item-name">' + c.name + (unread ? ' <span style="color:#FF4444;font-size:12px">· ' + unread + '条新消息</span>' : '') + '</span>' +
+          '<span class="msg-item-time">' + (last ? fmtRelative(last.time) : '') + '</span>' +
+        '</div>' +
+        '<div class="msg-item-preview">' + (last ? escapeHtml(last.text.replace(/\n/g, ' ')) : '还没有对话') + '</div>' +
+      '</div>' +
+      '</div>';
+  }).join('');
+}
+
+/* ============================================================
+   启动
+   ============================================================ */
+load();
+updateBadge();
+renderPosts();
+</script>
+</body>
+</html>

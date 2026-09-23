@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英国硕士 Offer 后保姆级指南 · 从Con到出发</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f0f4f8;
+    color: #1a2b3c;
+    line-height: 1.6;
+    padding: 16px;
+    max-width: 680px;
+    margin: 0 auto;
+    padding-bottom: 100px;
+  }
+  .toc {
+    position: sticky;
+    top: 56px;
+    z-index: 999;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+  }
+  .toc-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #065f46;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .toc-scroll {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .toc-scroll::-webkit-scrollbar { display: none; }
+  .toc-item {
+    flex-shrink: 0;
+    font-size: 12px;
+    color: #334155;
+    text-decoration: none;
+    background: #f1f5f9;
+    padding: 5px 12px;
+    border-radius: 16px;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+    border: 1px solid #e2e8f0;
+  }
+  .toc-item:active {
+    background: #10b981;
+    color: #fff;
+    border-color: #10b981;
+  }
+  .toc-item.green { border-left: 3px solid #10b981; }
+  .toc-item.orange { border-left: 3px solid #f59e0b; }
+  .toc-item.blue { border-left: 3px solid #2563eb; }
+  .toc-item.red { border-left: 3px solid #f97316; }
+
+  .header {
+    background: linear-gradient(135deg, #047857 0%, #10b981 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 28px 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+  }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .header p { font-size: 14px; opacity: 0.9; line-height: 1.5; }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  .step {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border-left: 4px solid #10b981;
+    scroll-margin-top: 150px;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .step-num {
+    background: #10b981;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-title { font-size: 17px; font-weight: 700; color: #065f46; }
+  .step-desc { font-size: 13px; color: #64748b; margin-bottom: 14px; padding-left: 38px; }
+  .tool-list { display: flex; flex-direction: column; gap: 8px; }
+  .tool-item {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+  }
+  .tool-item .name { font-weight: 600; font-size: 13.5px; color: #065f46; margin-bottom: 2px; }
+  .tool-item .desc { font-size: 12px; color: #64748b; margin-bottom: 5px; }
+  .tool-item a {
+    display: inline-block;
+    font-size: 12px;
+    color: #059669;
+    text-decoration: none;
+    word-break: break-all;
+    background: #ecfdf5;
+    padding: 2px 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
+    margin-right: 4px;
+    margin-bottom: 3px;
+  }
+  .tool-item a:active { background: #d1fae5; }
+  .sop-box {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 12px;
+  }
+  .sop-box .sop-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #047857;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sop-step {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+  }
+  .sop-step:last-child { margin-bottom: 0; }
+  .sop-step .snum {
+    background: #10b981;
+    color: #fff;
+    font-weight: 700;
+    font-size: 11px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .sop-step .stext { color: #334155; line-height: 1.5; }
+  .sop-step .stext strong { color: #047857; }
+  .timeline-box {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: #92400e;
+    line-height: 1.6;
+  }
+  .timeline-box strong { color: #78350f; }
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 24px;
+    padding: 0 10px;
+    line-height: 1.6;
+  }
+  .tag {
+    display: inline-block;
+    background: #d1fae5;
+    color: #065f46;
+    font-size: 11px;
+    padding: 1px 8px;
+    border-radius: 8px;
+    margin-left: 4px;
+    font-weight: 500;
+  }
+  .warning-box {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: #991b1b;
+    line-height: 1.6;
+  }
+  .warning-box strong { color: #7f1d1d; }
+  .info-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: #1e40af;
+    line-height: 1.6;
+  }
+  .info-box strong { color: #1e3a8a; }
+  .uni-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #065f46;
+    margin: 14px 0 8px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #d1fae5;
+  }
+  .uni-links-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .uni-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    border: 1px solid #e2e8f0;
+    text-decoration: none;
+    color: inherit;
+    font-size: 12px;
+    transition: background 0.2s;
+  }
+  .uni-link:active { background: #ecfdf5; }
+  .uni-link .rank {
+    font-size: 10px;
+    color: #94a3b8;
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .uni-link .name {
+    font-weight: 500;
+    color: #1a2b3c;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .step.fix404 { border-left-color: #f97316; }
+  .step.fix404 .step-num { background: #f97316; }
+  .step.fix404 .step-title { color: #9a3412; }
+  .step.fix404 .sop-box { background: #fff7ed; border-color: #fed7aa; }
+  .step.fix404 .sop-box .sop-title { color: #c2410c; }
+  .step.fix404 .sop-step .snum { background: #f97316; }
+  .step.fix404 .sop-step .stext strong { color: #c2410c; }
+
+  /* ===== 复制按钮 ===== */
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #10b981;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background .2s;
+    z-index: 2;
+  }
+  .copy-btn:active { background: #047857; }
+  .copy-btn.copied { background: #16a34a; }
+
+  /* ===== 搜索框 ===== */
+  .search-box {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .search-box input {
+    flex: 1;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    outline: none;
+    background: #f8fafc;
+  }
+  .search-box input:focus { border-color: #10b981; background: #fff; }
+  .search-box .search-count {
+    font-size: 11px;
+    color: #64748b;
+    white-space: nowrap;
+    min-width: 50px;
+    text-align: right;
+  }
+  .search-box .search-close {
+    background: #f1f5f9;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #64748b;
+  }
+  .search-hit {
+    background: #fef08a !important;
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+  .search-hit-active {
+    background: #fb923c !important;
+    color: #fff;
+  }
+
+  /* ===== 暗色模式 ===== */
+  .theme-toggle {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #10b981;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(16,185,129,.4);
+    z-index: 999;
+    transition: transform .2s, background .2s;
+  }
+  .theme-toggle:active { transform: scale(.92); }
+  body.dark { background: #0f172a; color: #e2e8f0; }
+  body.dark .header { background: linear-gradient(135deg, #064e3b 0%, #059669 100%); box-shadow: 0 4px 16px rgba(0,0,0,.5); }
+  body.dark .step, body.dark .search-box, body.dark .toc { background: #1e293b; color: #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,.4); }
+  body.dark .step-title { color: #34d399; }
+  body.dark .step-desc { color: #94a3b8; }
+  body.dark .tool-item, body.dark .uni-link {
+    background: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+  }
+  body.dark .tool-item .name, body.dark .uni-link .name { color: #6ee7b7; }
+  body.dark .tool-item .desc, body.dark .sop-step .stext { color: #cbd5e1; }
+  body.dark .sop-box { background: #064e3b; border-color: #065f46; }
+  body.dark .sop-box .sop-title { color: #6ee7b7; }
+  body.dark .warning-box { background: #450a0a; border-color: #7f1d1d; color: #fecaca; }
+  body.dark .info-box { background: #1e3a8a; border-color: #1e40af; color: #bfdbfe; }
+  body.dark .timeline-box { background: #422006; border-color: #78350f; color: #fed7aa; }
+  body.dark .toc-item { background: #0f172a; border-color: #334155; color: #cbd5e1; }
+  body.dark .toc-title { color: #6ee7b7; }
+  body.dark .search-box input { background: #0f172a; border-color: #334155; color: #e2e8f0; }
+  body.dark .footer { color: #64748b; }
+  body.dark .header h1, body.dark .header p { color: #fff; }
+  body.dark .step.fix404 { border-left-color: #fb923c; }
+  body.dark .step.fix404 .step-num { background: #ea580c; }
+  body.dark .step.fix404 .step-title { color: #fdba74; }
+  body.dark .step.fix404 .sop-box { background: #431407; border-color: #7c2d12; }
+  body.dark .step.fix404 .sop-box .sop-title { color: #fdba74; }
+  body.dark .step.fix404 .sop-step .stext { color: #fed7aa; }
+  body.dark .uni-section-title { color: #34d399; border-bottom-color: #065f46; }
+</style>
+</head>
+<body>
+
+<!-- 搜索框 -->
+<div class="search-box" id="searchBox">
+  <span style="font-size:16px;">🔍</span>
+  <input type="text" id="searchInput" placeholder="搜索页面内容...">
+  <span class="search-count" id="searchCount"></span>
+  <button class="search-close" id="searchClose" style="display:none;">✕</button>
+</div>
+
+<!-- 悬浮目录 -->
+<div class="toc">
+  <div class="toc-title">📌 快速跳转</div>
+  <div class="toc-scroll">
+    <a class="toc-item green" href="#step0">⏰ 时间线</a>
+    <a class="toc-item green" href="#step1">1 Con换Uncon</a>
+    <a class="toc-item green" href="#step2">2 语言成绩</a>
+    <a class="toc-item green" href="#step3">3 语言班</a>
+    <a class="toc-item green" href="#step4">4 换CAS</a>
+    <a class="toc-item green" href="#step5">5 签证</a>
+    <a class="toc-item green" href="#step6">6 宿舍</a>
+    <a class="toc-item green" href="#step7">7 机票</a>
+    <a class="toc-item red" href="#fix404">🔧 链接失效急救</a>
+  </div>
+</div>
+
+<div class="header">
+  <h1>🎓 英国硕士 Offer 后保姆级指南</h1>
+  <p>从拿到 Con Offer 到登机出发，每一步都有免费官方链接和操作 SOP。按照以下 7 步，自己搞定全部流程。</p>
+  <span class="badge">✨ 前200名大学 · 全部免费 · 手机适配</span>
+</div>
+
+<div class="step" id="step0">
+  <div class="step-header">
+    <div class="step-num" style="background:#f59e0b;">⏰</div>
+    <div class="step-title">全程时间线总览</div>
+  </div>
+  <div class="step-desc">先看整体节奏，心里有数再往下走。</div>
+  <div class="timeline-box">
+    <strong>📅 典型时间线（以 2026 年 9 月入学为例）</strong><br>
+    <strong>3–4月</strong>：收到 Con Offer，仔细阅读条件，确认截止日期<br>
+    <strong>5–6月</strong>：全力冲刺均分和语言成绩；如需语言班，此时申请<br>
+    <strong>6月底–7月初</strong>：拿到完整成绩单和双证，提交材料换 Uncon<br>
+    <strong>7月–8月初</strong>：接受 Uncon，缴纳押金，申请 CAS<br>
+    <strong>8月</strong>：CAS 到手后立即申请签证；同步申请宿舍<br>
+    <strong>8月中下旬–9月初</strong>：签证获批，订机票，打包行李<br>
+    <strong>9月</strong>：出发赴英，办理入学注册
+  </div>
+</div>
+
+<div class="step" id="step1">
+  <div class="step-header">
+    <div class="step-num">1</div>
+    <div class="step-title">Con Offer 换 Unconditional Offer</div>
+  </div>
+  <div class="step-desc">Con Offer 上列的条件必须全部满足，才能换成无条件录取。约 65% 的英国硕士录取以 Con Offer 形式发出，最晚 7 月底前必须完成转换。</div>
+
+  <div class="sop-box">
+    <div class="sop-title">📖 Con 换 Uncon 操作 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>打开 Con Offer 邮件/PDF</strong>，逐条列出所有条件。通常分三类：<strong>学术条件</strong>（最终均分、指定课程分数）、<strong>语言条件</strong>（雅思/托福总分和小分）、<strong>材料条件</strong>（毕业证、学位证、完整成绩单）。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>确认每项条件的截止日期。</strong>大多数英国院校给予 8–12 周满足条件的时间，最晚截止日期一般为 <strong>7 月 31 日或 8 月 15 日</strong>。务必去你学校的官网搜索 <strong>"your offer conditions deadline 2026"</strong>（你的 Offer 条件截止日期 2026）确认。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>准备材料并提交。</strong>拿到完整成绩单（教务处盖章）、毕业证和学位证后，翻译成英文并公证。将所有材料扫描成清晰 PDF，通过学校<strong>申请系统（Portal）</strong>上传，或按学校要求发邮件至招生办。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>等待审核。</strong>审核通常需要 <strong>1–3 周</strong>。审核通过后，学校会发放 Unconditional Offer（无条件录取）。登录申请系统确认状态变为 <strong>"Unconditional"</strong>（无条件）即可。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext"><strong>接受 Uncon。</strong>在申请系统中点击 <strong>"Accept"</strong>（接受）接受无条件录取。不接受，学校不会发 CAS。</div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠️ 注意：</strong>如果语言成绩不达标，不要死磕雅思，<strong>立刻申请语言班</strong>（见 Step 3）。语言班结课后通过校内测试即可直接入读正课，无需再考雅思。
+  </div>
+</div>
+
+<div class="step" id="step2">
+  <div class="step-header">
+    <div class="step-num">2</div>
+    <div class="step-title">提交语言成绩</div>
+  </div>
+  <div class="step-desc">如果 Con Offer 上有语言条件，你需要在截止日期前提交合格的雅思/托福成绩。大部分学校接受无雅思先拿 Con Offer，后补语言成绩。</div>
+
+  <div class="sop-box">
+    <div class="sop-title">📖 提交语言成绩操作 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>确认目标分数。</strong>登录学校官网，在课程页面的 <strong>"English Language Requirements"</strong>（英语语言要求）板块查看你专业的具体要求。例如：<strong>IELTS 6.5 (writing no less than 6.0)</strong>（雅思 6.5，写作不低于 6.0）。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>确认提交方式和截止日期。</strong>在 Con Offer 邮件或学校官网搜索 <strong>"submit English language results deadline 2026"</strong>（提交语言成绩截止日期 2026），确认是<strong>通过 Portal（申请系统）上传</strong>还是<strong>发邮件至招生办</strong>。大多数学校语言成绩截止日期在 <strong>7 月至 8 月中上旬</strong>之间。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>准备成绩证明。</strong>雅思需提供 <strong>Test Report Form Number</strong>（成绩单编号）或证书扫描件；托福需提供 <strong>16 位注册号</strong>或证书扫描件；PTE 需从 Pearson 账户直接发送成绩到学校。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>提交后确认。</strong>提交后 3–5 个工作日登录学校 Portal，确认语言条件状态变为 <strong>"Met"</strong>（已满足）或 <strong>"Satisfied"</strong>（已满足）。如果没有变化，发邮件至招生办询问。</div>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="step3">
+  <div class="step-header">
+    <div class="step-num">3</div>
+    <div class="step-title">申请语言班（Pre-sessional English）</div>
+  </div>
+  <div class="step-desc">如果雅思始终差 0.5–1.0 分，语言班是最常用的补救方案。英国主流大学语言班分 4–16 周不等，结课后通过校内测试即可直接入读正课。</div>
+
+  <div class="info-box">
+    <strong>📌 关于语言班链接：</strong>语言班页面是大学官网中<strong>最容易失效</strong>的链接之一。因为语言中心经常调整课程设置、周数和开课时间，页面路径每年都会变动。如果下方链接打不开，请直接跳到页面底部的<strong>「链接失效急救站」</strong>，按 SOP 操作即可找到最新页面。
+  </div>
+
+  <div class="sop-box">
+    <div class="sop-title">📖 语言班申请操作 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>确认你需要多长的语言班。</strong>登录学校官网搜索 <strong>"Pre-sessional English"</strong>（学前英语），查看不同周数对应的雅思分数要求。通常差 0.5 分对应 4–6 周，差 1.0 分对应 8–12 周。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>找到语言班的申请入口。</strong>在学校官网的 Pre-sessional 页面找到 <strong>"Apply now"</strong>（立即申请）或 <strong>"How to apply"</strong>（如何申请）按钮，点击进入在线申请表单。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>准备支持文件。</strong>通常需要：<strong>当前语言成绩证书</strong>、<strong>正课 Offer</strong>、<strong>护照扫描件</strong>。部分学校会要求 <strong>Personal Statement</strong>（个人陈述）说明为什么需要语言班。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>提交申请并等待审核。</strong>审核通常 <strong>1–2 周</strong>。通过后你会收到语言班的 Offer，需要在截止日期前<strong>接受并缴纳学费押金</strong>。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext"><strong>确认 CAS 类型。</strong>如果你同时申请了语言班和正课，部分学校会发 <strong>Combined CAS</strong>（合并 CAS，覆盖语言班+正课），部分学校需要先拿语言班 CAS 办理签证，结课后在英国境内续签正课 CAS。</div>
+    </div>
+  </div>
+
+  <div class="uni-section-title">🔗 前200名大学语言班官方页面</div>
+  <div class="uni-links-grid">
+    <a class="uni-link" href="https://www.imperial.ac.uk/study/international/english-language-requirements/" target="_blank"><span class="rank">QS2</span><span class="name">帝国理工</span></a>
+    <a class="uni-link" href="https://www.ox.ac.uk/admissions/graduate/apply/pre-sessional-english" target="_blank"><span class="rank">QS4</span><span class="name">牛津大学</span></a>
+    <a class="uni-link" href="https://www.postgraduate.study.cam.ac.uk/apply/pre-sessional" target="_blank"><span class="rank">QS6</span><span class="name">剑桥大学</span></a>
+    <a class="uni-link" href="https://www.ucl.ac.uk/languages-international-education/pre-sessional" target="_blank"><span class="rank">QS9</span><span class="name">UCL</span></a>
+    <a class="uni-link" href="https://www.kcl.ac.uk/study/pre-sessional" target="_blank"><span class="rank">QS31</span><span class="name">KCL</span></a>
+    <a class="uni-link" href="https://www.ed.ac.uk/english-language-teaching/pre-sessional" target="_blank"><span class="rank">QS34</span><span class="name">爱丁堡大学</span></a>
+    <a class="uni-link" href="https://www.manchester.ac.uk/study/international/pre-sessional-english/" target="_blank"><span class="rank">QS35</span><span class="name">曼彻斯特大学</span></a>
+    <a class="uni-link" href="https://www.bristol.ac.uk/academic-language/study/pre-sessional/" target="_blank"><span class="rank">QS51</span><span class="name">布里斯托大学</span></a>
+    <a class="uni-link" href="https://www.lse.ac.uk/language-centre/english-language-programmes/pre-sessional" target="_blank"><span class="rank">QS56</span><span class="name">LSE</span></a>
+    <a class="uni-link" href="https://warwick.ac.uk/study/learn-english/pre-sessional/" target="_blank"><span class="rank">QS74</span><span class="name">华威大学</span></a>
+    <a class="uni-link" href="https://www.birmingham.ac.uk/international/students/pre-sessional-english" target="_blank"><span class="rank">QS76</span><span class="name">伯明翰大学</span></a>
+    <a class="uni-link" href="https://www.gla.ac.uk/study/english-language/pre-sessional/" target="_blank"><span class="rank">QS79</span><span class="name">格拉斯哥大学</span></a>
+    <a class="uni-link" href="https://www.leeds.ac.uk/language-centre/pre-sessional" target="_blank"><span class="rank">QS86</span><span class="name">利兹大学</span></a>
+    <a class="uni-link" href="https://www.southampton.ac.uk/study/english-language/pre-sessional" target="_blank"><span class="rank">QS87</span><span class="name">南安普顿大学</span></a>
+    <a class="uni-link" href="https://www.sheffield.ac.uk/eltc/pre-sessional" target="_blank"><span class="rank">QS92</span><span class="name">谢菲尔德大学</span></a>
+    <a class="uni-link" href="https://www.durham.ac.uk/study/international/english-language/pre-sessional" target="_blank"><span class="rank">QS94</span><span class="name">杜伦大学</span></a>
+    <a class="uni-link" href="https://www.nottingham.ac.uk/cele/pre-sessional" target="_blank"><span class="rank">QS97</span><span class="name">诺丁汉大学</span></a>
+    <a class="uni-link" href="https://www.qmul.ac.uk/pre-sessional" target="_blank"><span class="rank">QS110</span><span class="name">伦敦玛丽女王大学</span></a>
+    <a class="uni-link" href="https://www.st-andrews.ac.uk/study/english/pre-sessional" target="_blank"><span class="rank">QS113</span><span class="name">圣安德鲁斯大学</span></a>
+    <a class="uni-link" href="https://www.bath.ac.uk/courses/pre-sessional-english" target="_blank"><span class="rank">QS132</span><span class="name">巴斯大学</span></a>
+    <a class="uni-link" href="https://www.ncl.ac.uk/international/pre-sessional" target="_blank"><span class="rank">QS137</span><span class="name">纽卡斯尔大学</span></a>
+    <a class="uni-link" href="https://www.liverpool.ac.uk/english-language-centre/pre-sessional" target="_blank"><span class="rank">QS147</span><span class="name">利物浦大学</span></a>
+    <a class="uni-link" href="https://www.exeter.ac.uk/study/international/english-language/pre-sessional" target="_blank"><span class="rank">QS155</span><span class="name">埃克塞特大学</span></a>
+    <a class="uni-link" href="https://www.lancaster.ac.uk/study/english-language/pre-sessional" target="_blank"><span class="rank">QS157</span><span class="name">兰卡斯特大学</span></a>
+    <a class="uni-link" href="https://www.york.ac.uk/study/international/english-language/pre-sessional" target="_blank"><span class="rank">QS169</span><span class="name">约克大学</span></a>
+    <a class="uni-link" href="https://www.cardiff.ac.uk/study/international/english-language/pre-sessional" target="_blank"><span class="rank">QS181</span><span class="name">卡迪夫大学</span></a>
+    <a class="uni-link" href="https://www.reading.ac.uk/study/international/pre-sessional" target="_blank"><span class="rank">QS194</span><span class="name">雷丁大学</span></a>
+    <a class="uni-link" href="https://www.qub.ac.uk/study/international-students/pre-sessional-english/" target="_blank"><span class="rank">QS199</span><span class="name">贝尔法斯特女王大学</span></a>
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠️ 链接失效提醒：</strong>如果以上语言班链接打不开，不要慌。直接跳到页面底部的 <strong>「链接失效急救站」</strong>，按 SOP 操作即可找到最新页面。语言班页面每年都会变动，链接失效是正常现象。
+  </div>
+</div>
+
+<div class="step" id="step4">
+  <div class="step-header">
+    <div class="step-num">4</div>
+    <div class="step-title">接受 Uncon 并换取 CAS</div>
+  </div>
+  <div class="step-desc">CAS（Confirmation of Acceptance for Studies，录取确认函）是你办理学生签证的必备文件。没有 CAS，你连签证申请表都填不了。CAS 是一个 <strong>14 位数字字母组合的号码</strong>，通过邮件发送给你，有效期 6 个月。</div>
+
+  <div class="sop-box">
+    <div class="sop-title">📖 换 CAS 操作 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>接受 Unconditional Offer。</strong>登录申请系统，点击 <strong>"Accept"</strong>（接受）。不接受，学校不会启动 CAS 流程。多数英国院校要求收到 Uncon 后一定时间内确认接受，否则名额可能被放掉。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>缴纳学费押金。</strong>多数学校要求在接受 Uncon 后缴纳 <strong>£1,000–£5,000</strong> 不等的学费押金（Deposit），才会发 CAS。缴费方式通常为在线信用卡支付或银行电汇。缴费后 <strong>3–5 个工作日</strong>，登录 Portal 确认押金状态已更新。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>等待 CAS 请求邮件。</strong>学校会在开学前 <strong>3–4 个月</strong> 发邮件到你申请时使用的邮箱，要求你确认个人信息并填写 <strong>CAS Request Form</strong>（CAS 申请表）。邮件可能来自 <strong>pgcasrequest@学校域名</strong>，记得检查垃圾邮件文件夹。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>核对 CAS Draft（草稿）。</strong>学校会先发一份 CAS 草稿给你核对。重点检查：<strong>姓名拼音</strong>（必须和护照一字不差）、<strong>课程起止日期</strong>、<strong>学费金额</strong>。任何一处错误都可能导致签证被拒。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext"><strong>确认无误，等待正式 CAS。</strong>回复学校 "确认无误" 后，学校会在 <strong>1–2 周内</strong> 发出正式 CAS 邮件，里面包含你的 CAS 号码。收到后尽快启动签证申请。</div>
+    </div>
+  </div>
+
+  <div class="uni-section-title">🔗 前200名大学 CAS 申请页面</div>
+  <div class="uni-links-grid">
+    <a class="uni-link" href="https://www.imperial.ac.uk/study/apply/postgraduate-taught/offer-holders/cas/" target="_blank"><span class="rank">QS2</span><span class="name">帝国理工</span></a>
+    <a class="uni-link" href="https://www.ox.ac.uk/admissions/graduate/apply/visa" target="_blank"><span class="rank">QS4</span><span class="name">牛津大学</span></a>
+    <a class="uni-link" href="https://www.postgraduate.study.cam.ac.uk/apply/visas-and-immigration" target="_blank"><span class="rank">QS6</span><span class="name">剑桥大学</span></a>
+    <a class="uni-link" href="https://www.ucl.ac.uk/study/immigration-and-visas/student-visas/confirmation-acceptance-studies" target="_blank"><span class="rank">QS9</span><span class="name">UCL</span></a>
+    <a class="uni-link" href="https://www.kcl.ac.uk/study/immigration/visas/cas" target="_blank"><span class="rank">QS31</span><span class="name">KCL</span></a>
+    <a class="uni-link" href="https://www.ed.ac.uk/student-immigration/visas/cas" target="_blank"><span class="rank">QS34</span><span class="name">爱丁堡大学</span></a>
+    <a class="uni-link" href="https://www.manchester.ac.uk/study/international/visas-and-immigration/cas/" target="_blank"><span class="rank">QS35</span><span class="name">曼彻斯特大学</span></a>
+    <a class="uni-link" href="https://www.bristol.ac.uk/directory/visas/cas/" target="_blank"><span class="rank">QS51</span><span class="name">布里斯托大学</span></a>
+    <a class="uni-link" href="https://www.lse.ac.uk/study-at-lse/visas-and-immigration" target="_blank"><span class="rank">QS56</span><span class="name">LSE</span></a>
+    <a class="uni-link" href="https://warwick.ac.uk/study/postgraduate/apply/pgadmissions/offerholders/cas/" target="_blank"><span class="rank">QS74</span><span class="name">华威大学</span></a>
+    <a class="uni-link" href="https://www.birmingham.ac.uk/international/students/visas/cas" target="_blank"><span class="rank">QS76</span><span class="name">伯明翰大学</span></a>
+    <a class="uni-link" href="https://www.gla.ac.uk/international/visas/cas/" target="_blank"><span class="rank">QS79</span><span class="name">格拉斯哥大学</span></a>
+    <a class="uni-link" href="https://www.leeds.ac.uk/international-visas/cas" target="_blank"><span class="rank">QS86</span><span class="name">利兹大学</span></a>
+    <a class="uni-link" href="https://www.southampton.ac.uk/study/international/visas/cas" target="_blank"><span class="rank">QS87</span><span class="name">南安普顿大学</span></a>
+    <a class="uni-link" href="https://www.sheffield.ac.uk/international/visas/cas" target="_blank"><span class="rank">QS92</span><span class="name">谢菲尔德大学</span></a>
+    <a class="uni-link" href="https://www.durham.ac.uk/study/international/visas/cas/" target="_blank"><span class="rank">QS94</span><span class="name">杜伦大学</span></a>
+    <a class="uni-link" href="https://www.nottingham.ac.uk/international/visas/cas" target="_blank"><span class="rank">QS97</span><span class="name">诺丁汉大学</span></a>
+    <a class="uni-link" href="https://www.qmul.ac.uk/international/visas/cas/" target="_blank"><span class="rank">QS110</span><span class="name">伦敦玛丽女王大学</span></a>
+    <a class="uni-link" href="https://www.st-andrews.ac.uk/study/international/visas/cas/" target="_blank"><span class="rank">QS113</span><span class="name">圣安德鲁斯大学</span></a>
+    <a class="uni-link" href="https://www.bath.ac.uk/study/international/visas/cas/" target="_blank"><span class="rank">QS132</span><span class="name">巴斯大学</span></a>
+    <a class="uni-link" href="https://www.ncl.ac.uk/international/visas/cas/" target="_blank"><span class="rank">QS137</span><span class="name">纽卡斯尔大学</span></a>
+    <a class="uni-link" href="https://www.liverpool.ac.uk/international/visas/cas/" target="_blank"><span class="rank">QS147</span><span class="name">利物浦大学</span></a>
+    <a class="uni-link" href="https://www.exeter.ac.uk/international/visas/cas/" target="_blank"><span class="rank">QS155</span><span class="name">埃克塞特大学</span></a>
+    <a class="uni-link" href="https://www.lancaster.ac.uk/international/visas/cas/" target="_blank"><span class="rank">QS157</span><span class="name">兰卡斯特大学</span></a>
+    <a class="uni-link" href="https://www.york.ac.uk/study/international/visas/cas/" target="_blank"><span class="rank">QS169</span><span class="name">约克大学</span></a>
+    <a class="uni-link" href="https://www.cardiff.ac.uk/study/international/visas/cas" target="_blank"><span class="rank">QS181</span><span class="name">卡迪夫大学</span></a>
+    <a class="uni-link" href="https://www.reading.ac.uk/study/international/visas/cas" target="_blank"><span class="rank">QS194</span><span class="name">雷丁大学</span></a>
+    <a class="uni-link" href="https://www.qub.ac.uk/study/international-students/visas/cas/" target="_blank"><span class="rank">QS199</span><span class="name">贝尔法斯特女王大学</span></a>
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠️ 关键时间点：</strong>每所大学都有 CAS 截止日期，通常是开学前 <strong>2–3 个月</strong>。例如 9 月下旬开学，CAS 截止日期可能是 7 月底。热门学校（UCL、曼大、爱丁堡等）CAS 截止日期更早。务必去学校官网搜索 <strong>"CAS deadline 2026 + 你的大学名称"</strong> 确认。
+  </div>
+</div>
+
+<div class="step" id="step5">
+  <div class="step-header">
+    <div class="step-num">5</div>
+    <div class="step-title">申请学生签证（Student Visa）</div>
+  </div>
+  <div class="step-desc">2026 年英国学生签证已全面改为电子签证（e-Visa），取消实体 BRP 卡。签证费 £558，IHS 医疗附加费每年 £776。常规审核约 7 个工作日。</div>
+
+  <div class="tool-list">
+    <div class="tool-item">
+      <div class="name">英国政府 · 学生签证官方申请页 <span class="tag">官方</span></div>
+      <div class="desc">在线填写签证申请表、缴费、预约生物信息采集的官方入口。</div>
+      <a href="https://www.gov.uk/student-visa/apply" target="_blank">开始申请 →</a>
+    </div>
+    <div class="tool-item">
+      <div class="name">英国政府 · 签证检查工具 <span class="tag">官方</span></div>
+      <div class="desc">输入国籍、旅行目的和停留时间，快速确认你需要哪种签证。</div>
+      <a href="https://www.gov.uk/check-uk-visa" target="_blank">查看工具 →</a>
+    </div>
+  </div>
+
+  <div class="sop-box">
+    <div class="sop-title">📖 签证申请操作 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>准备资金证明。</strong>资金需覆盖<strong>未缴纳的首年学费 + 9 个月生活费</strong>。生活费标准：伦敦地区每月 £1,529（9 个月合计 £13,761），非伦敦地区每月 £1,171（9 个月合计 £10,539）。资金须在账户中<strong>连续存满 28 天</strong>，存款证明开具后 <strong>31 天内</strong>须递交签证申请。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>登录 UKVI 官网填写申请表。</strong>打开 <strong>gov.uk/student-visa/apply</strong>，注册 UKVI 账户。填写个人信息、CAS 号码、护照信息、课程信息等。CAS 号码填错会导致申请被退回，务必仔细核对。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>缴纳费用。</strong>在线支付签证申请费 <strong>£558</strong> 和 IHS 医疗附加费 <strong>每年 £776</strong>。一年制硕士需支付超过 £776。可用信用卡（Visa/Mastercard）在线支付。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>身份验证与生物信息采集。</strong>通过 <strong>"UK Immigration: ID Check"</strong>（英国移民身份检查）APP 完成自助身份验证（需扫描护照）。首次申请者需前往签证中心采集指纹和照片。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext"><strong>等待出签，下载 e-Visa。</strong>标准服务约 <strong>3 周</strong>，优先服务 <strong>5 个工作日</strong>，超级优先服务 <strong>24 小时</strong>（仅限北上广等主要城市，名额有限）。签证获批后，登录 UKVI 账户下载并保存 <strong>e-Visa PDF 文件</strong>，建议打印备用。</div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠️ 存款证明避坑：</strong>资金必须在账户里<strong>连续存满 28 天</strong>，期间不能有大额存取，余额一天都不能低于要求数额。存款证明必须在递签前 <strong>31 天内</strong>开具。有些同学早早存了钱，结果递签时存款证明超过了 31 天有效期，直接导致拒签。
+  </div>
+</div>
+
+<div class="step" id="step6">
+  <div class="step-header">
+    <div class="step-num">6</div>
+    <div class="step-title">申请学校宿舍</div>
+  </div>
+  <div class="step-desc">拿到 Offer 后尽早申请宿舍，热门学校的宿舍名额有限。大部分学校在 <strong>4–6 月</strong>开放宿舍申请，国际学生申请截止日期通常在 <strong>8 月底</strong>前。</div>
+
+  <div class="sop-box">
+    <div class="sop-title">📖 宿舍申请操作 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>确认申请开放时间和截止日期。</strong>登录学校官网搜索 <strong>"Accommodation"</strong>（住宿）或 <strong>"Housing"</strong>（住房），找到申请页面。查看 <strong>"Application opens"</strong>（申请开放）和 <strong>"Deadline"</strong>（截止日期）两个日期。国际学生截止日期通常在 8 月 31 日左右。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>找到宿舍申请入口。</strong>在学校官网 Accommodation 页面找到 <strong>"Apply now"</strong>（立即申请）或 <strong>"Accommodation Portal"</strong>（住宿门户）按钮。部分学校通过 <strong>"MySIS"</strong> 或 <strong>"Chi View"</strong> 等学生系统进入。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>注册账号。</strong>用<strong>个人邮箱</strong>（不要用学校邮箱）注册宿舍申请账号。需要提供：<strong>学生 ID</strong>（在 Offer 邮件中，格式如 H00xxxxx）、出生日期、家庭地址、电话号码。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>选择房间偏好。</strong>通常可以列出 <strong>5–7 个房间选项</strong>，按优先级排列。可选择合同长度（如 40 周或 51 周）。可以备注特殊需求：安静楼层、单性别公寓、无酒精公寓、无障碍设施等。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext"><strong>提交申请，等待宿舍 Offer。</strong>提交后会收到确认邮件。研究生通常在 <strong>6 月起</strong> 陆续收到宿舍 Offer。收到 Offer 后需在 <strong>7 天内</strong> 登录系统正式接受，否则名额可能被释放。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">6</div>
+      <div class="stext"><strong>接受合同并支付押金。</strong>接受宿舍 Offer 后，需在线签署合同并支付押金（通常 <strong>£250–£500</strong>）。押金会从后续房租中扣除。完成合同后，你可以在线完成入住引导并预约到达时间。</div>
+    </div>
+  </div>
+
+  <div class="uni-section-title">🔗 前200名大学宿舍申请页面</div>
+  <div class="uni-links-grid">
+    <a class="uni-link" href="https://www.imperial.ac.uk/study/campus-life/accommodation/" target="_blank"><span class="rank">QS2</span><span class="name">帝国理工</span></a>
+    <a class="uni-link" href="https://www.ox.ac.uk/admissions/graduate/colleges/accommodation" target="_blank"><span class="rank">QS4</span><span class="name">牛津大学</span></a>
+    <a class="uni-link" href="https://www.postgraduate.study.cam.ac.uk/apply/accommodation" target="_blank"><span class="rank">QS6</span><span class="name">剑桥大学</span></a>
+    <a class="uni-link" href="https://www.ucl.ac.uk/students/accommodation" target="_blank"><span class="rank">QS9</span><span class="name">UCL</span></a>
+    <a class="uni-link" href="https://www.kcl.ac.uk/study/accommodation" target="_blank"><span class="rank">QS31</span><span class="name">KCL</span></a>
+    <a class="uni-link" href="https://www.ed.ac.uk/students/accommodation" target="_blank"><span class="rank">QS34</span><span class="name">爱丁堡大学</span></a>
+    <a class="uni-link" href="https://www.manchester.ac.uk/study/accommodation/" target="_blank"><span class="rank">QS35</span><span class="name">曼彻斯特大学</span></a>
+    <a class="uni-link" href="https://www.bristol.ac.uk/students/accommodation/" target="_blank"><span class="rank">QS51</span><span class="name">布里斯托大学</span></a>
+    <a class="uni-link" href="https://www.lse.ac.uk/study-at-lse/accommodation" target="_blank"><span class="rank">QS56</span><span class="name">LSE</span></a>
+    <a class="uni-link" href="https://warwick.ac.uk/services/accommodation/" target="_blank"><span class="rank">QS74</span><span class="name">华威大学</span></a>
+    <a class="uni-link" href="https://www.birmingham.ac.uk/students/accommodation" target="_blank"><span class="rank">QS76</span><span class="name">伯明翰大学</span></a>
+    <a class="uni-link" href="https://www.gla.ac.uk/myglasgow/accommodation/" target="_blank"><span class="rank">QS79</span><span class="name">格拉斯哥大学</span></a>
+    <a class="uni-link" href="https://www.leeds.ac.uk/accommodation" target="_blank"><span class="rank">QS86</span><span class="name">利兹大学</span></a>
+    <a class="uni-link" href="https://www.southampton.ac.uk/student-life/accommodation" target="_blank"><span class="rank">QS87</span><span class="name">南安普顿大学</span></a>
+    <a class="uni-link" href="https://www.sheffield.ac.uk/accommodation" target="_blank"><span class="rank">QS92</span><span class="name">谢菲尔德大学</span></a>
+    <a class="uni-link" href="https://www.durham.ac.uk/study/accommodation/" target="_blank"><span class="rank">QS94</span><span class="name">杜伦大学</span></a>
+    <a class="uni-link" href="https://www.nottingham.ac.uk/accommodation/" target="_blank"><span class="rank">QS97</span><span class="name">诺丁汉大学</span></a>
+    <a class="uni-link" href="https://www.qmul.ac.uk/accommodation/" target="_blank"><span class="rank">QS110</span><span class="name">伦敦玛丽女王大学</span></a>
+    <a class="uni-link" href="https://www.st-andrews.ac.uk/study/accommodation/" target="_blank"><span class="rank">QS113</span><span class="name">圣安德鲁斯大学</span></a>
+    <a class="uni-link" href="https://www.bath.ac.uk/study/accommodation/" target="_blank"><span class="rank">QS132</span><span class="name">巴斯大学</span></a>
+    <a class="uni-link" href="https://www.ncl.ac.uk/accommodation/" target="_blank"><span class="rank">QS137</span><span class="name">纽卡斯尔大学</span></a>
+    <a class="uni-link" href="https://www.liverpool.ac.uk/accommodation/" target="_blank"><span class="rank">QS147</span><span class="name">利物浦大学</span></a>
+    <a class="uni-link" href="https://www.exeter.ac.uk/students/accommodation/" target="_blank"><span class="rank">QS155</span><span class="name">埃克塞特大学</span></a>
+    <a class="uni-link" href="https://www.lancaster.ac.uk/accommodation/" target="_blank"><span class="rank">QS157</span><span class="name">兰卡斯特大学</span></a>
+    <a class="uni-link" href="https://www.york.ac.uk/students/accommodation/" target="_blank"><span class="rank">QS169</span><span class="name">约克大学</span></a>
+    <a class="uni-link" href="https://www.cardiff.ac.uk/study/accommodation" target="_blank"><span class="rank">QS181</span><span class="name">卡迪夫大学</span></a>
+    <a class="uni-link" href="https://www.reading.ac.uk/accommodation" target="_blank"><span class="rank">QS194</span><span class="name">雷丁大学</span></a>
+    <a class="uni-link" href="https://www.qub.ac.uk/accommodation/" target="_blank"><span class="rank">QS199</span><span class="name">贝尔法斯特女王大学</span></a>
+  </div>
+</div>
+
+<div class="step" id="step7">
+  <div class="step-header">
+    <div class="step-num">7</div>
+    <div class="step-title">订机票 & 行前准备</div>
+  </div>
+  <div class="step-desc">拿到签证后就可以订机票了。建议提前 <strong>1–2 个月</strong> 预订，9 月是旺季，越临近越贵。优先选择<strong>白天抵达</strong>的航班，不建议深夜落地。</div>
+
+  <div class="tool-list">
+    <div class="tool-item">
+      <div class="name">Skyscanner <span class="tag">免费</span></div>
+      <div class="desc">全球机票比价平台，输入出发地、目的地和日期即可比较各航司价格。确认航班后建议到航司官网购买。</div>
+      <a href="https://www.skyscanner.net" target="_blank">打开比价 →</a>
+    </div>
+    <div class="tool-item">
+      <div class="name">Google Flights <span class="tag">免费</span></div>
+      <div class="desc">Google 机票搜索，支持价格趋势图和 "日期灵活" 搜索，找到最便宜的出发日期。</div>
+      <a href="https://www.google.com/travel/flights" target="_blank">打开搜索 →</a>
+    </div>
+  </div>
+
+  <div class="sop-box">
+    <div class="sop-title">📖 订机票 + 行前操作 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>确认到达时间。</strong>先确认宿舍的<strong>最早可入住日期</strong>（在宿舍合同上），然后选择比入住日期<strong>晚 1–2 天</strong>抵达的航班。避免提前到达无处可住。优先选择<strong>白天抵达</strong>的航班。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>比价并购买。</strong>在 <strong>Skyscanner</strong> 或 <strong>Google Flights</strong> 输入出发城市和目的地，比较价格。确认航班后，直接到<strong>航司官网</strong>购买。如果你有学生身份，在航司官网购买时可享受<strong>留学生专属票价</strong>和额外的行李托运额。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>确认行李额度。</strong>留学生机票通常允许托运 <strong>30–40kg</strong>，随身行李 7–10kg。避免选择无免费行李的廉航。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>准备随身文件包（不要托运）。</strong>包括：<strong>护照原件 + e-Visa 打印件、CAS 打印件、Offer 打印件、住宿确认信（含完整地址和邮编）、肺结核检测报告原件、学费缴费凭证、学位证/毕业证原件及翻译件、证件照若干</strong>。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext"><strong>准备现金和银行卡。</strong>建议携带 <strong>£1,000–£2,000</strong> 现金以备落地急需。超过 <strong>£10,000</strong> 必须向海关申报。同时准备一张可在英国使用的 Visa/Mastercard 信用卡。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">6</div>
+      <div class="stext"><strong>确认接机安排。</strong>查看学校是否提供<strong>免费接机服务</strong>。如果学校不提供，提前查好从机场到宿舍的火车/大巴路线，或预约接机服务。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">7</div>
+      <div class="stext"><strong>入境时准备。</strong>抵达英国机场后，走 <strong>"All other passports"</strong>（其他护照）通道，向边检官员出示护照和 e-Visa。可能会被问到：你来英国做什么？在哪个学校读书？住在哪里？准备好学校名称和宿舍地址即可。</div>
+    </div>
+  </div>
+
+  <div class="timeline-box">
+    <strong>🧳 随身行李必备清单</strong><br>
+    ✅ 护照 + e-Visa 打印件<br>
+    ✅ CAS + Offer 打印件<br>
+    ✅ 住宿确认信（含地址和邮编）<br>
+    ✅ 肺结核检测报告原件<br>
+    ✅ 学位证/毕业证原件 + 翻译件<br>
+    ✅ 证件照（多张备用）<br>
+    ✅ 转换插头（英标三孔）<br>
+    ✅ 笔记本电脑、充电器、充电宝<br>
+    ✅ 常用药品（附英文说明）<br>
+    ✅ £1,000–£2,000 现金 + 信用卡
+  </div>
+</div>
+
+<div class="step fix404" id="fix404">
+  <div class="step-header">
+    <div class="step-num">🔧</div>
+    <div class="step-title">链接失效急救站（404 怎么办）</div>
+  </div>
+  <div class="step-desc">大学官网经常改版，语言班、CAS、宿舍页面每年都可能变动。遇到 404 不要慌，按下面步骤自己找到最新页面。</div>
+
+  <div class="info-box" style="background:#fff7ed; border-color:#fed7aa; color:#9a3412;">
+    <strong>📌 为什么语言班链接最容易失效？</strong><br>
+    语言班（Pre-sessional English）由各大学的<strong>语言中心</strong>独立管理，不是常规学位课程。语言中心每年都会调整课程周数、开课时间和申请截止日期，页面路径几乎每年都会变动。所以语言班链接失效是<strong>正常现象</strong>，不代表学校取消了语言班。
+  </div>
+
+  <div class="sop-box">
+    <div class="sop-title">📖 链接失效处理 SOP（通用）</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>判断是否真的失效。</strong>页面显示 <strong>"404 Not Found"</strong>（页面未找到）、<strong>"Page not found"</strong>（页面未找到）或自动跳转到首页，说明链接已过期。如果只是加载慢，先刷新或换浏览器试试。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>回到大学官网首页。</strong>在浏览器地址栏删掉链接后面的路径，只保留主域名（例如 <strong>manchester.ac.uk</strong>），按回车进入官网首页。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>用官网搜索框。</strong>大多数大学官网右上角都有搜索图标（🔍）。点击后输入你需要的 <strong>关键词</strong>，按回车搜索。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>用 Google 精准搜索。</strong>在 Google 输入 <strong>site:大学域名 关键词</strong>。例如：<strong>site:manchester.ac.uk pre-sessional English</strong>。这样只搜该大学官网的内容，很快能找到最新页面。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext"><strong>通过导航菜单重新找。</strong>官网首页一般有 <strong>"Study"</strong>（学习/招生）、<strong>"International"</strong>（国际）等菜单。点击进入，再找 <strong>"English Language"</strong>（英语语言）或 <strong>"Pre-sessional"</strong>（学前）板块。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">6</div>
+      <div class="stext"><strong>用互联网档案馆查看历史快照。</strong>打开 <strong>web.archive.org</strong>，把失效链接粘贴进去，可以查看该页面过去的存档，了解原来的内容，再根据关键词去官网找新页面。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">7</div>
+      <div class="stext"><strong>直接联系学校。</strong>发邮件给大学语言中心或招生办。联系方式可在官网 <strong>"Contact us"</strong>（联系我们）页面找到。邮件模板：<br>
+      <em>"Dear Sir/Madam, I am an offer holder for [专业名称] and I would like to apply for the Pre-sessional English course. Could you please send me the latest application link and deadlines? Thank you."</em></div>
+    </div>
+  </div>
+
+  <div class="sop-box" style="background:#f0f9ff; border-color:#bae6fd; margin-top:12px;">
+    <div class="sop-title" style="color:#0369a1;">📖 语言班链接专项查找 SOP</div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">1</div>
+      <div class="stext"><strong>在官网搜索框输入 "Pre-sessional English"。</strong>这是最直接的入口。如果搜索不到，试试 <strong>"Pre-sessional"</strong>、<strong>"English language course"</strong>（英语语言课程）或 <strong>"Summer English"</strong>（暑期英语）。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">2</div>
+      <div class="stext"><strong>如果找不到，去语言中心专属页面。</strong>很多大学有独立的语言中心网站，路径通常是 <strong>大学域名/language-centre</strong> 或 <strong>大学域名/english-language</strong>。例如 <strong>lse.ac.uk/language-centre</strong>。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">3</div>
+      <div class="stext"><strong>在 Google 搜索 "大学名称 + pre-sessional English 2026"。</strong>加上年份，能快速找到最新的课程页面和截止日期。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">4</div>
+      <div class="stext"><strong>查看 Offer 邮件中的语言班信息。</strong>很多学校在发 Con Offer 时，会附上语言班的链接和申请说明。翻一翻你的 Offer 邮件，看看有没有相关附件。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">5</div>
+      <div class="stext"><strong>直接发邮件问语言中心。</strong>邮件模板：<br>
+      <em>"Dear Language Centre, I am an offer holder for [专业名称] and I need to apply for a Pre-sessional English course. Could you please send me the application link and confirm the deadline? Thank you."</em><br>
+      通常 1–2 个工作日回复。</div>
+    </div>
+  </div>
+
+  <div class="sop-box" style="background:#f0f9ff; border-color:#bae6fd; margin-top:12px;">
+    <div class="sop-title" style="color:#0369a1;">💡 预防链接失效的小技巧</div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">1</div>
+      <div class="stext">把重要页面<strong>保存为 PDF 或截图</strong>，存到本地，避免链接失效后找不到。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">2</div>
+      <div class="stext">用浏览器<strong>书签</strong>收藏关键页面，并定期检查是否还能打开。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">3</div>
+      <div class="stext">关注大学官方微信公众号或邮件订阅，重要通知会主动推送。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">4</div>
+      <div class="stext">把本页面<strong>分享到自己的微信收藏</strong>，随时可以点开查看最新链接。</div>
+    </div>
+  </div>
+
+  <div class="timeline-box" style="background:#fff7ed; border-color:#fed7aa; color:#9a3412;">
+    <strong>📌 常用官网关键词中英对照（复制即用）</strong><br>
+    • Pre-sessional English → 学前英语 / 语言班<br>
+    • English Language Requirements → 英语语言要求<br>
+    • English Language Centre → 英语语言中心<br>
+    • Accommodation → 住宿<br>
+    • Housing → 住房<br>
+    • CAS (Confirmation of Acceptance for Studies) → 录取确认函<br>
+    • Student Visa → 学生签证<br>
+    • Tuition Deposit → 学费押金<br>
+    • Offer Conditions → 录取条件<br>
+    • Unconditional Offer → 无条件录取
+  </div>
+</div>
+
+<div class="footer">
+  ⚠️ 以上链接基于 2026 年入学的最新政策。各大学官网路径可能更新，如果链接失效，请到学校官网搜索对应关键词（如 "CAS"、"Accommodation"、"Pre-sessional"）找到最新页面。<br>
+  祝申请顺利，一路平安 🎓✈️
+</div>
+
+<!-- 暗色模式切换 -->
+<button class="theme-toggle" id="themeToggle" title="切换明暗模式">🌙</button>
+
+<script>
+/* ============================================================
+   1. Prompt 一键复制
+   ============================================================ */
+(function initCopyButtons() {
+  document.querySelectorAll('.prompt-template').forEach(function (box) {
+    if (box.querySelector('.copy-btn')) return;
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = '📋 复制';
+    btn.onclick = function () {
+      const textEl = box.querySelector('.prompt-text');
+      if (!textEl) return;
+      const text = textEl.innerText;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = '✅ 已复制';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = '📋 复制';
+          btn.classList.remove('copied');
+        }, 1800);
+      }).catch(function () {
+        const range = document.createRange();
+        range.selectNode(textEl);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        try {
+          document.execCommand('copy');
+          btn.textContent = '✅ 已复制';
+          setTimeout(function () { btn.textContent = '📋 复制'; }, 1800);
+        } catch (e) {
+          btn.textContent = '❌ 复制失败';
+        }
+        window.getSelection().removeAllRanges();
+      });
+    };
+    box.appendChild(btn);
+  });
+})();
+
+/* ============================================================
+   2. 页面内搜索
+   ============================================================ */
+(function initSearch() {
+  const input = document.getElementById('searchInput');
+  const countEl = document.getElementById('searchCount');
+  const closeBtn = document.getElementById('searchClose');
+  if (!input) return;
+
+  let hits = [];
+  let current = -1;
+
+  function clearHits() {
+    document.querySelectorAll('.search-hit').forEach(function (el) {
+      const parent = el.parentNode;
+      parent.replaceChild(document.createTextNode(el.textContent), el);
+      parent.normalize();
+    });
+    hits = [];
+    current = -1;
+    countEl.textContent = '';
+  }
+
+  function highlight(keyword) {
+    clearHits();
+    if (!keyword) return;
+
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: function (node) {
+          const tag = node.parentNode.nodeName;
+          if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'INPUT' ||
+              tag === 'TEXTAREA' || tag === 'BUTTON') {
+            return NodeFilter.FILTER_REJECT;
+          }
+          if (node.parentNode.classList &&
+              node.parentNode.classList.contains('search-hit')) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      }
+    );
+
+    const textNodes = [];
+    let n;
+    while ((n = walker.nextNode())) textNodes.push(n);
+
+    const kw = keyword.toLowerCase();
+    textNodes.forEach(function (node) {
+      const text = node.nodeValue;
+      const lower = text.toLowerCase();
+      let idx = lower.indexOf(kw);
+      if (idx === -1) return;
+
+      const frag = document.createDocumentFragment();
+      let last = 0;
+      while (idx !== -1) {
+        if (idx > last) {
+          frag.appendChild(document.createTextNode(text.slice(last, idx)));
+        }
+        const span = document.createElement('span');
+        span.className = 'search-hit';
+        span.textContent = text.slice(idx, idx + keyword.length);
+        frag.appendChild(span);
+        hits.push(span);
+        last = idx + keyword.length;
+        idx = lower.indexOf(kw, last);
+      }
+      if (last < text.length) {
+        frag.appendChild(document.createTextNode(text.slice(last)));
+      }
+      node.parentNode.replaceChild(frag, node);
+    });
+
+    countEl.textContent = hits.length ? hits.length + ' 处' : '无结果';
+    closeBtn.style.display = hits.length ? 'inline-block' : 'none';
+  }
+
+  function gotoNext() {
+    if (!hits.length) return;
+    if (current >= 0 && hits[current]) {
+      hits[current].classList.remove('search-hit-active');
+    }
+    current = (current + 1) % hits.length;
+    hits[current].classList.add('search-hit-active');
+    hits[current].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    countEl.textContent = (current + 1) + ' / ' + hits.length;
+  }
+
+  let timer = null;
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      highlight(input.value.trim());
+      if (hits.length) { current = -1; gotoNext(); }
+    }, 300);
+  });
+
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      gotoNext();
+    } else if (e.key === 'Escape') {
+      input.value = '';
+      clearHits();
+      closeBtn.style.display = 'none';
+    }
+  });
+
+  closeBtn.onclick = function () {
+    input.value = '';
+    clearHits();
+    closeBtn.style.display = 'none';
+  };
+})();
+
+/* ============================================================
+   3. 暗色模式切换
+   ============================================================ */
+(function initTheme() {
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+
+  const KEY = 'uk_guide_theme_b';
+  const saved = localStorage.getItem(KEY);
+
+  function applyTheme(dark) {
+    if (dark) {
+      document.body.classList.add('dark');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('dark');
+      btn.textContent = '🌙';
+    }
+  }
+
+  if (saved === 'dark') {
+    applyTheme(true);
+  } else if (saved === 'light') {
+    applyTheme(false);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    applyTheme(true);
+  } else {
+    applyTheme(false);
+  }
+
+  btn.onclick = function () {
+    const isDark = document.body.classList.contains('dark');
+    applyTheme(!isDark);
+    localStorage.setItem(KEY, !isDark ? 'dark' : 'light');
+  };
+})();
+</script>
+
+</body>
+</html>

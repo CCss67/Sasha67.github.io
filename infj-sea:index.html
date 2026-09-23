@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>漂流瓶 · 海</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #0f2840;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 12px;
+            overflow: hidden;
+        }
+
+        .phone {
+            max-width: 390px;
+            width: 100%;
+            height: 780px;
+            max-height: 95vh;
+            background: #1a3a55;
+            border-radius: 36px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+        }
+
+        /* ===== 海天背景 ===== */
+        .sea-scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg,
+                    rgba(180, 225, 245, 0.35) 0%,
+                    rgba(150, 215, 240, 0.40) 15%,
+                    rgba(120, 200, 230, 0.45) 30%,
+                    rgba(90, 180, 215, 0.50) 45%,
+                    rgba(70, 165, 200, 0.55) 55%,
+                    rgba(55, 145, 180, 0.60) 65%,
+                    rgba(40, 125, 160, 0.65) 75%,
+                    rgba(25, 100, 135, 0.70) 85%,
+                    rgba(15, 75, 105, 0.75) 100%);
+            z-index: 0;
+        }
+
+        .sea-scene .underwater-glow {
+            position: absolute;
+            width: 100%;
+            height: 45%;
+            bottom: 15%;
+            left: 0;
+            background: radial-gradient(ellipse at 30% 70%, rgba(160, 230, 255, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(130, 210, 255, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .sea-scene .light-spot {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            pointer-events: none;
+            animation: lightPulse 8s ease-in-out infinite;
+        }
+        .sea-scene .light-spot:nth-child(4) {
+            width: 120px;
+            height: 40px;
+            top: 45%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .sea-scene .light-spot:nth-child(5) {
+            width: 150px;
+            height: 35px;
+            top: 54%;
+            left: 50%;
+            animation-delay: 3.5s;
+        }
+        .sea-scene .light-spot:nth-child(6) {
+            width: 90px;
+            height: 30px;
+            top: 60%;
+            left: 25%;
+            animation-delay: 2s;
+        }
+
+        @keyframes lightPulse {
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.08);
+            }
+        }
+
+        /* ===== 海浪 ===== */
+        .waves-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: -10%;
+            width: 120%;
+            height: 100%;
+            background: repeating-linear-gradient(90deg,
+                    transparent 0px,
+                    rgba(255, 255, 255, 0.035) 50px,
+                    transparent 100px,
+                    rgba(255, 255, 255, 0.025) 150px,
+                    transparent 200px);
+            animation: waveDrift 16s ease-in-out infinite;
+            border-radius: 60% 40% 0 0 / 20% 10% 0 0;
+        }
+
+        .wave::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(120deg,
+                    transparent 0px,
+                    rgba(255, 255, 255, 0.025) 40px,
+                    transparent 80px,
+                    rgba(255, 255, 255, 0.015) 120px,
+                    transparent 160px);
+            animation: waveDrift2 20s ease-in-out infinite;
+        }
+
+        .wave:nth-child(1) {
+            animation-duration: 18s;
+            opacity: 0.4;
+            bottom: -5%;
+            height: 65%;
+        }
+        .wave:nth-child(2) {
+            animation-duration: 22s;
+            opacity: 0.25;
+            bottom: -10%;
+            height: 75%;
+            animation-delay: -4s;
+        }
+        .wave:nth-child(3) {
+            animation-duration: 14s;
+            opacity: 0.18;
+            bottom: 0%;
+            height: 55%;
+            animation-delay: -8s;
+        }
+
+        @keyframes waveDrift {
+            0% {
+                transform: translateX(0) scaleX(1);
+            }
+            50% {
+                transform: translateX(6%) scaleX(1.04);
+            }
+            100% {
+                transform: translateX(0) scaleX(1);
+            }
+        }
+        @keyframes waveDrift2 {
+            0% {
+                transform: translateX(0) scaleX(1) skewX(0deg);
+            }
+            50% {
+                transform: translateX(-4%) scaleX(1.02) skewX(0.5deg);
+            }
+            100% {
+                transform: translateX(0) scaleX(1) skewX(0deg);
+            }
+        }
+
+        /* ===== 海鸥群 ===== */
+        .seagull-group {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            z-index: 8;
+            pointer-events: none;
+        }
+
+        .seagull-interactive {
+            position: absolute;
+            font-size: 22px;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.4s ease;
+            opacity: 0.55;
+            filter: drop-shadow(0 2px 12px rgba(255, 255, 255, 0.04));
+            animation: seagullFlyLoop 20s ease-in-out infinite;
+        }
+
+        .seagull-interactive .label-hint {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.08);
+            white-space: nowrap;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease;
+            font-style: italic;
+        }
+
+        .seagull-interactive:hover {
+            opacity: 0.85;
+            transform: scale(1.08);
+        }
+
+        .seagull-interactive:hover .label-hint {
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .seagull-interactive.feeding {
+            animation: seagullPeck 0.6s ease;
+        }
+
+        @keyframes seagullFlyLoop {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.4;
+            }
+            25% {
+                transform: translate(100px, -30px) scale(1.05);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translate(180px, 10px) scale(0.95);
+                opacity: 0.45;
+            }
+            75% {
+                transform: translate(60px, -35px) scale(1.08);
+                opacity: 0.65;
+            }
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.4;
+            }
+        }
+
+        @keyframes seagullPeck {
+            0% {
+                transform: scale(1) rotate(0deg);
+            }
+            30% {
+                transform: scale(0.85) rotate(-6deg) translateY(6px);
+            }
+            60% {
+                transform: scale(1.08) rotate(4deg) translateY(-3px);
+            }
+            100% {
+                transform: scale(1) rotate(0deg) translateY(0);
+            }
+        }
+
+        .seagull-interactive:nth-child(1) {
+            top: 8%;
+            left: 5%;
+            animation-delay: 0s;
+            font-size: 20px;
+            opacity: 0.5;
+        }
+        .seagull-interactive:nth-child(2) {
+            top: 14%;
+            left: 30%;
+            animation-delay: -4s;
+            font-size: 17px;
+            opacity: 0.4;
+        }
+        .seagull-interactive:nth-child(3) {
+            top: 5%;
+            left: 60%;
+            animation-delay: -9s;
+            font-size: 24px;
+            opacity: 0.6;
+        }
+        .seagull-interactive:nth-child(4) {
+            top: 20%;
+            left: 75%;
+            animation-delay: -14s;
+            font-size: 16px;
+            opacity: 0.35;
+        }
+        .seagull-interactive:nth-child(5) {
+            top: 10%;
+            left: 45%;
+            animation-delay: -19s;
+            font-size: 19px;
+            opacity: 0.45;
+        }
+
+        /* 面包屑 */
+        .breadcrumb {
+            position: absolute;
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 9;
+            animation: crumbFall 0.9s ease forwards;
+            opacity: 0;
+            filter: drop-shadow(0 2px 6px rgba(255, 200, 150, 0.1));
+        }
+
+        @keyframes crumbFall {
+            0% {
+                opacity: 0.7;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.5);
+            }
+        }
+
+        /* ===== 心情值脚印 ===== */
+        .mood-display {
+            position: absolute;
+            bottom: 18%;
+            right: 5%;
+            z-index: 7;
+            display: flex;
+            gap: 6px;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 4px 10px 4px 8px;
+            border-radius: 20px;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .mood-display .paw {
+            font-size: 18px;
+            opacity: 0.15;
+            transition: all 0.6s ease;
+            filter: grayscale(0.8);
+        }
+
+        .mood-display .paw.active {
+            opacity: 0.7;
+            filter: grayscale(0) drop-shadow(0 0 8px rgba(255, 220, 180, 0.15));
+            transform: scale(1.05);
+        }
+
+        .mood-display .paw.high {
+            opacity: 0.9;
+            filter: grayscale(0) drop-shadow(0 0 16px rgba(255, 200, 150, 0.25));
+            transform: scale(1.1);
+        }
+
+        .mood-display .mood-label {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.08);
+            letter-spacing: 1px;
+            margin-left: 4px;
+            align-self: center;
+            font-style: italic;
+        }
+
+        /* ===== 沙滩（颜色更黄） ===== */
+        .beach {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 35%;
+            z-index: 4;
+            pointer-events: none;
+            background: linear-gradient(180deg,
+                    rgba(210, 190, 165, 0) 0%,
+                    rgba(220, 195, 165, 0.05) 10%,
+                    rgba(230, 205, 170, 0.10) 20%,
+                    rgba(240, 215, 178, 0.20) 35%,
+                    rgba(245, 222, 185, 0.32) 50%,
+                    rgba(250, 230, 195, 0.46) 70%,
+                    rgba(252, 238, 205, 0.62) 85%,
+                    rgba(255, 245, 215, 0.80) 100%);
+            border-radius: 0 0 36px 36px;
+        }
+
+        .beach::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 20% 75%, rgba(250, 235, 200, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 85%, rgba(245, 225, 190, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            border-radius: 0 0 36px 36px;
+        }
+
+        /* 沙滩装饰 */
+        .beach-decorations {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .beach-deco {
+            position: absolute;
+            font-size: 10px;
+            opacity: 0.15;
+            transform: rotate(var(--rot, 0deg));
+        }
+
+        .beach-deco:nth-child(1) {
+            bottom: 20%;
+            left: 8%;
+            font-size: 12px;
+            --rot: 15deg;
+        }
+        .beach-deco:nth-child(2) {
+            bottom: 35%;
+            left: 18%;
+            font-size: 9px;
+            --rot: -20deg;
+        }
+        .beach-deco:nth-child(3) {
+            bottom: 15%;
+            left: 30%;
+            font-size: 14px;
+            --rot: 8deg;
+        }
+        .beach-deco:nth-child(4) {
+            bottom: 40%;
+            left: 45%;
+            font-size: 10px;
+            --rot: -10deg;
+        }
+        .beach-deco:nth-child(5) {
+            bottom: 22%;
+            left: 55%;
+            font-size: 11px;
+            --rot: 25deg;
+        }
+        .beach-deco:nth-child(6) {
+            bottom: 30%;
+            left: 68%;
+            font-size: 9px;
+            --rot: -5deg;
+        }
+        .beach-deco:nth-child(7) {
+            bottom: 18%;
+            left: 78%;
+            font-size: 13px;
+            --rot: 12deg;
+        }
+        .beach-deco:nth-child(8) {
+            bottom: 38%;
+            left: 88%;
+            font-size: 10px;
+            --rot: -18deg;
+        }
+        .beach-deco:nth-child(9) {
+            bottom: 25%;
+            left: 12%;
+            font-size: 14px;
+            --rot: -8deg;
+            opacity: 0.10;
+        }
+        .beach-deco:nth-child(10) {
+            bottom: 32%;
+            left: 35%;
+            font-size: 12px;
+            --rot: 12deg;
+            opacity: 0.08;
+        }
+        .beach-deco:nth-child(11) {
+            bottom: 20%;
+            left: 62%;
+            font-size: 13px;
+            --rot: -15deg;
+            opacity: 0.12;
+        }
+        .beach-deco:nth-child(12) {
+            bottom: 28%;
+            left: 82%;
+            font-size: 11px;
+            --rot: 6deg;
+            opacity: 0.10;
+        }
+
+        /* ===== 交互元素 ===== */
+        .interactive-shell {
+            position: absolute;
+            bottom: 22%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 6;
+            font-size: 48px;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.08)) drop-shadow(0 0 30px rgba(255, 220, 180, 0.05));
+            animation: shellFloat 4.5s ease-in-out infinite;
+            opacity: 0.5;
+        }
+
+        .interactive-shell:hover {
+            transform: translateX(-50%) scale(1.08);
+            opacity: 0.8;
+        }
+        .interactive-shell:active {
+            transform: translateX(-50%) scale(0.92);
+        }
+
+        @keyframes shellFloat {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0) rotate(-2deg);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-8px) rotate(2deg);
+            }
+        }
+
+        .interactive-shell .label {
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: rgba(255, 255, 240, 0.15);
+            letter-spacing: 2.5px;
+            white-space: nowrap;
+            font-style: italic;
+        }
+
+        /* ===== 小船 ===== */
+        .boat {
+            position: absolute;
+            bottom: 12%;
+            right: 5%;
+            z-index: 6;
+            font-size: 30px;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.15));
+            opacity: 0.85;
+            animation: boatRock 6s ease-in-out infinite;
+            color: #f5e6d3;
+        }
+
+        .boat:hover {
+            opacity: 1;
+            transform: scale(1.06);
+        }
+        .boat:active {
+            transform: scale(0.9);
+        }
+
+        @keyframes boatRock {
+            0%,
+            100% {
+                transform: rotate(-2.5deg);
+            }
+            50% {
+                transform: rotate(2.5deg);
+            }
+        }
+
+        .boat .label {
+            position: absolute;
+            bottom: -16px;
+            right: 0;
+            font-size: 9px;
+            color: rgba(255, 255, 240, 0.2);
+            letter-spacing: 1.5px;
+            white-space: nowrap;
+        }
+
+        /* ===== 海里的漂流瓶 ===== */
+        .sea-bottles {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* ----- 新瓶子（航行中）----- */
+        .bottle-at-sea.bottle-new {
+            opacity: 0.35;
+            filter: blur(0px) brightness(0.9) drop-shadow(0 0 20px rgba(100, 200, 255, 0.06));
+            text-shadow: 0 0 30px rgba(100, 200, 255, 0.08);
+        }
+
+        .bottle-at-sea.bottle-new .label {
+            color: rgba(255, 255, 255, 0.10);
+        }
+
+        /* ----- 旧瓶子（已返航/归来中）----- */
+        .bottle-at-sea.bottle-old {
+            opacity: 0.20;
+            filter: blur(0.8px) brightness(0.6) sepia(0.3);
+            text-shadow: none;
+            animation-duration: 8s;
+            color: #b8956a;
+        }
+
+        .bottle-at-sea.bottle-old .label {
+            color: rgba(255, 200, 150, 0.06);
+            font-size: 7px;
+            letter-spacing: 0.5px;
+        }
+
+        .bottle-at-sea.bottle-old .old-tag {
+            position: absolute;
+            top: -10px;
+            right: -8px;
+            font-size: 14px;
+            opacity: 0.3;
+            filter: blur(0.3px);
+            pointer-events: none;
+        }
+
+        /* ----- 通用瓶子样式 ----- */
+        .bottle-at-sea {
+            position: absolute;
+            font-size: 24px;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            animation: bottleFloat 6s ease-in-out infinite;
+        }
+
+        .bottle-at-sea:hover {
+            opacity: 0.6 !important;
+            transform: scale(1.06);
+            filter: blur(0px) brightness(1) !important;
+        }
+        .bottle-at-sea:active {
+            transform: scale(0.85);
+        }
+
+        .bottle-at-sea .label {
+            position: absolute;
+            bottom: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        /* 装饰瓶（不可点击） */
+        .bottle-deco {
+            position: absolute;
+            font-size: 22px;
+            opacity: 0.15;
+            filter: blur(0.5px) brightness(0.7);
+            pointer-events: none;
+            animation: bottleFloat 7s ease-in-out infinite;
+        }
+
+        @keyframes bottleFloat {
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+        }
+
+        /* ===== 返航的旧瓶子 ===== */
+        .returned-bottle {
+            position: absolute;
+            z-index: 5;
+            font-size: 30px;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.06));
+            opacity: 0.30;
+            animation: bottleWash 8s ease-in-out infinite;
+        }
+
+        .returned-bottle:hover {
+            opacity: 0.6;
+            transform: scale(1.06);
+        }
+        .returned-bottle:active {
+            transform: scale(0.9);
+        }
+
+        .returned-bottle .label {
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            color: rgba(255, 255, 240, 0.04);
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        @keyframes bottleWash {
+            0%,
+            100% {
+                transform: translateY(0) rotate(-4deg);
+            }
+            50% {
+                transform: translateY(-4px) rotate(4deg);
+            }
+        }
+
+        /* ===== 弹窗 ===== */
+        .write-overlay,
+        .public-overlay,
+        .detail-overlay,
+        .test-panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 36px;
+            z-index: 20;
+            display: none;
+            flex-direction: column;
+        }
+
+        .write-overlay.active,
+        .public-overlay.active,
+        .detail-overlay.active,
+        .test-panel.active {
+            display: flex;
+        }
+
+        .write-overlay {
+            background: rgba(0, 20, 40, 0.30);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            padding: 40px 28px;
+        }
+
+        .write-card {
+            background: rgba(20, 50, 75, 0.50);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 32px 24px 28px;
+            max-width: 310px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            animation: writeIn 0.35s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.20);
+        }
+
+        @keyframes writeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.92) translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .write-card .shell-icon {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 4px;
+            opacity: 0.5;
+        }
+
+        .write-card .prompt {
+            color: rgba(255, 255, 240, 0.20);
+            font-size: 12px;
+            text-align: center;
+            letter-spacing: 2.5px;
+            margin-bottom: 14px;
+            font-style: italic;
+        }
+
+        .write-card textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.02);
+            color: rgba(255, 255, 240, 0.7);
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            resize: none;
+            min-height: 72px;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .write-card textarea::placeholder {
+            color: rgba(255, 255, 240, 0.08);
+            font-style: italic;
+        }
+
+        .write-card textarea:focus {
+            border-color: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .write-card .share-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+            color: rgba(255, 255, 240, 0.10);
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .write-card .share-row input[type="checkbox"] {
+            width: 34px;
+            height: 18px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .write-card .share-row input[type="checkbox"]:checked {
+            background: rgba(74, 108, 247, 0.12);
+            border-color: rgba(74, 108, 247, 0.08);
+        }
+
+        .write-card .share-row input[type="checkbox"]::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .write-card .share-row input[type="checkbox"]:checked::after {
+            left: 18px;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .write-card .write-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .write-card .write-actions button {
+            flex: 1;
+            padding: 11px;
+            border-radius: 40px;
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .write-card .write-actions .btn-send {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 240, 0.20);
+        }
+
+        .write-card .write-actions .btn-send.has-text {
+            color: rgba(255, 255, 240, 0.45);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .write-card .write-actions .btn-cancel {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 240, 0.06);
+            font-size: 13px;
+        }
+
+        .write-card .write-actions .btn-cancel:hover {
+            color: rgba(255, 255, 240, 0.12);
+        }
+
+        /* ===== 公共海滩 ===== */
+        .public-overlay {
+            background: rgba(5, 15, 30, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 24px 20px 20px;
+        }
+
+        .public-overlay .public-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            flex-shrink: 0;
+        }
+
+        .public-overlay .public-header h2 {
+            color: rgba(255, 255, 240, 0.15);
+            font-size: 15px;
+            font-weight: 300;
+            letter-spacing: 4px;
+        }
+
+        .public-overlay .public-header .close-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 240, 0.04);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .public-overlay .public-header .close-btn:hover {
+            color: rgba(255, 255, 240, 0.10);
+        }
+
+        .public-overlay .public-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0 6px;
+        }
+
+        .public-overlay .public-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .public-overlay .public-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+
+        .public-overlay .public-item {
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.01);
+            opacity: 0.25;
+            margin-bottom: 4px;
+        }
+
+        .public-overlay .public-item .text {
+            color: rgba(255, 255, 240, 0.25);
+            font-size: 13px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .public-overlay .public-item .tag {
+            font-size: 9px;
+            color: rgba(255, 255, 240, 0.03);
+            margin-top: 3px;
+            letter-spacing: 1px;
+        }
+
+        .public-overlay .empty-public {
+            text-align: center;
+            color: rgba(255, 255, 240, 0.02);
+            font-size: 12px;
+            letter-spacing: 2px;
+            padding: 40px 0;
+            font-style: italic;
+        }
+
+        .public-back-boat {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            z-index: 16;
+            font-size: 24px;
+            cursor: pointer;
+            pointer-events: auto;
+            opacity: 0.2;
+            transition: all 0.4s ease;
+        }
+
+        .public-back-boat:hover {
+            opacity: 0.5;
+            transform: scale(1.05);
+        }
+
+        .public-back-boat .label {
+            font-size: 8px;
+            color: rgba(255, 255, 240, 0.03);
+            letter-spacing: 1px;
+            margin-left: 4px;
+        }
+
+        /* ===== 详情弹窗 ===== */
+        .detail-overlay {
+            background: rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            padding: 40px 30px;
+        }
+
+        .detail-card {
+            background: rgba(15, 35, 55, 0.50);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 20px;
+            padding: 28px 24px 24px;
+            max-width: 290px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            animation: detailIn 0.3s ease;
+        }
+
+        @keyframes detailIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .detail-card .detail-text {
+            color: rgba(255, 255, 240, 0.45);
+            font-size: 15px;
+            line-height: 1.8;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .detail-card .detail-location {
+            color: rgba(255, 255, 240, 0.08);
+            font-size: 12px;
+            text-align: center;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        .detail-card .detail-meta {
+            color: rgba(255, 255, 240, 0.04);
+            font-size: 10px;
+            text-align: center;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+
+        .detail-card .detail-close {
+            display: block;
+            margin: 12px auto 0;
+            padding: 7px 24px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.01);
+            background: none;
+            color: rgba(255, 255, 240, 0.05);
+            font-family: inherit;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+        }
+
+        .detail-card .detail-close:hover {
+            color: rgba(255, 255, 240, 0.10);
+            border-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* ===== 测试面板 ===== */
+        .test-toggle {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            z-index: 10;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+            letter-spacing: 1.5px;
+            font-style: italic;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .test-toggle:hover {
+            color: rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .test-panel {
+            background: rgba(5, 12, 25, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 20px 16px 16px;
+            z-index: 40;
+        }
+
+        .test-panel .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            flex-shrink: 0;
+        }
+
+        .test-panel .test-header h3 {
+            color: rgba(255, 255, 240, 0.15);
+            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        .test-panel .test-header .close-test {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 240, 0.04);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .test-panel .test-header .close-test:hover {
+            color: rgba(255, 255, 240, 0.08);
+        }
+
+        .test-panel .test-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+
+        .test-panel .test-body::-webkit-scrollbar {
+            width: 3px;
+        }
+        .test-panel .test-body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .test-panel .test-stats {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.01);
+        }
+
+        .test-panel .test-stats .stat {
+            color: rgba(255, 255, 240, 0.10);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .test-panel .test-stats .stat strong {
+            color: rgba(255, 255, 240, 0.20);
+            font-weight: 500;
+        }
+
+        .test-panel .test-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .test-panel .test-actions button {
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
+            color: rgba(255, 255, 240, 0.12);
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .test-panel .test-actions button:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 240, 0.20);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .test-panel .test-actions button.danger:hover {
+            color: rgba(255, 100, 100, 0.20);
+            border-color: rgba(255, 100, 100, 0.05);
+        }
+
+        .test-panel .test-list .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+            font-size: 11px;
+            color: rgba(255, 255, 240, 0.08);
+        }
+
+        .test-panel .test-list .test-item .info {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .test-panel .test-list .test-item .info .status {
+            font-size: 9px;
+            padding: 1px 8px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .test-panel .test-list .test-item .info .status.returned {
+            color: rgba(255, 200, 150, 0.15);
+        }
+        .test-panel .test-list .test-item .info .status.sailing {
+            color: rgba(255, 255, 240, 0.08);
+        }
+
+        .test-panel .test-list .test-item .info .pos {
+            color: rgba(255, 255, 240, 0.04);
+            font-style: italic;
+            font-size: 10px;
+        }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: absolute;
+            bottom: 28%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 20, 40, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: rgba(255, 255, 240, 0.18);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            z-index: 35;
+            display: none;
+            animation: toastIn 0.35s ease;
+            max-width: 80%;
+            text-align: center;
+            font-style: italic;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        @keyframes toastIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 420px) {
+            .phone {
+                border-radius: 20px;
+                height: 100vh;
+                max-height: 100vh;
+            }
+            .beach {
+                border-radius: 0 0 20px 20px;
+            }
+            .public-overlay,
+            .write-overlay,
+            .detail-overlay,
+            .test-panel {
+                border-radius: 20px;
+            }
+            .interactive-shell {
+                font-size: 40px;
+                bottom: 24%;
+            }
+            .boat {
+                font-size: 26px;
+                bottom: 14%;
+            }
+            .returned-bottle {
+                font-size: 26px;
+            }
+            .bottle-at-sea {
+                font-size: 20px;
+            }
+            .bottle-deco {
+                font-size: 18px;
+            }
+            .write-card textarea {
+                font-size: 14px;
+                min-height: 64px;
+            }
+            .seagull-interactive {
+                font-size: 18px !important;
+            }
+            .mood-display {
+                bottom: 20%;
+                right: 4%;
+                padding: 3px 8px 3px 6px;
+            }
+            .mood-display .paw {
+                font-size: 15px;
+            }
+            .test-toggle {
+                font-size: 10px;
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone" id="app">
+
+        <!-- ===== 海天背景 ===== -->
+        <div class="sea-scene">
+            <div class="underwater-glow"></div>
+            <div class="light-spot"></div>
+            <div class="light-spot"></div>
+            <div class="light-spot"></div>
+        </div>
+
+        <!-- ===== 海浪 ===== -->
+        <div class="waves-container">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+
+        <!-- ===== 海里的漂流瓶 ===== -->
+        <div class="sea-bottles" id="seaBottles"></div>
+
+        <!-- ===== 沙滩 ===== -->
+        <div class="beach"></div>
+
+        <!-- ===== 沙滩装饰 ===== -->
+        <div class="beach-decorations">
+            <span class="beach-deco">🐚</span>
+            <span class="beach-deco">🐚</span>
+            <span class="beach-deco">🪸</span>
+            <span class="beach-deco">🐚</span>
+            <span class="beach-deco">🐚</span>
+            <span class="beach-deco">🪸</span>
+            <span class="beach-deco">🐚</span>
+            <span class="beach-deco">🐚</span>
+            <span class="beach-deco">🦶</span>
+            <span class="beach-deco">🦶</span>
+            <span class="beach-deco">🦶</span>
+            <span class="beach-deco">🦶</span>
+        </div>
+
+        <!-- ===== 海鸥群 ===== -->
+        <div class="seagull-group" id="seagullGroup">
+            <div class="seagull-interactive" data-index="0">
+                🕊️
+                <span class="label-hint">· 轻轻点我 ·</span>
+            </div>
+            <div class="seagull-interactive" data-index="1">
+                🕊️
+                <span class="label-hint">· 喂我 ·</span>
+            </div>
+            <div class="seagull-interactive" data-index="2">
+                🕊️
+                <span class="label-hint">· 点我 ·</span>
+            </div>
+            <div class="seagull-interactive" data-index="3">
+                🕊️
+                <span class="label-hint">· 这里 ·</span>
+            </div>
+            <div class="seagull-interactive" data-index="4">
+                🕊️
+                <span class="label-hint">· 🐚 ·</span>
+            </div>
+        </div>
+
+        <!-- ===== 心情值 ===== -->
+        <div class="mood-display" id="moodDisplay">
+            <span class="paw" data-i="0">🐾</span>
+            <span class="paw" data-i="1">🐾</span>
+            <span class="paw" data-i="2">🐾</span>
+            <span class="paw" data-i="3">🐾</span>
+            <span class="paw" data-i="4">🐾</span>
+            <span class="mood-label">· 心情 ·</span>
+        </div>
+
+        <!-- ===== 写信入口 ===== -->
+        <div class="interactive-shell" id="shellBtn">
+            🐚
+            <span class="label">— 写一封信 —</span>
+        </div>
+
+        <!-- ===== 小船 ===== -->
+        <div class="boat" id="boatBtn">
+            ⛵
+            <span class="label">公共海滩</span>
+        </div>
+
+        <!-- ===== 返航的旧瓶子 ===== -->
+        <div id="returnedBottles"></div>
+
+        <!-- ===== 测试入口 ===== -->
+        <div class="test-toggle" id="testToggle">· · ·</div>
+
+        <!-- ===== Toast ===== -->
+        <div class="toast" id="toast"></div>
+
+        <!-- ===== 写信弹窗 ===== -->
+        <div class="write-overlay" id="writeOverlay">
+            <div class="write-card">
+                <div class="shell-icon">🐚</div>
+                <div class="prompt">— 把什么放进瓶子里？ —</div>
+                <textarea id="writeInput" placeholder="写点什么… 什么都可以" rows="3"></textarea>
+                <div class="share-row">
+                    <input type="checkbox" id="shareToggle" />
+                    <label for="shareToggle" style="cursor:pointer;">让它在公共海滩出现</label>
+                </div>
+                <div class="write-actions">
+                    <button class="btn-cancel" id="writeCancel">取消</button>
+                    <button class="btn-send" id="writeSend">放进海里</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 公共海滩 ===== -->
+        <div class="public-overlay" id="publicOverlay">
+            <div class="public-header">
+                <h2>🌊 公共海滩</h2>
+                <button class="close-btn" id="publicClose">✕</button>
+            </div>
+            <div class="public-list" id="publicList">
+                <div class="empty-public">还没有共享的瓶子<br />海面很安静</div>
+            </div>
+            <div class="public-back-boat" id="publicBackBoat">
+                ⛵ <span class="label">返回</span>
+            </div>
+        </div>
+
+        <!-- ===== 详情弹窗 ===== -->
+        <div class="detail-overlay" id="detailOverlay">
+            <div class="detail-card">
+                <div class="detail-text" id="detailText">—</div>
+                <div class="detail-location" id="detailLocation">—</div>
+                <div class="detail-meta" id="detailMeta">—</div>
+                <button class="detail-close" id="detailClose">轻轻关上</button>
+            </div>
+        </div>
+
+        <!-- ===== 测试面板 ===== -->
+        <div class="test-panel" id="testPanel">
+            <div class="test-header">
+                <h3>⚙️ 测试面板</h3>
+                <button class="close-test" id="testClose">✕</button>
+            </div>
+            <div class="test-body">
+                <div class="test-stats" id="testStats"></div>
+                <div class="test-actions">
+                    <button id="testFeed">🕊️ +心情</button>
+                    <button id="testReturn">🌊 手动返航</button>
+                    <button id="testAddDay">📅 +1 天</button>
+                    <button id="testAddWeek">📅 +7 天</button>
+                    <button id="testReset" class="danger">🗑️ 重置数据</button>
+                </div>
+                <div class="test-list" id="testList"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        //  数据层
+        // ============================================================
+
+        const SENSITIVE_WORDS = ['暴力', '色情', '政治', '辱骂', '毒品', '犯罪', '仇恨'];
+        const MAX_MOOD = 5;
+        const SPEED_MULTIPLIERS = [1, 1.2, 1.5, 2.0, 2.5, 3.0];
+
+        function containsSensitive(t) {
+            for (const w of SENSITIVE_WORDS) {
+                if (t.includes(w)) return true;
+            }
+            return false;
+        }
+
+        const JOURNEY_STAGES = [
+            { minDay: 0, maxDay: 0.5, emoji: '🌊', desc: '刚刚放进海里，还在近岸漂流…' },
+            { minDay: 0.5, maxDay: 2, emoji: '🌅', desc: '穿过晨雾，正驶向台湾海峡' },
+            { minDay: 2, maxDay: 5, emoji: '🐬', desc: '遇到了一群海豚，它们在船头带路' },
+            { minDay: 5, maxDay: 9, emoji: '☀️', desc: '到达菲律宾海域，海水温暖又清澈' },
+            { minDay: 9, maxDay: 15, emoji: '✨', desc: '正在横跨太平洋，夜里的星星特别亮' },
+            { minDay: 15, maxDay: 25, emoji: '🏔️', desc: '接近新西兰南岛，远处的雪山若隐若现' },
+            { minDay: 25, maxDay: 40, emoji: '🌪️', desc: '在太平洋深处遇到了一场风暴，但安然无恙' },
+            { minDay: 40, maxDay: 60, emoji: '🌏', desc: '已经绕了地球半圈，正在穿越印度洋' },
+            { minDay: 60, maxDay: 90, emoji: '🏠', desc: '正在返航的途中，海风带着家的味道' },
+            { minDay: 90, maxDay: Infinity, emoji: '💫', desc: '完成了环球旅行，正在被洋流带回海岸' },
+        ];
+
+        function getJourneyStage(days) {
+            for (const s of JOURNEY_STAGES) {
+                if (days >= s.minDay && days < s.maxDay) return s;
+            }
+            return JOURNEY_STAGES[JOURNEY_STAGES.length - 1];
+        }
+
+        function getLocation(days) {
+            const s = getJourneyStage(days);
+            return `${s.emoji} ${s.desc}`;
+        }
+
+        // ===== 状态 =====
+        let state = {
+            bottles: [],
+            nextId: 1,
+            simulatedDays: 0,
+            mood: 0,
+            lastReturnCheck: null,
+        };
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem('drift_bottles_v7');
+                if (raw) {
+                    const data = JSON.parse(raw);
+                    state.bottles = data.bottles || [];
+                    state.nextId = data.nextId || 1;
+                    state.simulatedDays = data.simulatedDays || 0;
+                    state.mood = data.mood || 0;
+                    state.lastReturnCheck = data.lastReturnCheck || null;
+                }
+            } catch (e) { /* ignore */ }
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem('drift_bottles_v7', JSON.stringify({
+                    bottles: state.bottles,
+                    nextId: state.nextId,
+                    simulatedDays: state.simulatedDays,
+                    mood: state.mood,
+                    lastReturnCheck: state.lastReturnCheck,
+                }));
+            } catch (e) { /* ignore */ }
+        }
+
+        // ============================================================
+        //  心情值 & 时间流速
+        // ============================================================
+
+        function getSpeedMultiplier() {
+            const idx = Math.min(state.mood, MAX_MOOD);
+            return SPEED_MULTIPLIERS[idx] || 1;
+        }
+
+        function addMood(amount) {
+            const prev = state.mood;
+            state.mood = Math.min(MAX_MOOD, state.mood + amount);
+            if (state.mood > prev) {
+                saveState();
+                renderMood();
+                showToast(`🕊️ 心情值 +${amount}，时间流速 ${getSpeedMultiplier()}x`);
+                if (state.mood >= 2 && Math.random() < 0.3 * getSpeedMultiplier()) {
+                    checkReturn();
+                }
+                renderAll();
+            }
+        }
+
+        function renderMood() {
+            const paws = document.querySelectorAll('.paw');
+            paws.forEach((el, i) => {
+                el.classList.remove('active', 'high');
+                if (i < state.mood) {
+                    el.classList.add('active');
+                    if (i >= 3) el.classList.add('high');
+                }
+            });
+        }
+
+        // ============================================================
+        //  返航逻辑
+        // ============================================================
+
+        function checkReturn() {
+            const now = new Date();
+            const lastCheck = state.lastReturnCheck;
+
+            if (lastCheck) {
+                const lastDate = new Date(lastCheck);
+                if (lastDate.toDateString() === now.toDateString()) {
+                    return;
+                }
+            }
+
+            const baseChance = 0.25;
+            const moodBonus = state.mood * 0.04;
+            const triggerChance = Math.min(0.6, baseChance + moodBonus);
+
+            if (Math.random() >= triggerChance) {
+                state.lastReturnCheck = now.toISOString();
+                saveState();
+                return;
+            }
+
+            const sailing = state.bottles.filter(b => !b.returned);
+            if (sailing.length === 0) {
+                state.lastReturnCheck = now.toISOString();
+                saveState();
+                return;
+            }
+
+            const baseRate = 0.10 + Math.random() * 0.20;
+            const moodRate = state.mood * 0.03;
+            const rate = Math.min(0.6, baseRate + moodRate);
+            const count = Math.max(1, Math.floor(sailing.length * rate));
+            const shuffled = [...sailing].sort(() => Math.random() - 0.5);
+            const toReturn = shuffled.slice(0, count);
+
+            toReturn.forEach(b => {
+                b.returned = true;
+                b.returnDate = now.toISOString();
+            });
+
+            state.lastReturnCheck = now.toISOString();
+            saveState();
+            renderAll();
+
+            if (toReturn.length > 0) {
+                showToast(`🌊 ${toReturn.length} 个漂流瓶回到了海滩`);
+            }
+        }
+
+        // ============================================================
+        //  核心操作
+        // ============================================================
+
+        function dropBottle(text, share) {
+            if (!text || text.trim() === '') {
+                showToast('💭 写点什么再放进去吧');
+                return false;
+            }
+            const trimmed = text.trim();
+            if (containsSensitive(trimmed)) {
+                showToast('🌊 换一句温柔的话吧');
+                return false;
+            }
+
+            const bottle = {
+                id: state.nextId++,
+                text: trimmed,
+                date: new Date().toISOString(),
+                returned: false,
+                shared: share || false,
+                returnDate: null,
+            };
+
+            state.bottles.push(bottle);
+            saveState();
+
+            const btn = document.getElementById('writeSend');
+            const orig = btn.textContent;
+            btn.textContent = '🌊 漂走了…';
+            btn.style.opacity = '0.4';
+
+            setTimeout(() => {
+                btn.textContent = orig;
+                btn.style.opacity = '1';
+                document.getElementById('writeInput').value = '';
+                document.getElementById('shareToggle').checked = false;
+                document.getElementById('writeOverlay').classList.remove('active');
+                showToast('🍾 它出发了，海会替你保管');
+                renderAll();
+            }, 700);
+
+            return true;
+        }
+
+        function getBottleDays(bottle) {
+            const base = new Date(bottle.date);
+            const now = new Date();
+            const diff = (now - base) / (1000 * 60 * 60 * 24);
+            return Math.max(0, diff + state.simulatedDays);
+        }
+
+        function getBottleLocation(bottle) {
+            return getLocation(getBottleDays(bottle));
+        }
+
+        // ============================================================
+        //  渲染 —— 瓶子分布在屏幕高度 45%-65% 区域
+        // ============================================================
+
+        function renderSeaBottles() {
+            const container = document.getElementById('seaBottles');
+            const sailing = state.bottles.filter(b => !b.returned);
+            const returned = state.bottles.filter(b => b.returned);
+
+            const totalBottles = Math.max(12, sailing.length + 4);
+            const interactiveCount = Math.min(sailing.length, 7);
+
+            let html = '';
+
+            // ===== 交互式新瓶子（航行中）=====
+            // 位置：bottom 45%-65% 区域（从底部算起）
+            const centerBottom = 55;
+            const spreadY = 9;
+            const spreadX = 42;
+
+            const newPositions = [];
+            for (let i = 0; i < interactiveCount; i++) {
+                const angle = (i / interactiveCount) * Math.PI * 2 + Math.random() * 0.3;
+                const offsetX = Math.sin(angle) * spreadX;
+                const offsetY = Math.cos(angle) * spreadY + 1;
+                newPositions.push({
+                    bottom: (centerBottom + offsetY) + '%',
+                    left: (50 + offsetX) + '%',
+                    delay: Math.random() * 1.8,
+                });
+            }
+
+            for (let i = 0; i < interactiveCount && i < sailing.length; i++) {
+                const b = sailing[i];
+                const pos = newPositions[i % newPositions.length];
+                const days = Math.round(getBottleDays(b));
+                html += `
+                    <div class="bottle-at-sea bottle-new" style="bottom:${pos.bottom}; left:${pos.left}; animation-delay:${pos.delay}s;" data-id="${b.id}">
+                        🍾
+                        <span class="label">${days}d</span>
+                    </div>
+                `;
+            }
+
+            // ===== 装饰瓶（不可点击）=====
+            const decoCount = Math.max(0, totalBottles - interactiveCount);
+            const decoPositions = [];
+            for (let i = 0; i < decoCount; i++) {
+                const angle = (i / decoCount) * Math.PI * 2 + Math.random() * 0.4;
+                const offsetX = Math.sin(angle) * (spreadX + 12);
+                const offsetY = Math.cos(angle) * (spreadY + 4) + 1;
+                decoPositions.push({
+                    bottom: (centerBottom + offsetY) + '%',
+                    left: (50 + offsetX) + '%',
+                    delay: Math.random() * 2.2,
+                });
+            }
+
+            for (let i = 0; i < Math.min(decoCount, decoPositions.length); i++) {
+                const pos = decoPositions[i % decoPositions.length];
+                html += `
+                    <div class="bottle-deco" style="bottom:${pos.bottom}; left:${pos.left}; animation-delay:${pos.delay}s;">
+                        🍾
+                    </div>
+                `;
+            }
+
+            // ===== 旧瓶子（归来中）=====
+            const oldPositions = [
+                { bottom: '48%', left: '10%', delay: 0.6 },
+                { bottom: '58%', left: '28%', delay: 1.4 },
+                { bottom: '46%', left: '46%', delay: 2.0 },
+                { bottom: '62%', left: '64%', delay: 0.8 },
+                { bottom: '52%', left: '82%', delay: 1.6 },
+            ];
+
+            const returningBottles = returned.slice(0, 5);
+            returningBottles.forEach((b, idx) => {
+                const pos = oldPositions[idx % oldPositions.length];
+                const dateStr = new Date(b.returnDate).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+                html += `
+                    <div class="bottle-at-sea bottle-old" style="bottom:${pos.bottom}; left:${pos.left}; animation-delay:${pos.delay}s;" data-id="${b.id}">
+                        🍾
+                        <span class="label">${dateStr}</span>
+                        <span class="old-tag">🌿</span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+
+            container.querySelectorAll('.bottle-at-sea').forEach(el => {
+                el.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const id = parseInt(this.dataset.id);
+                    const bottle = state.bottles.find(b => b.id === id);
+                    if (bottle) {
+                        showBottleDetail(bottle);
+                    }
+                });
+            });
+        }
+
+        // ============================================================
+        //  其余渲染函数
+        // ============================================================
+
+        function renderReturnedBottles() {
+            const container = document.getElementById('returnedBottles');
+            const returned = state.bottles.filter(b => b.returned);
+
+            if (returned.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const positions = [
+                { bottom: '16%', left: '4%' },
+                { bottom: '24%', left: '20%' },
+                { bottom: '12%', left: '44%' },
+                { bottom: '28%', left: '68%' },
+                { bottom: '18%', left: '88%' },
+            ];
+
+            const sorted = [...returned].sort((a, b) => new Date(b.returnDate) - new Date(a.returnDate));
+            const toShow = sorted.slice(0, 3);
+
+            let html = '';
+            toShow.forEach((b, i) => {
+                const pos = positions[i % positions.length];
+                const dateStr = new Date(b.returnDate).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+                html += `
+                    <div class="returned-bottle" style="bottom:${pos.bottom}; left:${pos.left}; animation-delay:${i * 0.4}s;" data-id="${b.id}">
+                        🍾
+                        <span class="label">${dateStr}</span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+
+            container.querySelectorAll('.returned-bottle').forEach(el => {
+                el.addEventListener('click', function() {
+                    const id = parseInt(this.dataset.id);
+                    const b = state.bottles.find(x => x.id === id);
+                    if (b) showBottleDetail(b);
+                });
+            });
+        }
+
+        function renderPublic() {
+            const container = document.getElementById('publicList');
+            const shared = state.bottles.filter(b => b.shared && !b.returned);
+
+            if (shared.length === 0) {
+                container.innerHTML = `<div class="empty-public">还没有共享的瓶子<br />海面很安静</div>`;
+                return;
+            }
+
+            const shuffled = [...shared].sort(() => Math.random() - 0.5);
+            let html = '';
+            for (const b of shuffled) {
+                const dateStr = new Date(b.date).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+                html += `
+                    <div class="public-item">
+                        <div class="text">“${b.text}”</div>
+                        <div class="tag">🌊 · ${dateStr}</div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        function renderTestPanel() {
+            const stats = document.getElementById('testStats');
+            const list = document.getElementById('testList');
+
+            const total = state.bottles.length;
+            const sailing = state.bottles.filter(b => !b.returned).length;
+            const returned = state.bottles.filter(b => b.returned).length;
+
+            stats.innerHTML = `
+                <span class="stat">📦 总 <strong>${total}</strong></span>
+                <span class="stat">⛵ 航行 <strong>${sailing}</strong></span>
+                <span class="stat">🏖️ 返航 <strong>${returned}</strong></span>
+                <span class="stat">🕊️ 心情 <strong>${state.mood}/${MAX_MOOD}</strong></span>
+                <span class="stat">⚡ ${getSpeedMultiplier()}x</span>
+            `;
+
+            if (state.bottles.length === 0) {
+                list.innerHTML =
+                    '<div style="color:rgba(255,255,240,0.02);padding:20px 0;text-align:center;font-size:12px;">还没有瓶子</div>';
+                return;
+            }
+
+            let html = '';
+            const sorted = [...state.bottles].sort((a, b) => new Date(b.date) - new Date(a.date));
+            for (const b of sorted) {
+                const days = Math.round(getBottleDays(b));
+                const loc = getBottleLocation(b);
+                const status = b.returned ? 'returned' : 'sailing';
+                const label = b.returned ? '🏖️ 已返航' : '⛵ 航行中';
+                html += `
+                    <div class="test-item">
+                        <div class="info">
+                            <span>“${b.text.length > 12 ? b.text.slice(0,12)+'…' : b.text}”</span>
+                            <span class="status ${status}">${label}</span>
+                            <span class="pos">${loc.slice(0, 20)}${loc.length > 20 ? '…' : ''}</span>
+                        </div>
+                        <span style="font-size:10px;color:rgba(255,255,240,0.04);">${days}d</span>
+                    </div>
+                `;
+            }
+            list.innerHTML = html;
+        }
+
+        function renderAll() {
+            renderSeaBottles();
+            renderReturnedBottles();
+            renderPublic();
+            renderTestPanel();
+            renderMood();
+        }
+
+        // ============================================================
+        //  详情弹窗
+        // ============================================================
+
+        function showBottleDetail(bottle) {
+            const overlay = document.getElementById('detailOverlay');
+            document.getElementById('detailText').textContent = bottle.text;
+            if (bottle.returned) {
+                const dateStr = new Date(bottle.returnDate).toLocaleDateString('zh-CN', { year: 'numeric', month: 'long',
+                    day: 'numeric' });
+                document.getElementById('detailLocation').textContent = '🏖️ 它已经回到了海滩';
+                document.getElementById('detailMeta').textContent = `${dateStr} · 它完成了旅行`;
+            } else {
+                const days = Math.round(getBottleDays(bottle));
+                document.getElementById('detailLocation').textContent = getBottleLocation(bottle);
+                const dateStr = new Date(bottle.date).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+                document.getElementById('detailMeta').textContent = `📅 ${dateStr} · 已航行 ${days} 天`;
+            }
+            overlay.classList.add('active');
+        }
+
+        document.getElementById('detailClose').addEventListener('click', () => {
+            document.getElementById('detailOverlay').classList.remove('active');
+        });
+        document.getElementById('detailOverlay').addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('active');
+        });
+
+        // ============================================================
+        //  海鸥交互
+        // ============================================================
+
+        const seagulls = document.querySelectorAll('.seagull-interactive');
+        let feedingCooldown = false;
+
+        seagulls.forEach((gull, idx) => {
+            gull.addEventListener('click', function(e) {
+                if (feedingCooldown) return;
+                feedingCooldown = true;
+                this.classList.add('feeding');
+
+                const crumb = document.createElement('div');
+                crumb.className = 'breadcrumb';
+                crumb.textContent = '🍞';
+                const rect = this.getBoundingClientRect();
+                const parentRect = this.parentElement.getBoundingClientRect();
+                crumb.style.left = (e.clientX - parentRect.left - 10) + 'px';
+                crumb.style.top = (e.clientY - parentRect.top - 10) + 'px';
+                this.appendChild(crumb);
+
+                addMood(1);
+
+                setTimeout(() => {
+                    this.classList.remove('feeding');
+                    feedingCooldown = false;
+                    crumb.remove();
+                }, 800);
+            });
+        });
+
+        // ============================================================
+        //  UI 事件绑定
+        // ============================================================
+
+        document.getElementById('shellBtn').addEventListener('click', () => {
+            document.getElementById('writeOverlay').classList.add('active');
+            document.getElementById('writeInput').focus();
+        });
+        document.getElementById('writeCancel').addEventListener('click', () => {
+            document.getElementById('writeOverlay').classList.remove('active');
+            document.getElementById('writeInput').value = '';
+        });
+        document.getElementById('writeOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.getElementById('writeInput').value = '';
+            }
+        });
+
+        const writeInput = document.getElementById('writeInput');
+        const writeSend = document.getElementById('writeSend');
+        writeInput.addEventListener('input', function() {
+            this.value.trim() ? writeSend.classList.add('has-text') : writeSend.classList.remove('has-text');
+        });
+        writeSend.addEventListener('click', () => {
+            const text = writeInput.value;
+            const share = document.getElementById('shareToggle').checked;
+            dropBottle(text, share);
+        });
+        writeInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                writeSend.click();
+            }
+        });
+
+        document.getElementById('boatBtn').addEventListener('click', () => {
+            renderPublic();
+            document.getElementById('publicOverlay').classList.add('active');
+        });
+        document.getElementById('publicClose').addEventListener('click', () => {
+            document.getElementById('publicOverlay').classList.remove('active');
+        });
+        document.getElementById('publicOverlay').addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('active');
+        });
+        document.getElementById('publicBackBoat').addEventListener('click', () => {
+            document.getElementById('publicOverlay').classList.remove('active');
+        });
+
+        document.getElementById('testToggle').addEventListener('click', () => {
+            renderTestPanel();
+            document.getElementById('testPanel').classList.toggle('active');
+        });
+        document.getElementById('testClose').addEventListener('click', () => {
+            document.getElementById('testPanel').classList.remove('active');
+        });
+
+        document.getElementById('testFeed').addEventListener('click', () => {
+            addMood(2);
+            renderAll();
+        });
+        document.getElementById('testReturn').addEventListener('click', () => {
+            checkReturn();
+            renderAll();
+            showToast('🌊 已检查返航');
+        });
+        document.getElementById('testAddDay').addEventListener('click', () => {
+            state.simulatedDays += 1;
+            saveState();
+            renderAll();
+            showToast(`📅 +1 天（累计 +${state.simulatedDays} 天）`);
+        });
+        document.getElementById('testAddWeek').addEventListener('click', () => {
+            state.simulatedDays += 7;
+            saveState();
+            renderAll();
+            showToast(`📅 +7 天（累计 +${state.simulatedDays} 天）`);
+        });
+        document.getElementById('testReset').addEventListener('click', () => {
+            if (confirm('确定要重置所有数据吗？')) {
+                state.bottles = [];
+                state.nextId = 1;
+                state.simulatedDays = 0;
+                state.mood = 0;
+                saveState();
+                renderAll();
+                showToast('🗑️ 已重置');
+            }
+        });
+
+        // ============================================================
+        //  Toast
+        // ============================================================
+
+        let toastTimer = null;
+
+        function showToast(msg) {
+            const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+        }
+
+        // ============================================================
+        //  定时器
+        // ============================================================
+
+        function autoLoop() {
+            const speed = getSpeedMultiplier();
+            const interval = Math.max(2000, 8000 / speed);
+            checkReturn();
+            renderAll();
+            setTimeout(autoLoop, interval);
+        }
+
+        // ============================================================
+        //  初始化
+        // ============================================================
+
+        loadState();
+
+        if (state.bottles.length === 0) {
+            const samples = [
+                { text: '今天有点累，没什么原因', shared: true },
+                { text: '希望那个决定是对的', shared: false },
+                { text: '想念小时候的海边', shared: true },
+                { text: '工作好忙，想休息', shared: false },
+                { text: '希望她一切都好', shared: true },
+                { text: '明天会更好吧', shared: false },
+            ];
+            for (const s of samples) {
+                state.bottles.push({
+                    id: state.nextId++,
+                    text: s.text,
+                    date: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
+                    returned: Math.random() > 0.6,
+                    shared: s.shared,
+                    returnDate: Math.random() > 0.6 ? new Date(Date.now() - Math.random() * 10 * 24 * 60 * 60 * 1000)
+                        .toISOString() : null,
+                });
+            }
+            saveState();
+        }
+
+        renderAll();
+        setTimeout(autoLoop, 2000);
+
+        setTimeout(() => {
+            showToast('🕊️ 点击海鸥喂食，加快时间流速');
+        }, 1200);
+    </script>
+
+</body>
+</html>

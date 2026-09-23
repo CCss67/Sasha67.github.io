@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>幼儿园英文教案生成器 · 含PPT导出</title>
+    <style>
+        /* ===== 全局 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: #f5f7fb;
+            padding: 24px 20px 40px;
+            color: #1a1a2e;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== 头部 ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4a6cf7, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .header p {
+            color: #6b7280;
+            margin-top: 6px;
+            font-size: 16px;
+        }
+
+        /* ===== 输入区 ===== */
+        .input-area {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px 28px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            margin-bottom: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 20px;
+            align-items: flex-end;
+            border: 1px solid #eef2f6;
+        }
+
+        .input-group {
+            flex: 1 1 200px;
+            min-width: 160px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #4a5568;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.2s;
+            background: #fafafa;
+            font-family: inherit;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            border-color: #4a6cf7;
+            background: #ffffff;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 44px;
+            height: 44px;
+        }
+
+        .btn {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #4a6cf7;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+            white-space: nowrap;
+            align-self: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 108, 247, 0.4);
+        }
+
+        .btn-secondary {
+            background: #1a1a2e;
+            box-shadow: 0 4px 12px rgba(26, 26, 46, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: #2d2d44;
+        }
+
+        .btn-success {
+            background: #16a34a;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+        }
+
+        .btn-success:hover {
+            background: #15803d;
+        }
+
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 13px;
+            border-radius: 30px;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e5e7eb;
+            color: #4a5568;
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: #f1f5f9;
+            transform: none;
+        }
+
+        /* ===== 年龄段切换 ===== */
+        .age-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .age-tab {
+            padding: 8px 24px;
+            border-radius: 40px;
+            border: 2px solid #e5e7eb;
+            background: #ffffff;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #6b7280;
+        }
+
+        .age-tab.active {
+            border-color: #4a6cf7;
+            background: #4a6cf7;
+            color: #fff;
+        }
+
+        .age-tab:hover:not(.active) {
+            background: #f1f5f9;
+        }
+
+        /* ===== 教案容器 ===== */
+        .lesson-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-top: 10px;
+        }
+
+        /* ===== 单个教案卡片 ===== */
+        .lesson-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #eef2f6;
+            padding: 20px 20px 24px;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lesson-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .lesson-card .age-badge {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 40px;
+            background: #e8f0fe;
+            color: #4a6cf7;
+            margin-bottom: 12px;
+            align-self: flex-start;
+        }
+
+        .lesson-card .age-badge.small {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .lesson-card .age-badge.middle {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .lesson-card .age-badge.large {
+            background: #fce4ec;
+            color: #dc2626;
+        }
+
+        .lesson-card .title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+
+        .lesson-card .sub {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 14px;
+        }
+
+        /* ===== 活动目标 ===== */
+        .objective {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border-left: 4px solid #4a6cf7;
+        }
+
+        .objective strong {
+            display: block;
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 2px;
+        }
+
+        .objective ul {
+            list-style: none;
+            padding: 0;
+            font-size: 14px;
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+
+        .objective ul li::before {
+            content: "• ";
+            color: #4a6cf7;
+            font-weight: 700;
+        }
+
+        .objective p {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        /* ===== 活动流程步骤 ===== */
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 8px 0 12px;
+            flex: 1;
+        }
+
+        .step-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 12px 14px;
+            border: 1px solid #eef2f6;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .step-card:hover {
+            background: #f1f5f9;
+        }
+
+        .step-card .step-index {
+            font-weight: 700;
+            color: #4a6cf7;
+            font-size: 14px;
+            min-width: 28px;
+            padding-top: 2px;
+        }
+
+        .step-card .step-content {
+            flex: 1;
+        }
+
+        .step-card .step-content .step-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #1a1a2e;
+        }
+
+        .step-card .step-content .step-desc {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        .step-card .step-content .step-time {
+            font-size: 13px;
+            color: #8e8e93;
+            margin-top: 4px;
+        }
+
+        .step-card .step-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-card .step-actions button {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #b0b0b0;
+            transition: all 0.2s;
+            padding: 0 4px;
+            line-height: 1;
+        }
+
+        .step-card .step-actions button:hover {
+            color: #1a1a2e;
+        }
+
+        .step-card .step-actions .del-btn:hover {
+            color: #ef4444;
+        }
+
+        .add-step-btn {
+            background: none;
+            border: 2px dashed #d0d5dd;
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 14px;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .add-step-btn:hover {
+            border-color: #4a6cf7;
+            color: #4a6cf7;
+            background: #f8faff;
+        }
+
+        /* ===== 总时长 ===== */
+        .total-time {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a2e;
+            padding: 10px 0 4px;
+            border-top: 1px solid #eef2f6;
+            margin-top: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-time span:last-child {
+            background: #e8f0fe;
+            padding: 2px 14px;
+            border-radius: 40px;
+            color: #4a6cf7;
+        }
+
+        /* ===== 反思 ===== */
+        .reflection {
+            background: #fef9e7;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .reflection strong {
+            display: block;
+            font-size: 14px;
+            color: #92400e;
+            margin-bottom: 4px;
+        }
+
+        .reflection ul {
+            list-style: none;
+            padding: 0;
+            font-size: 13px;
+            color: #78350f;
+            line-height: 1.6;
+        }
+
+        .reflection ul li::before {
+            content: "• ";
+            color: #f59e0b;
+            font-weight: 700;
+        }
+
+        /* ===== 全英文稿件 ===== */
+        .script-section {
+            margin-top: 14px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .script-section summary {
+            font-weight: 600;
+            font-size: 14px;
+            color: #4a5568;
+            cursor: pointer;
+            padding: 4px 0;
+        }
+
+        .script-section .script-content {
+            font-size: 14px;
+            color: #1a1a2e;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #e5e7eb;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        /* ===== 操作栏 ===== */
+        .action-bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+            justify-content: flex-start;
+        }
+
+        /* ===== 空状态 ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #b0b0b0;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state .icon-big {
+            font-size: 56px;
+            margin-bottom: 12px;
+        }
+
+        /* ================================================================
+           PPT 幻灯片模式（覆盖层）
+           ================================================================ */
+        .ppt-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a1a;
+            z-index: 9999;
+            flex-direction: column;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        .ppt-overlay.active {
+            display: flex;
+        }
+
+        .ppt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .ppt-header .ppt-title {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .ppt-header .ppt-title strong {
+            color: #fff;
+        }
+
+        .ppt-header .ppt-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .ppt-header .ppt-controls .btn-ppt {
+            padding: 6px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .ppt-header .ppt-controls .btn-ppt:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .ppt-header .ppt-controls .btn-ppt-primary {
+            background: #4a6cf7;
+            color: #fff;
+            border-color: #4a6cf7;
+        }
+
+        .ppt-header .ppt-controls .btn-ppt-primary:hover {
+            background: #3b5de7;
+        }
+
+        .ppt-header .ppt-controls .btn-ppt-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0 8px;
+            transition: all 0.2s;
+            line-height: 1;
+        }
+
+        .ppt-header .ppt-controls .btn-ppt-close:hover {
+            color: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        /* PPT 幻灯片主体 */
+        .ppt-slides {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ppt-slide {
+            display: none;
+            width: 100%;
+            max-width: 900px;
+            max-height: 80vh;
+            background: linear-gradient(145deg, #1a1a2e, #2d2d44);
+            border-radius: 24px;
+            padding: 40px 48px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            overflow-y: auto;
+            animation: slideIn 0.35s ease;
+            color: #f0f0f0;
+        }
+
+        .ppt-slide.active {
+            display: block;
+        }
+
+        .ppt-slide::-webkit-scrollbar {
+            width: 4px;
+        }
+        .ppt-slide::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .ppt-slide .slide-number {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        .ppt-slide .slide-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .ppt-slide .slide-sub {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .ppt-slide .slide-body {
+            font-size: 18px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .ppt-slide .slide-body ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ppt-slide .slide-body ul li {
+            padding: 6px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .ppt-slide .slide-body ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #4a6cf7;
+            font-weight: 700;
+        }
+
+        .ppt-slide .slide-body .highlight {
+            color: #4a6cf7;
+            font-weight: 600;
+        }
+
+        .ppt-slide .slide-body .time-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-left: 8px;
+        }
+
+        /* PPT 底部导航 */
+        .ppt-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .ppt-footer .ppt-nav {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .ppt-footer .ppt-nav .nav-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 40px;
+            padding: 8px 20px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .ppt-footer .ppt-nav .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .ppt-footer .ppt-nav .nav-btn:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+        }
+
+        .ppt-footer .ppt-progress {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        /* ===== PPT 打印样式 ===== */
+        @media print {
+            .ppt-overlay {
+                position: relative !important;
+                height: auto !important;
+                min-height: 100vh;
+                background: #fff !important;
+                display: block !important;
+            }
+
+            .ppt-header,
+            .ppt-footer {
+                display: none !important;
+            }
+
+            .ppt-slides {
+                padding: 0 !important;
+                display: block !important;
+            }
+
+            .ppt-slide {
+                display: block !important;
+                max-height: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                background: #fff !important;
+                color: #1a1a2e !important;
+                padding: 30px 40px !important;
+                page-break-after: always;
+                border: 1px solid #ddd !important;
+                margin: 0 !important;
+            }
+
+            .ppt-slide .slide-title {
+                color: #1a1a2e !important;
+            }
+
+            .ppt-slide .slide-sub {
+                color: #6b7280 !important;
+            }
+
+            .ppt-slide .slide-body {
+                color: #333 !important;
+            }
+
+            .ppt-slide .slide-body .time-tag {
+                background: #f0f0f0 !important;
+                color: #6b7280 !important;
+            }
+
+            .ppt-slide .slide-number {
+                color: #c0c0c0 !important;
+            }
+
+            .ppt-slide .slide-body ul li::before {
+                color: #4a6cf7 !important;
+            }
+
+            .ppt-slide .slide-body .highlight {
+                color: #4a6cf7 !important;
+            }
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 700px) {
+            .lesson-container {
+                grid-template-columns: 1fr;
+            }
+
+            .input-area {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .input-group {
+                flex: 1 1 auto;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .step-card {
+                flex-wrap: wrap;
+            }
+
+            .step-card .step-actions {
+                margin-left: auto;
+            }
+
+            .ppt-slide {
+                padding: 24px 20px !important;
+            }
+
+            .ppt-slide .slide-title {
+                font-size: 22px !important;
+            }
+
+            .ppt-slide .slide-body {
+                font-size: 16px !important;
+            }
+
+            .ppt-header {
+                padding: 10px 16px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .ppt-footer {
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
+                padding: 10px 16px;
+            }
+        }
+
+        @media print and (max-width: 700px) {
+            .ppt-slide {
+                padding: 16px !important;
+            }
+            .ppt-slide .slide-title {
+                font-size: 18px !important;
+            }
+            .ppt-slide .slide-body {
+                font-size: 14px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>🧸 幼儿园英文教案生成器</h1>
+            <p>输入核心单词和语法 → 一键生成小班 · 中班 · 大班教案 + PPT</p>
+        </div>
+
+        <!-- 输入区 -->
+        <div class="input-area no-print">
+            <div class="input-group">
+                <label>📝 核心单词（空格分隔）</label>
+                <input type="text" id="wordsInput" value="apple banana cat dog" placeholder="如：apple banana cat" />
+            </div>
+            <div class="input-group" style="flex:2;">
+                <label>📖 核心语法 / 句型</label>
+                <textarea id="grammarInput" rows="1" placeholder="如：I like ... / It is a ...">I like ...</textarea>
+            </div>
+            <button class="btn" id="generateBtn">🚀 生成教案</button>
+        </div>
+
+        <!-- 年龄段切换 -->
+        <div class="age-tabs no-print" id="ageTabs">
+            <button class="age-tab active" data-age="all">📚 全部</button>
+            <button class="age-tab" data-age="small">🧒 小班</button>
+            <button class="age-tab" data-age="middle">👦 中班</button>
+            <button class="age-tab" data-age="large">👧 大班</button>
+        </div>
+
+        <!-- 教案容器 -->
+        <div class="lesson-container" id="lessonContainer">
+            <div class="empty-state">
+                <div class="icon-big">✨</div>
+                <div class="text">输入单词和语法，点击「生成教案」</div>
+                <div style="font-size:14px;color:#c0c0c0;margin-top:6px;">将生成三个年龄段的完整活动方案</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================================
+    PPT 覆盖层
+    ================================================================ -->
+    <div class="ppt-overlay" id="pptOverlay">
+        <!-- PPT 顶部栏 -->
+        <div class="ppt-header">
+            <div class="ppt-title">📊 <strong id="pptTitle">教案幻灯片</strong></div>
+            <div class="ppt-controls">
+                <button class="btn-ppt" onclick="exportPPT()">📥 导出PDF/打印</button>
+                <button class="btn-ppt btn-ppt-primary" onclick="toggleFullscreen()">⛶ 全屏</button>
+                <button class="btn-ppt-close" onclick="closePPT()">✕</button>
+            </div>
+        </div>
+
+        <!-- 幻灯片 -->
+        <div class="ppt-slides" id="pptSlides">
+            <!-- 由 JS 动态生成 -->
+        </div>
+
+        <!-- 底部导航 -->
+        <div class="ppt-footer">
+            <div class="ppt-progress" id="pptProgress">1 / 1</div>
+            <div class="ppt-nav">
+                <button class="nav-btn" id="pptPrev" onclick="pptPrev()">◀ 上一页</button>
+                <button class="nav-btn" id="pptNext" onclick="pptNext()">下一页 ▶</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  数据与状态
+        // ============================================================
+        let currentData = [];
+        let currentFilter = 'all';
+        let pptSlides = [];
+        let pptIndex = 0;
+
+        // ============================================================
+        //  模板引擎
+        // ============================================================
+
+        function generateLesson(age, words, grammar) {
+            const wordList = words.split(/\s+/).filter(w => w.trim());
+            const wordStr = wordList.join('、');
+            const firstWord = wordList[0] || 'cat';
+            const grammarPhrase = grammar || 'I like ...';
+
+            const ageMap = {
+                small: { label: '小班 (3-4岁)', badge: 'small', target: '能模仿发音，初步感知单词意义，愿意参与活动。' },
+                middle: { label: '中班 (4-5岁)', badge: 'middle', target: '能较清晰说出单词，理解简单句型，积极参与互动。' },
+                large: { label: '大班 (5-6岁)', badge: 'large', target: '能自信表达单词和句型，能在情境中运用，具备初步合作能力。' }
+            };
+
+            const info = ageMap[age];
+            const ageLabel = info.label;
+            const badgeClass = info.badge;
+            const target = info.target;
+
+            const desc = {
+                small: {
+                    intro: `教师出示玩偶或图片，用夸张的语气和动作说 "Hello! Look! What's this?" 引导幼儿观察并尝试模仿单词发音。`,
+                    chant: `教师带领幼儿用简单的节奏拍手说 chant： "Apple, apple, I like apple! (重复)" 配合动作。`,
+                    circle: `围坐成圆圈，教师展示闪卡，幼儿说出单词或做出相应动作，如 "Clap for apple!"`,
+                    flashcard: `教师逐一展示彩色闪卡，清晰说出单词，幼儿跟读2-3遍，鼓励用手势表示。`,
+                    game1: `游戏 "Find it!"：教师说出单词，幼儿在教室内找到对应图片或物品，找到后说 "I see ..."`,
+                    game2: `游戏 "Pass the card"：幼儿传递闪卡，音乐停时手持卡片者说出单词，其他幼儿跟读。`,
+                    game3: `游戏 "What's missing?"：展示3-4张闪卡，让幼儿闭眼，拿走一张，猜出少了什么。`,
+                    summary: `教师带领幼儿回顾今天学的单词，用玩偶互动重复重点词汇，鼓励幼儿大声说。`,
+                    goodbye: `教师和幼儿挥手说 "Goodbye, everyone! See you next time!" 配合歌曲。`
+                },
+                middle: {
+                    intro: `教师用神秘袋或手偶引入主题，提问 "What's in my bag?" 引导幼儿猜测，自然引出核心词汇。`,
+                    chant: `教师带领幼儿用拍手和踏步的节奏说 chant，并加入简单动作，如 "Apple, apple, I like apple! Yum, yum!"`,
+                    circle: `围坐成圆圈，教师展示闪卡，幼儿轮流说出单词并尝试造句，如 "I like apple."`,
+                    flashcard: `教师快速展示闪卡，幼儿抢答说出单词，然后慢速展示并引导完整跟读。`,
+                    game1: `游戏 "Hot potato"：传递卡片，音乐停时持卡者说出单词并尝试用句型 "I like ..."`,
+                    game2: `游戏 "Jump and say"：教师在地面放置闪卡，幼儿跳到对应卡片前说出单词。`,
+                    game3: `游戏 "Bingo"：幼儿在各自卡片上标记听到的单词，先完成者喊 "Bingo!"`,
+                    summary: `教师用思维导图或表格回顾今日所学，邀请几位幼儿展示句型。`,
+                    goodbye: `教师和幼儿一起唱再见歌，并鼓励幼儿用英语说出 "Goodbye, teacher!"`
+                },
+                large: {
+                    intro: `教师通过真实情境或短视频引入主题，提问 "What do you see?" 引导幼儿用完整句子回答。`,
+                    chant: `教师带领幼儿创编 chant，替换单词，如 "Apple, apple, I like apple. Do you like apple? Yes, I do!" 配合节奏。`,
+                    circle: `围坐成圆圈，教师展示闪卡，幼儿自主提问 "What's this?" 并回答 "It's a ..."`,
+                    flashcard: `教师展示闪卡，幼儿独立读出单词，并尝试用句型 "I like ... because ..." 表达。`,
+                    game1: `游戏 "Memory game"：展示多张闪卡，幼儿闭眼，教师拿走一张，幼儿猜出缺少的单词并用句型描述。`,
+                    game2: `游戏 "Role play"：幼儿分组扮演不同角色，用所学句型进行对话。`,
+                    game3: `游戏 "Sentence relay"：每组幼儿轮流用句型造句，接龙传递。`,
+                    summary: `幼儿分组进行成果展示，用英语介绍自己最喜欢的单词或句子。`,
+                    goodbye: `幼儿用英语互道再见，并约定下次活动主题。`
+                }
+            };
+
+            const steps = desc[age];
+            const stepNames = ['引入', 'Chant游戏', 'Circle', '闪卡', '游戏互动1', '游戏互动2', '游戏互动3', '总结', '再见'];
+            const stepKeys = ['intro', 'chant', 'circle', 'flashcard', 'game1', 'game2', 'game3', 'summary', 'goodbye'];
+            const defaultTimes = {
+                small: [3, 3, 4, 4, 4, 4, 4, 3, 2],
+                middle: [3, 4, 4, 5, 5, 5, 5, 3, 2],
+                large: [4, 4, 5, 5, 6, 6, 6, 4, 2]
+            };
+            const times = defaultTimes[age];
+
+            const stepList = stepKeys.map((key, idx) => {
+                return {
+                    name: stepNames[idx],
+                    desc: steps[key] || `${stepNames[idx]} 活动`,
+                    time: times[idx] || 3,
+                    id: key + '_' + age + '_' + idx
+                };
+            });
+
+            const objectives = [];
+            if (age === 'small') {
+                objectives.push(`能听懂并模仿说出 ${wordStr} 等单词。`);
+                objectives.push(`能在教师引导下参与简单游戏和 chant。`);
+                objectives.push(`对英语活动产生兴趣，愿意大胆尝试。`);
+            } else if (age === 'middle') {
+                objectives.push(`能较清晰说出 ${wordStr}，理解句型 "${grammarPhrase}" 的含义。`);
+                objectives.push(`能在游戏和互动中运用句型进行简单交流。`);
+                objectives.push(`积极参与集体活动，体验合作与分享的快乐。`);
+            } else {
+                objectives.push(`能自信表达 ${wordStr}，灵活运用句型 "${grammarPhrase}" 进行描述。`);
+                objectives.push(`能在情境中主动使用英语交流，初步具备合作学习能力。`);
+                objectives.push(`培养对英语学习的持续兴趣和自信心。`);
+            }
+
+            // 全英文稿件
+            const scriptLines = [];
+            scriptLines.push(`🎯 Lesson Plan for ${ageLabel}`);
+            scriptLines.push(`Words: ${wordStr}`);
+            scriptLines.push(`Grammar: ${grammarPhrase}`);
+            scriptLines.push('');
+            const stepNamesForScript = ['Introduction', 'Chant', 'Circle Time', 'Flashcards', 'Game 1', 'Game 2', 'Game 3',
+                'Summary', 'Goodbye'
+            ];
+            const stepDescs = [steps.intro, steps.chant, steps.circle, steps.flashcard, steps.game1, steps.game2, steps
+                .game3, steps.summary, steps.goodbye
+            ];
+            stepNamesForScript.forEach((name, i) => {
+                scriptLines.push(`🔹 ${name}:`);
+                scriptLines.push(stepDescs[i] || 'Activity');
+                scriptLines.push('');
+            });
+            scriptLines.push('--- Teacher Script ---');
+            scriptLines.push(
+                `Teacher: "Good morning, everyone! Today we are going to learn some words about ${wordStr}. Let's start!"`
+                );
+            scriptLines.push(`(Show flashcards and say each word clearly, encourage children to repeat.)`);
+            scriptLines.push(`Let's play a chant! (Lead the chant with clapping.)`);
+            scriptLines.push(`Now, let's sit in a circle and practice.`);
+            scriptLines.push(`Time for games! Are you ready?`);
+            scriptLines.push(`Great job! Let's review what we learned today.`);
+            scriptLines.push(`Goodbye, everyone! See you next time!`);
+
+            return {
+                age: age,
+                label: ageLabel,
+                badge: badgeClass,
+                objectives: objectives,
+                steps: stepList,
+                totalTime: stepList.reduce((sum, s) => sum + s.time, 0),
+                target: target,
+                fullScript: scriptLines.join('\n'),
+                words: wordStr,
+                grammar: grammarPhrase
+            };
+        }
+
+        // ============================================================
+        //  渲染教案
+        // ============================================================
+
+        function renderLessons(data) {
+            const container = document.getElementById('lessonContainer');
+            if (!data || data.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon-big">✨</div>
+                        <div class="text">暂无教案，请生成</div>
+                    </div>
+                `;
+                return;
+            }
+
+            let filtered = data;
+            if (currentFilter !== 'all') {
+                filtered = data.filter(item => item.age === currentFilter);
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon-big">🔍</div>
+                        <div class="text">当前年龄段暂无教案</div>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            filtered.forEach((lesson, idx) => {
+                const ageClass = lesson.badge;
+                const stepsHtml = lesson.steps.map((step, si) => {
+                    return `
+                        <div class="step-card" data-step-id="${step.id}">
+                            <div class="step-index">${String(si + 1).padStart(2, '0')}</div>
+                            <div class="step-content">
+                                <div class="step-name">${step.name}</div>
+                                <div class="step-desc">${step.desc}</div>
+                                <div class="step-time">⏱ ${step.time} 分钟</div>
+                            </div>
+                            <div class="step-actions">
+                                <button class="del-btn" onclick="deleteStep('${lesson.age}', ${si})" title="删除此环节">✕</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                const addBtn = `
+                    <button class="add-step-btn" onclick="addStep('${lesson.age}')">➕ 添加环节</button>
+                `;
+
+                const objHtml = lesson.objectives.map(o => `<li>${o}</li>`).join('');
+
+                html += `
+                    <div class="lesson-card" data-age="${lesson.age}">
+                        <span class="age-badge ${ageClass}">${lesson.label}</span>
+                        <div class="title">🎯 活动教案</div>
+                        <div class="sub">单词：${lesson.words} ｜ 语法：${lesson.grammar}</div>
+
+                        <div class="objective">
+                            <strong>📌 活动目标</strong>
+                            <ul>${objHtml}</ul>
+                            <p>💡 发展水平：${lesson.target}</p>
+                        </div>
+
+                        <div class="steps-container">
+                            ${stepsHtml}
+                            ${addBtn}
+                        </div>
+
+                        <div class="total-time">
+                            <span>⏱ 总时长</span>
+                            <span>${lesson.totalTime} 分钟</span>
+                        </div>
+
+                        <div class="reflection">
+                            <strong>🤔 活动反思引导</strong>
+                            <ul>
+                                <li>幼儿是否达成了本次活动目标？</li>
+                                <li>哪些环节幼儿参与度最高？为什么？</li>
+                                <li>游戏难度是否适合本班幼儿水平？</li>
+                                <li>教师语言输入是否清晰、可理解？</li>
+                                <li>下次活动可以如何改进？</li>
+                            </ul>
+                        </div>
+
+                        <div class="script-section">
+                            <details>
+                                <summary>📄 教师全英文稿件（可照读）</summary>
+                                <div class="script-content">${lesson.fullScript}</div>
+                            </details>
+                        </div>
+
+                        <div class="action-bar no-print">
+                            <button class="btn btn-sm btn-outline" onclick="copyScript('${lesson.age}')">📋 复制稿件</button>
+                            <button class="btn btn-sm btn-success" onclick="openPPT('${lesson.age}')">📊 生成PPT</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ============================================================
+        //  操作函数
+        // ============================================================
+
+        function deleteStep(age, index) {
+            const lesson = currentData.find(d => d.age === age);
+            if (!lesson) return;
+            if (lesson.steps.length <= 3) {
+                alert('至少保留3个环节');
+                return;
+            }
+            lesson.steps.splice(index, 1);
+            lesson.totalTime = lesson.steps.reduce((sum, s) => sum + s.time, 0);
+            lesson.fullScript = regenerateScript(lesson);
+            renderLessons(currentData);
+        }
+
+        function addStep(age) {
+            const lesson = currentData.find(d => d.age === age);
+            if (!lesson) return;
+            lesson.steps.push({
+                name: '新环节',
+                desc: '请在此描述活动内容',
+                time: 3,
+                id: 'new_' + Date.now()
+            });
+            lesson.totalTime = lesson.steps.reduce((sum, s) => sum + s.time, 0);
+            lesson.fullScript = regenerateScript(lesson);
+            renderLessons(currentData);
+        }
+
+        function regenerateScript(lesson) {
+            let lines = [];
+            lines.push(`🎯 Lesson Plan for ${lesson.label}`);
+            lines.push(`Words: ${lesson.words}`);
+            lines.push(`Grammar: ${lesson.grammar}`);
+            lines.push('');
+            lesson.steps.forEach((step, i) => {
+                lines.push(`🔹 ${step.name}:`);
+                lines.push(step.desc || '活动描述');
+                lines.push('');
+            });
+            lines.push('--- Teacher Script ---');
+            lines.push(
+                `Teacher: "Good morning, everyone! Today we are going to learn about ${lesson.words}. Let's start!"`);
+            lines.push(`(Lead the activities as planned.)`);
+            lines.push(`Great job! Let's review what we learned.`);
+            lines.push(`Goodbye, everyone! See you next time!`);
+            return lines.join('\n');
+        }
+
+        function copyScript(age) {
+            const lesson = currentData.find(d => d.age === age);
+            if (!lesson) return;
+            navigator.clipboard.writeText(lesson.fullScript).then(() => {
+                alert('✅ 稿件已复制到剪贴板');
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = lesson.fullScript;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('✅ 稿件已复制');
+            });
+        }
+
+        // ============================================================
+        //  生成所有教案
+        // ============================================================
+
+        function generateAll() {
+            const wordsInput = document.getElementById('wordsInput');
+            const grammarInput = document.getElementById('grammarInput');
+            const words = wordsInput.value.trim();
+            const grammar = grammarInput.value.trim();
+
+            if (!words) {
+                alert('请输入核心单词');
+                return;
+            }
+
+            const ages = ['small', 'middle', 'large'];
+            const result = ages.map(age => generateLesson(age, words, grammar || 'I like ...'));
+            currentData = result;
+            renderLessons(currentData);
+            document.querySelector('.lesson-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ============================================================
+        //  PPT 功能
+        // ============================================================
+
+        function openPPT(age) {
+            const lesson = currentData.find(d => d.age === age);
+            if (!lesson) {
+                alert('请先生成教案');
+                return;
+            }
+
+            // 构建幻灯片数据
+            pptSlides = [];
+            // 封面
+            pptSlides.push({
+                title: `🎯 ${lesson.label} 英文活动教案`,
+                sub: `单词：${lesson.words} ｜ 语法：${lesson.grammar}`,
+                body: `📌 活动目标：\n${lesson.objectives.map(o => '• ' + o).join('\n')}\n\n💡 发展水平：${lesson.target}\n\n⏱ 总时长：${lesson.totalTime} 分钟`,
+                isCover: true
+            });
+
+            // 每个步骤一页
+            lesson.steps.forEach((step, idx) => {
+                pptSlides.push({
+                    title: `步骤 ${idx + 1}：${step.name}`,
+                    sub: `⏱ ${step.time} 分钟`,
+                    body: step.desc || '活动描述',
+                    isCover: false
+                });
+            });
+
+            // 总结页
+            pptSlides.push({
+                title: '📝 活动总结与反思',
+                sub: '回顾与提升',
+                body: `✅ 回顾今日所学单词和句型\n✅ 观察幼儿参与度和目标达成情况\n✅ 哪些环节效果最好？哪些需要调整？\n✅ 下次活动优化方向`,
+                isCover: false
+            });
+
+            // 全英文稿件页
+            pptSlides.push({
+                title: '📄 教师全英文稿件',
+                sub: '可照读脚本',
+                body: lesson.fullScript,
+                isCover: false,
+                isScript: true
+            });
+
+            pptIndex = 0;
+            document.getElementById('pptTitle').textContent = `${lesson.label} · 教案PPT`;
+            document.getElementById('pptOverlay').classList.add('active');
+            renderPPT();
+        }
+
+        function renderPPT() {
+            const container = document.getElementById('pptSlides');
+            container.innerHTML = '';
+
+            pptSlides.forEach((slide, idx) => {
+                const div = document.createElement('div');
+                div.className = 'ppt-slide' + (idx === pptIndex ? ' active' : '');
+                div.dataset.index = idx;
+
+                let bodyHtml = slide.body;
+                // 如果是纯文本，按行转成段落
+                if (!slide.isCover && !slide.isScript) {
+                    bodyHtml = slide.body.split('\n').filter(line => line.trim()).map(line =>
+                        `<p style="margin-bottom:8px;">${line}</p>`
+                    ).join('');
+                } else if (slide.isCover) {
+                    bodyHtml = slide.body.split('\n').filter(line => line.trim()).map(line => {
+                        if (line.startsWith('📌') || line.startsWith('💡') || line.startsWith('⏱')) {
+                            return `<p style="font-weight:500;margin-bottom:6px;color:#4a6cf7;">${line}</p>`;
+                        }
+                        if (line.startsWith('•')) {
+                            return `<p style="margin-bottom:4px;padding-left:20px;">${line}</p>`;
+                        }
+                        return `<p style="margin-bottom:6px;">${line}</p>`;
+                    }).join('');
+                } else if (slide.isScript) {
+                    bodyHtml = `<pre style="font-family:inherit;white-space:pre-wrap;font-size:16px;line-height:1.8;color:rgba(255,255,255,0.85);">${slide.body}</pre>`;
+                } else {
+                    bodyHtml = `<p>${slide.body}</p>`;
+                }
+
+                div.innerHTML = `
+                    <div class="slide-number">${String(idx + 1).padStart(2, '0')} / ${pptSlides.length}</div>
+                    <div class="slide-title">${slide.title}</div>
+                    ${slide.sub ? `<div class="slide-sub">${slide.sub}</div>` : ''}
+                    <div class="slide-body">${bodyHtml}</div>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('pptProgress').textContent = `${pptIndex + 1} / ${pptSlides.length}`;
+            document.getElementById('pptPrev').disabled = pptIndex === 0;
+            document.getElementById('pptNext').disabled = pptIndex === pptSlides.length - 1;
+        }
+
+        function pptNext() {
+            if (pptIndex < pptSlides.length - 1) {
+                pptIndex++;
+                renderPPT();
+            }
+        }
+
+        function pptPrev() {
+            if (pptIndex > 0) {
+                pptIndex--;
+                renderPPT();
+            }
+        }
+
+        function closePPT() {
+            document.getElementById('pptOverlay').classList.remove('active');
+            // 退出全屏
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function exportPPT() {
+            window.print();
+        }
+
+        // 键盘控制
+        document.addEventListener('keydown', function(e) {
+            if (!document.getElementById('pptOverlay').classList.contains('active')) return;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                e.preventDefault();
+                pptNext();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                pptPrev();
+            } else if (e.key === 'Escape') {
+                closePPT();
+            }
+        });
+
+        // ============================================================
+        //  事件绑定
+        // ============================================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('generateBtn').addEventListener('click', generateAll);
+
+            document.getElementById('wordsInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') generateAll();
+            });
+            document.getElementById('grammarInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    generateAll();
+                }
+            });
+
+            document.querySelectorAll('.age-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.age-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.age;
+                    if (currentData.length > 0) renderLessons(currentData);
+                });
+            });
+
+            // 初始生成
+            setTimeout(generateAll, 300);
+        });
+
+        // 暴露全局
+        window.deleteStep = deleteStep;
+        window.addStep = addStep;
+        window.copyScript = copyScript;
+        window.openPPT = openPPT;
+        window.closePPT = closePPT;
+        window.pptNext = pptNext;
+        window.pptPrev = pptPrev;
+        window.toggleFullscreen = toggleFullscreen;
+        window.exportPPT = exportPPT;
+        window.renderLessons = renderLessons;
+        window.generateAll = generateAll;
+    </script>
+
+</body>
+</html>

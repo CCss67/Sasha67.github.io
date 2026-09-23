@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英国硕士DIY选校导航 · 从0到申请</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f0f4f8;
+    color: #1a2b3c;
+    line-height: 1.6;
+    padding: 16px;
+    max-width: 680px;
+    margin: 0 auto;
+    padding-bottom: 100px;
+  }
+  .header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 28px 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+  }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .header p { font-size: 14px; opacity: 0.9; line-height: 1.5; }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  .step {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border-left: 4px solid #2563eb;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .step-num {
+    background: #2563eb;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-title { font-size: 17px; font-weight: 700; color: #1e3a8a; }
+  .step-desc { font-size: 13px; color: #64748b; margin-bottom: 14px; padding-left: 38px; }
+  .tool-list { display: flex; flex-direction: column; gap: 10px; }
+  .tool-item {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid #e2e8f0;
+  }
+  .tool-item .name { font-weight: 600; font-size: 14px; color: #1e3a8a; margin-bottom: 3px; }
+  .tool-item .desc { font-size: 12.5px; color: #64748b; margin-bottom: 6px; }
+  .tool-item a {
+    display: inline-block;
+    font-size: 12.5px;
+    color: #2563eb;
+    text-decoration: none;
+    word-break: break-all;
+    background: #eff6ff;
+    padding: 3px 10px;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+  .tool-item a:active { background: #dbeafe; }
+  .prompt-template {
+    margin-top: 10px;
+    background: #eef2ff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px solid #c7d2fe;
+    position: relative;
+  }
+  .prompt-label {
+    font-size: 11.5px;
+    color: #4338ca;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .prompt-text {
+    font-size: 12px;
+    color: #1e3a8a;
+    line-height: 1.5;
+    word-break: break-word;
+    font-family: monospace;
+    background: #fff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #e0e7ff;
+    user-select: all;
+    white-space: pre-wrap;
+  }
+  .sop-box {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 10px;
+  }
+  .sop-box .sop-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sop-step {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+  }
+  .sop-step:last-child { margin-bottom: 0; }
+  .sop-step .snum {
+    background: #0ea5e9;
+    color: #fff;
+    font-weight: 700;
+    font-size: 11px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .sop-step .stext { color: #334155; line-height: 1.5; }
+  .sop-step .stext strong { color: #0369a1; }
+  .method-box {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+    margin-top: 10px;
+  }
+  .method-step {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .method-step:last-child { margin-bottom: 0; }
+  .method-step .num {
+    background: #dbeafe;
+    color: #1e3a8a;
+    font-weight: 700;
+    font-size: 12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .method-step .text { color: #334155; line-height: 1.5; }
+  .method-step .text strong { color: #1e3a8a; }
+  .uni-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .uni-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 11px 14px;
+    border: 1px solid #e2e8f0;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+  .uni-item:active { background: #eff6ff; }
+  .uni-item .uni-name { font-size: 14px; font-weight: 500; color: #1a2b3c; }
+  .uni-item .uni-rank {
+    font-size: 11px;
+    color: #94a3b8;
+    background: #f1f5f9;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+  }
+  .uni-item .arrow { color: #2563eb; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+  .video-list { display: flex; flex-direction: column; gap: 8px; }
+  .video-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid #e2e8f0;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+  .video-item:active { background: #eff6ff; }
+  .video-item .icon { font-size: 18px; flex-shrink: 0; }
+  .video-item .vtitle { font-size: 13px; color: #1a2b3c; line-height: 1.4; }
+  .video-item .vlink { font-size: 11px; color: #94a3b8; margin-top: 2px; word-break: break-all; }
+  .deadline-box {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: #92400e;
+    line-height: 1.6;
+  }
+  .deadline-box strong { color: #78350f; }
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 24px;
+    padding: 0 10px;
+    line-height: 1.6;
+  }
+  .tag {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1e3a8a;
+    font-size: 11px;
+    padding: 1px 8px;
+    border-radius: 8px;
+    margin-left: 6px;
+    font-weight: 500;
+  }
+  .tag.free { background: #dcfce7; color: #166534; }
+  .abbr-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin-top: 8px;
+  }
+  .abbr-table th, .abbr-table td {
+    border: 1px solid #e2e8f0;
+    padding: 6px 8px;
+    text-align: left;
+  }
+  .abbr-table th {
+    background: #f1f5f9;
+    color: #1e3a8a;
+    font-weight: 600;
+  }
+  .abbr-table td { color: #334155; }
+  .print-btn {
+    display: inline-block;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 10px;
+    text-decoration: none;
+  }
+  .print-btn:active { background: #1e3a8a; }
+  @media print {
+    body * { visibility: hidden; }
+    .abbr-section, .abbr-section * { visibility: visible; }
+    .abbr-section { position: absolute; left: 0; top: 0; width: 100%; }
+    .print-btn { display: none; }
+  }
+  .step.writing { border-left-color: #7c3aed; }
+  .step.writing .step-num { background: #7c3aed; }
+  .step.writing .step-title { color: #5b21b6; }
+  .step.writing .sop-box { background: #f5f3ff; border-color: #ddd6fe; }
+  .step.writing .sop-box .sop-title { color: #6d28d9; }
+  .step.writing .sop-step .snum { background: #8b5cf6; }
+  .step.writing .sop-step .stext strong { color: #6d28d9; }
+  .step.writing .prompt-template { background: #f5f3ff; border-color: #ddd6fe; }
+  .step.writing .prompt-label { color: #6d28d9; }
+  .step.writing .prompt-text { color: #4c1d95; border-color: #ede9fe; }
+
+  /* ===== 复制按钮 ===== */
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background .2s;
+    z-index: 2;
+  }
+  .copy-btn:active { background: #1e3a8a; }
+  .copy-btn.copied { background: #16a34a; }
+
+  /* ===== 搜索框 ===== */
+  .search-box {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .search-box input {
+    flex: 1;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    outline: none;
+    background: #f8fafc;
+  }
+  .search-box input:focus { border-color: #2563eb; background: #fff; }
+  .search-box .search-count {
+    font-size: 11px;
+    color: #64748b;
+    white-space: nowrap;
+    min-width: 50px;
+    text-align: right;
+  }
+  .search-box .search-close {
+    background: #f1f5f9;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #64748b;
+  }
+  .search-hit {
+    background: #fef08a !important;
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+  .search-hit-active {
+    background: #fb923c !important;
+    color: #fff;
+  }
+
+  /* ===== 暗色模式 ===== */
+  .theme-toggle {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(37,99,235,.4);
+    z-index: 999;
+    transition: transform .2s, background .2s;
+  }
+  .theme-toggle:active { transform: scale(.92); }
+  body.dark { background: #0f172a; color: #e2e8f0; }
+  body.dark .header { background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); box-shadow: 0 4px 16px rgba(0,0,0,.5); }
+  body.dark .step, body.dark .search-box { background: #1e293b; color: #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,.4); }
+  body.dark .step-title { color: #60a5fa; }
+  body.dark .step-desc { color: #94a3b8; }
+  body.dark .tool-item, body.dark .method-box, body.dark .uni-item, body.dark .video-item {
+    background: #0f172a;
+    border-color: #334155;
+    color: #e2e8f0;
+  }
+  body.dark .tool-item .name, body.dark .uni-item .uni-name { color: #93c5fd; }
+  body.dark .tool-item .desc, body.dark .method-step .text, body.dark .sop-step .stext { color: #cbd5e1; }
+  body.dark .sop-box { background: #1e3a5f; border-color: #1e40af; }
+  body.dark .sop-box .sop-title { color: #93c5fd; }
+  body.dark .prompt-template { background: #1e3a5f; border-color: #1e40af; }
+  body.dark .prompt-text { background: #0f172a; color: #e2e8f0; border-color: #334155; }
+  body.dark .abbr-table th { background: #1e293b; color: #93c5fd; border-color: #334155; }
+  body.dark .abbr-table td { color: #cbd5e1; border-color: #334155; }
+  body.dark .deadline-box { background: #422006; border-color: #78350f; color: #fed7aa; }
+  body.dark .search-box input { background: #0f172a; border-color: #334155; color: #e2e8f0; }
+  body.dark .footer { color: #64748b; }
+  body.dark .header h1, body.dark .header p { color: #fff; }
+  body.dark .step.writing { border-left-color: #a78bfa; }
+  body.dark .step.writing .step-num { background: #7c3aed; }
+  body.dark .step.writing .step-title { color: #c4b5fd; }
+</style>
+</head>
+<body>
+
+<!-- 搜索框 -->
+<div class="search-box" id="searchBox">
+  <span style="font-size:16px;">🔍</span>
+  <input type="text" id="searchInput" placeholder="搜索页面内容...">
+  <span class="search-count" id="searchCount"></span>
+  <button class="search-close" id="searchClose" style="display:none;">✕</button>
+</div>
+
+<div class="header">
+  <h1>🇬🇧 英国硕士 DIY 选校导航</h1>
+  <p>不需要中介，不需要付费工具。按照以下 6 步，用免费网页工具从 0 完成英国硕士选校和申请。</p>
+  <span class="badge">✨ 全部免费 · 手机适配 · 点击即用</span>
+</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">1</div>
+    <div class="step-title">背景评估</div>
+  </div>
+  <div class="step-desc">先弄清楚自己的本科院校、均分、语言成绩能匹配什么档次的学校。</div>
+  <div class="tool-list">
+    <div class="tool-item">
+      <div class="name">Apply UK Center <span class="tag free">免费</span></div>
+      <div class="desc">AI 背景评估，30 秒出结果，覆盖伯明翰、杜伦、谢菲尔德等 8 所罗素集团大学，无推销压力。</div>
+      <a href="https://www.applyukcenter.com" target="_blank">打开工具 →</a>
+    </div>
+    <div class="tool-item">
+      <div class="name">UNILINK 留学 AI 工具 <span class="tag free">免费</span></div>
+      <div class="desc">提供选校候选与定位参考、申请时间线与材料清单生成。</div>
+      <a href="https://ulec.com.cn" target="_blank">打开工具 →</a>
+    </div>
+    <div class="tool-item">
+      <div class="name">DeepSeek <span class="tag free">免费</span></div>
+      <div class="desc">AI 对话助手，可根据你的背景定制选校方案和预算分析。点击打开后，复制下方模板发给它。</div>
+      <a href="https://chat.deepseek.com/" target="_blank">打开 DeepSeek →</a>
+      <div class="prompt-template">
+        <div class="prompt-label">📋 套用模板（复制后修改括号内容）：</div>
+        <div class="prompt-text">你好，我想申请英国硕士，请帮我制定选校方案和预算分析。我的背景如下：
+
+- 当前状态：[在读/已毕业]
+- 本科院校：[学校名称]（[985/211/双一流/双非/中外合作]）
+- 本科专业：[专业名称]
+- 均分：[均分]（百分制），GPA：[如有]
+- 语言成绩：[雅思/托福分数，小分；或计划考试时间]
+- 实习/科研/工作经历：[几段，简要说明]
+- 目标专业方向：[如 Data Science / Marketing / Education 等]
+- 目标入学年份：[如 2027 Fall]
+- 意向排名范围：[如 QS前100 / 前200]
+- 预算：[总预算或每年预算，币种，是否含生活费]
+- 偏好地区：[伦敦 / 非伦敦 / 不限]
+- 特殊要求：[是否需要GRE/GMAT、作品集、转专业等]
+- 毕业后计划：[留英工作 / 回国]
+
+请给我所有可能的选校方案（冲刺/匹配/保底），并列出每所学校的专业名称、学费、大致生活费、均分要求、雅思要求和申请截止时间，最后给出总预算估算。
+
+另外，请告诉我：
+1. 申请英国硕士需要准备哪些材料（如成绩单、推荐信、个人陈述、简历等），并给出每项材料的准备建议和时间规划。
+2. 针对我的背景，有哪些提升竞争力的建议？</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="step abbr-section">
+  <div class="step-header">
+    <div class="step-num" style="background:#0ea5e9;">📖</div>
+    <div class="step-title">留学常用缩写速查</div>
+  </div>
+  <div class="step-desc">第一次留学，这些缩写会反复出现。可打印或保存为 PDF 随时查看。</div>
+  <table class="abbr-table">
+    <thead>
+      <tr><th>缩写</th><th>全称</th><th>含义</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>UK</td><td>United Kingdom</td><td>英国</td></tr>
+      <tr><td>QS</td><td>Quacquarelli Symonds</td><td>世界大学排名</td></tr>
+      <tr><td>GPA</td><td>Grade Point Average</td><td>平均绩点</td></tr>
+      <tr><td>IELTS</td><td>International English Language Testing System</td><td>雅思</td></tr>
+      <tr><td>TOEFL</td><td>Test of English as a Foreign Language</td><td>托福</td></tr>
+      <tr><td>PS</td><td>Personal Statement</td><td>个人陈述</td></tr>
+      <tr><td>CV</td><td>Curriculum Vitae</td><td>简历</td></tr>
+      <tr><td>RL</td><td>Reference Letter</td><td>推荐信</td></tr>
+      <tr><td>List</td><td>Approved University List</td><td>认可院校名单</td></tr>
+      <tr><td>2:1</td><td>Second Class Honours, Upper Division</td><td>英本二等一学位</td></tr>
+      <tr><td>2:2</td><td>Second Class Honours, Lower Division</td><td>英本二等二学位</td></tr>
+      <tr><td>CAS</td><td>Confirmation of Acceptance for Studies</td><td>录取确认函</td></tr>
+      <tr><td>Offer</td><td>Offer Letter</td><td>录取通知书</td></tr>
+      <tr><td>DDL</td><td>Deadline</td><td>截止日期</td></tr>
+      <tr><td>Deposit</td><td>Tuition Deposit</td><td>学费押金</td></tr>
+    </tbody>
+  </table>
+  <button class="print-btn" onclick="window.print()">🖨️ 打印 / 保存为 PDF</button>
+</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">2</div>
+    <div class="step-title">查询认可名单（List）</div>
+  </div>
+  <div class="step-desc">英国名校采用"准入制"，本科院校不在 List 上，均分再高也会被系统自动过滤。</div>
+
+  <div class="tool-list">
+    <div class="tool-item">
+      <div class="name">爱丁堡大学 · 中国院校 List</div>
+      <div class="desc">官网直接公布中国院校名单与对应均分要求。</div>
+      <a href="https://www.ed.ac.uk/studying/international/postgraduate-entry/asia/china" target="_blank">查看 List →</a>
+    </div>
+    <div class="tool-item">
+      <div class="name">UCL · 中国院校 List</div>
+      <div class="desc">UCL 对中国申请者的院校分类与成绩要求说明。</div>
+      <a href="https://www.ucl.ac.uk/prospective-students/international/china" target="_blank">查看 List →</a>
+    </div>
+    <div class="tool-item">
+      <div class="name">新东方 · List 制度详解</div>
+      <div class="desc">包含三类院校对应的准入待遇和通用查询方法。</div>
+      <a href="https://mtoutiao.xdf.cn/goabroad/202607/15302856.html" target="_blank">阅读文章 →</a>
+    </div>
+  </div>
+
+  <div class="sop-box" style="margin-top:14px;">
+    <div class="sop-title">📖 通用方法：在任意大学官网查中国院校 List 的 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext">打开目标大学官网（例如 <strong>manchester.ac.uk</strong>），在首页顶部菜单找到 <strong>"Study"</strong>（学习/招生），或 <strong>"Admissions"</strong>（招生），点击进入。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext">在 Study 页面找到 <strong>"Postgraduate"</strong>（研究生）入口，点击进入。然后选择 <strong>"International Students"</strong>（国际学生）或 <strong>"Country-specific information"</strong>（国家专属信息）。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext">在 Country-specific 页面找到 <strong>"China"</strong>（中国），点击进入中国申请者专属页面。这里通常会列出 <strong>认可的中国院校名单（List）</strong> 和对应均分要求。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext">如果学校没有单独的中国页面，回到课程详情页，在 <strong>"Entry Requirements"</strong>（入学要求）板块中找到 <strong>"International Qualifications"</strong>（国际学历资格）链接，点击后选择 China，即可看到 List 和均分要求。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext">部分大学（如爱丁堡、UCL）会直接提供 <strong>PDF 版 List 文件</strong>。点击页面上的 <strong>"Download"</strong>（下载）或 <strong>"PDF"</strong> 按钮即可下载查看。如果找不到，可在 Google 搜索 <strong>"大学名称 + China List + 年份"</strong>。</div>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">3</div>
+    <div class="step-title">查学费与核心课程</div>
+  </div>
+  <div class="step-desc">在目标大学的课程页面，按 Ctrl+F 搜索 "Fee" 或 "Tuition" 即可找到国际学生学费。</div>
+
+  <div class="tool-item" style="margin-bottom:12px;">
+    <div class="name">Whatuni <span class="tag free">免费</span></div>
+    <div class="desc">超过 60,000 个英国学位课程，可筛选学费范围和生活成本计算。</div>
+    <a href="https://www.whatuni.com" target="_blank">打开工具 →</a>
+  </div>
+  <div class="sop-box">
+    <div class="sop-title">📖 Whatuni 操作 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext">打开 <strong>whatuni.com</strong>，在首页顶部搜索框输入你感兴趣的专业名称（例如 "Data Science"），点击 <strong>Search</strong>（搜索）。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext">搜索结果页左侧会出现筛选栏（Filter）。在 <strong>"Study level"</strong>（学习阶段）中勾选 <strong>"Postgraduate"</strong>（研究生），在 <strong>"Location"</strong>（地点）中选择 England / Scotland 等地区，快速缩小范围。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext">点击任意一条课程结果，进入课程详情页。页面上方显示 <strong>课程全名、大学名称、学制</strong>，中间有 <strong>"Course overview"</strong>（课程概述）和 <strong>"Modules"</strong>（课程模块）板块，这就是你要找的核心课程信息。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext">在课程详情页向下滚动，找到 <strong>"Fees & funding"</strong>（费用与资助）区域。这里会分列 <strong>UK students</strong>（英国学生）和 <strong>International students</strong>（国际学生）两个价格，国际学生学费一目了然。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext">如果想对比多个课程，点击课程卡片右上角的 <strong>❤️ 爱心图标</strong> 加入收藏，之后回到个人主页点击 <strong>"Compare"</strong>（对比）即可横向对比学费、课程长度等关键信息。</div>
+    </div>
+  </div>
+
+  <div class="tool-item" style="margin-top:12px; margin-bottom:12px;">
+    <div class="name">UniPath <span class="tag free">免费</span></div>
+    <div class="desc">可比较大学学费和排名，覆盖 70+ 大学。</div>
+    <a href="https://www.producthunt.com/products/unipath" target="_blank">打开工具 →</a>
+  </div>
+  <div class="sop-box">
+    <div class="sop-title">📖 UniPath 操作 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext">打开页面后，点击 <strong>"Visit website"</strong>（访问网站）或 <strong>"Get started"</strong>（开始使用）进入 UniPath 主站。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext">在首页搜索框输入专业关键词（例如 "Computer Science"），选择 <strong>"United Kingdom"</strong>（英国）和 <strong>"Master's"</strong>（硕士），点击搜索。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext">结果列表会显示每所大学的 <strong>学费、排名、课程时长</strong>。点击任意一条结果，可查看详细费用拆解和课程信息。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext">如果想对比多所大学，勾选课程左侧的 <strong>复选框</strong>，然后点击页面底部的 <strong>"Compare"</strong>（对比）按钮，即可横向对比学费和排名。</div>
+    </div>
+  </div>
+
+  <div class="sop-box" style="margin-top:12px;">
+    <div class="sop-title">📖 大学官网查学费 + 课程 SOP（以任意大学为例）</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext">打开目标大学官网（例如 <strong>manchester.ac.uk</strong>），在首页找到 <strong>"Study"</strong>（学习/招生）或 <strong>"Courses"</strong>（课程）菜单，点击进入课程搜索页面。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext">在课程搜索页选择 <strong>"Postgraduate"</strong>（研究生），在搜索框输入专业关键词，点击 <strong>Search</strong>（搜索）。看到课程列表后，点击课程名称进入详情页。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext">进入课程详情页后，按键盘快捷键 <strong>Ctrl + F</strong>（Mac 是 <strong>Command + F</strong>），在页面内搜索 <strong>"Fee"</strong>（费用）或 <strong>"Tuition"</strong>（学费）。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext">找到学费区域后，你会看到两个数字：一个是 <strong>Home / UK</strong>（本土/英国），一个是 <strong>International / Overseas</strong>（国际/海外）。你要看的是 <strong>International</strong> 那一栏。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext">继续在页面上按 <strong>Ctrl + F</strong>（Mac 是 <strong>Command + F</strong>），搜索 <strong>"Modules"</strong>（课程模块）或 <strong>"Course content"</strong>（课程内容）。页面会跳转到课程结构部分，通常分为 <strong>"Core modules"</strong>（核心课程）和 <strong>"Optional modules"</strong>（选修课程）。点击任意课程名称，可以查看该课程的详细简介、学分和考核方式。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">6</div>
+      <div class="stext">再次按 <strong>Ctrl + F</strong>，搜索 <strong>"Entry Requirements"</strong>（入学要求）。页面会跳转到入学要求板块。这里会列出学术要求，通常写 <strong>"2:1"</strong>（二等一学位）或 <strong>"2:2"</strong>（二等二学位）学位等级。对于中国学生，会有一个换算表，例如 <strong>"2:1 equivalent to 80–85% from a Chinese university"</strong>（二等一学位相当于中国大学 80–85 分）。同时会列出英语语言要求，如 <strong>IELTS 6.5 (no less than 6.0)</strong>（雅思 6.5，小分不低于 6.0）。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">7</div>
+      <div class="stext">如果页面没有直接显示中国均分换算，在 <strong>Entry Requirements</strong>（入学要求）区域找到 <strong>"International qualifications"</strong>（国际学历资格）或 <strong>"Country-specific requirements"</strong>（国家专属要求）链接，点击后选择 <strong>China</strong>（中国），即可看到针对中国本科院校的均分要求。部分学校会在这里直接提供 PDF 版的中国院校 List。</div>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">4</div>
+    <div class="step-title">官网信息核实四步法</div>
+  </div>
+  <div class="step-desc">确定目标专业后，进入大学官网，按以下四步核实所有关键信息。</div>
+  <div class="method-box">
+    <div class="method-step">
+      <div class="num">1</div>
+      <div class="text"><strong>找到课程页面</strong>：在官网首页找到 "Course Finder"（课程查找器）或 "Find a Course"（查找课程），输入专业名称进入具体课程页面。</div>
+    </div>
+    <div class="method-step">
+      <div class="num">2</div>
+      <div class="text"><strong>查找学费</strong>：在课程页面按 Ctrl+F 搜索 "Fee"（费用）或 "Tuition"（学费），查看 International（国际学生）学费。如果没有直接显示，查看 "Fees and Funding"（费用与资助）专区。</div>
+    </div>
+    <div class="method-step">
+      <div class="num">3</div>
+      <div class="text"><strong>查找中国院校 List</strong>：在 "Entry Requirements"（入学要求）中查找 "China"（中国）或 "International Qualifications"（国际学历资格）链接。部分大学会直接公布 PDF 名单。</div>
+    </div>
+    <div class="method-step">
+      <div class="num">4</div>
+      <div class="text"><strong>核实语言和申请费</strong>：在 "English Language Requirements"（英语语言要求）查看雅思要求；在 "How to Apply"（如何申请）页面查看申请费（通常 £50–£120）。</div>
+    </div>
+  </div>
+</div>
+
+<div class="step" style="border-left-color: #0891b2;">
+  <div class="step-header">
+    <div class="step-num" style="background:#0891b2;">🎯</div>
+    <div class="step-title">这个专业卡不卡背景？</div>
+  </div>
+  <div class="step-desc">DeepSeek 推荐的专业，不一定接受你的本科背景。申请前必须先确认：这个专业是否要求相关本科专业，或者是否有先修课程要求。</div>
+
+  <div class="sop-box" style="background:#ecfeff; border-color:#a5f3fc;">
+    <div class="sop-title" style="color:#0e7490;">📖 判断专业是否卡背景 SOP</div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0891b2;">1</div>
+      <div class="stext"><strong>打开目标大学的课程详情页。</strong>在官网找到该专业的课程页面（如 <strong>manchester.ac.uk</strong> → <strong>Study</strong>（学习/招生）→ <strong>Postgraduate</strong>（研究生）→ 搜索专业名称）。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0891b2;">2</div>
+      <div class="stext"><strong>按 Ctrl+F 搜索 "Entry Requirements"（入学要求）。</strong>这是所有入学要求的集中区域。如果页面没有直接显示，找 <strong>"Admissions"</strong>（招生）或 <strong>"How to Apply"</strong>（如何申请）标签页。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0891b2;">3</div>
+      <div class="stext"><strong>看学术要求的第一句话。</strong>常见表述分三种：<br>
+      • <strong>"A 2:1 degree in a relevant subject"</strong>（二等一学位，相关专业）→ <span style="color:#dc2626;">明确要求相关专业</span>，跨专业大概率被拒<br>
+      • <strong>"A 2:1 degree in any subject"</strong>（二等一学位，任何专业）→ <span style="color:#16a34a;">不卡背景</span>，任何专业均可申请<br>
+      • <strong>"A 2:1 degree in a relevant subject, or equivalent professional experience"</strong>（二等一学位，相关专业或同等职业经验）→ <span style="color:#d97706;">有条件开放</span>，相关实习/工作经验可替代专业背景</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0891b2;">4</div>
+      <div class="stext"><strong>检查是否有"先修课程"要求。</strong>在 Entry Requirements（入学要求）中搜索 <strong>"prerequisite"</strong>（先修课程）、<strong>"prior study"</strong>（先前学习）、<strong>"core modules"</strong>（核心课程）等关键词。例如数据科学专业可能要求"统计与概率、线性代数、编程（Python/R/Java 其一）、微积分与离散数学"。缺少这些课程，即使专业名称不卡背景，也可能被拒。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0891b2;">5</div>
+      <div class="stext"><strong>查看是否接受"转换课程（Conversion Course）"。</strong>如果页面提到 <strong>"Conversion"</strong>（转换课程）或 <strong>"designed for students from other disciplines"</strong>（为其他学科学生设计），说明该专业专门为跨专业申请者设计，不卡背景，例如 QMUL 的 <strong>MSc Computer Science (Conversion)</strong>。在官网搜索专业名称时加上 "Conversion" 关键词即可找到。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0891b2;">6</div>
+      <div class="stext"><strong>用 AI 工具快速匹配。</strong>打开 <strong>Apply UK Center</strong>（免费），在"背景评估"中输入你的本科专业和均分，AI 会自动匹配接受该背景的英国大学和专业，30 秒出结果。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0891b2;">7</div>
+      <div class="stext"><strong>如果还是不确定，直接发邮件问招生办。</strong>邮件模板：<br>
+      <em>"Dear Admissions Team, I hold a bachelor's degree in [你的专业] from [你的学校]. I am interested in [专业名称] (Programme Code: XXX). Could you please confirm whether my academic background meets the entry requirements for this programme? Thank you."</em><br>
+      发送至课程页面底部或 <strong>Contact us</strong>（联系我们）页面上的招生邮箱，通常 1–3 个工作日回复。</div>
+    </div>
+  </div>
+
+  <div class="tool-list" style="margin-top:12px;">
+    <div class="tool-item">
+      <div class="name">Apply UK Center · AI 背景匹配 <span class="tag free">免费</span></div>
+      <div class="desc">输入本科专业和均分，AI 自动匹配接受该背景的英国大学和专业，30 秒出结果。</div>
+      <a href="https://www.applyukcenter.com" target="_blank">打开工具 →</a>
+    </div>
+    <div class="tool-item">
+      <div class="name">UCAS Postgraduate · 入学要求参考 <span class="tag free">官方</span></div>
+      <div class="desc">UCAS 官方硕士入学要求说明，了解英国大学通常接受的学位等级和学科要求。</div>
+      <a href="https://www.ucas.com/postgraduate" target="_blank">查看页面 →</a>
+    </div>
+  </div>
+</div>
+
+<div class="step" style="border-left-color: #7c3aed;">
+  <div class="step-header">
+    <div class="step-num" style="background:#7c3aed;">📚</div>
+    <div class="step-title">核心课程都有什么？有没有我不喜欢的？</div>
+  </div>
+  <div class="step-desc">专业名称听起来对口，不代表课程内容你喜欢。申请前必须打开课程模块页面，逐门看核心课程（Core Modules）的简介和考核方式。</div>
+
+  <div class="sop-box" style="background:#f5f3ff; border-color:#ddd6fe;">
+    <div class="sop-title" style="color:#6d28d9;">📖 查看核心课程内容 SOP</div>
+    <div class="sop-step">
+      <div class="snum" style="background:#8b5cf6;">1</div>
+      <div class="stext"><strong>在课程详情页找到 Modules / Course Structure 板块。</strong>打开目标专业的课程页面后，按 <strong>Ctrl+F</strong>（Mac 是 <strong>Command+F</strong>），搜索 <strong>"Modules"</strong>（课程模块）、<strong>"Course content"</strong>（课程内容）或 <strong>"Course structure"</strong>（课程结构）。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#8b5cf6;">2</div>
+      <div class="stext"><strong>区分核心课程和选修课程。</strong>页面通常分两栏：<br>
+      • <strong>Core modules / Compulsory modules</strong>（核心课程/必修课程）→ <span style="color:#dc2626;">所有学生必须修读，无法逃避</span><br>
+      • <strong>Optional modules / Elective modules</strong>（选修课程）→ <span style="color:#16a34a;">可以从列表中选择，有一定自由度</span><br>
+      先看核心课程，因为这部分决定了你大部分的学习内容。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#8b5cf6;">3</div>
+      <div class="stext"><strong>点击每一门核心课程名称，查看模块详情。</strong>大多数大学会把课程名称做成超链接，点击后进入 <strong>"Module Descriptor"</strong>（模块描述）页面。如果页面没有超链接，在官网搜索 <strong>"模块名称 + 大学名称"</strong>，例如 <strong>"Database Systems Queen Mary module"</strong>。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#8b5cf6;">4</div>
+      <div class="stext"><strong>重点看四个信息：</strong><br>
+      • <strong>课程简介（Overview / Aims）</strong>：这门课到底学什么？<br>
+      • <strong>教学大纲（Syllabus / Topics）</strong>：每周的具体主题是什么？<br>
+      • <strong>考核方式（Assessment）</strong>：考试、论文、小组项目、还是代码作业？占比多少？<br>
+      • <strong>先修要求（Prerequisites）</strong>：是否需要特定的本科课程基础？</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#8b5cf6;">5</div>
+      <div class="stext"><strong>下载 Module Catalogue / Programme Specification。</strong>很多大学提供完整的模块目录文件（PDF），里面包含所有课程模块的详细描述。在英国大学官网搜索 <strong>"Module Catalogue"</strong>（模块目录）或 <strong>"Programme Specification"</strong>（项目说明书），找到你目标专业的文件下载即可。例如，萨里大学的 <strong>Programme/Module Catalogue</strong> 可以查看所有课程和模块的完整内容。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#8b5cf6;">6</div>
+      <div class="stext"><strong>如果还是找不到，用 Google 精准搜索。</strong>在 Google 输入 <strong>site:大学域名 专业名称 module descriptor</strong>，例如 <strong>site:qmul.ac.uk Computer Science module</strong>。QMUL 的模块目录地址是 <strong>qmul.ac.uk/modules/</strong>，可以直接按关键词搜索。</div>
+    </div>
+  </div>
+
+  <div class="tool-list" style="margin-top:12px;">
+    <div class="tool-item">
+      <div class="name">萨里大学 · Module Catalogue（示例） <span class="tag free">免费</span></div>
+      <div class="desc">可参考这种"Programme/Module Catalogue"的形式，在任意大学官网查找核心课程和选修课程的完整描述。</div>
+      <a href="https://catalogue.surrey.ac.uk/" target="_blank">查看示例 →</a>
+    </div>
+    <div class="tool-item">
+      <div class="name">QMUL · Module Directory（示例） <span class="tag free">免费</span></div>
+      <div class="desc">伦敦玛丽女王大学的模块目录，可按关键词搜索任意课程的模块描述、学分和考核方式。</div>
+      <a href="https://www.qmul.ac.uk/modules/" target="_blank">查看示例 →</a>
+    </div>
+  </div>
+</div>
+
+<div class="step writing">
+  <div class="step-header">
+    <div class="step-num">5</div>
+    <div class="step-title">文书写作（CV · PS · RL）</div>
+  </div>
+  <div class="step-desc">用 DeepSeek 扮演文书顾问，通过多轮追问帮你收集素材，最终产出 CV、两篇 PS、两封推荐信。</div>
+
+  <div class="tool-item" style="margin-bottom:12px;">
+    <div class="name">DeepSeek <span class="tag free">免费</span></div>
+    <div class="desc">AI 对话助手，可作为你的私人文书顾问。打开后，复制下方 Prompt 发给它，开始多轮问答。</div>
+    <a href="https://chat.deepseek.com/" target="_blank">打开 DeepSeek →</a>
+  </div>
+
+  <div class="sop-box">
+    <div class="sop-title">📖 文书写作 Prompt 使用 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>打开 DeepSeek</strong>，把下方紫色框里的 Prompt 完整复制，粘贴到对话框发送。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>认真回答它的提问。</strong>它会分阶段问你 2–3 个问题，涉及教育背景、实习经历、申请目标、职业规划、推荐人信息等。回答越具体越好，尤其是数字、细节、个人感受。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>如果问得不够深</strong>，你可以回复："请继续追问"或"能不能再挖细一点"。它就会用 STAR 法则帮你深挖经历。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>信息收集完毕后</strong>，它会自动整理清单，并开始撰写一份 CV、两篇 PS、两封推荐信草稿。写完后逐份发给你确认。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext"><strong>如果对某篇 PS 有特殊要求</strong>，在它提问时直接说明，比如"PS1 我想偏学术，PS2 偏职业规划"或"这两篇 PS 分别针对不同学校"。</div>
+    </div>
+  </div>
+
+  <div class="prompt-template" style="margin-top:14px;">
+    <div class="prompt-label">📋 文书写作 Prompt（复制以下全部内容发给 DeepSeek）：</div>
+    <div class="prompt-text">你现在是一位资深的英国硕士留学文书写作顾问，擅长撰写 CV、个人陈述（PS）和推荐信（LR）。你的任务是通过与我对话，逐步收集我的背景信息，最终帮我撰写一套完整的申请文书：一份 CV、两篇 PS、两封推荐信。
+
+请严格按照以下要求进行：
+
+1. 不要一次性问完所有问题，而是分阶段提问，每次只问 2–3 个问题，等我回答后，再根据我的回答深入追问。
+2. 提问要具体，引导我回忆细节，比如使用 STAR 法则（情境、任务、行动、结果）挖掘经历。
+3. 你需要收集的信息包括但不限于：
+   - 个人基本信息：姓名、联系方式、教育背景（学校、专业、均分、核心课程）
+   - 学术经历：论文、研究项目、竞赛、学术成果
+   - 实习/工作经历：公司、职位、时间、职责、成就、量化结果
+   - 课外活动/志愿者/社团：角色、贡献、收获
+   - 技能与证书：语言成绩、计算机技能、专业证书
+   - 申请目标：目标学校、专业、为什么选择该专业和学校
+   - 职业规划：短期和长期目标
+   - 个人特质与故事：影响你的事件、你的独特之处
+   - 两篇 PS 的不同侧重点（请告诉我你希望两篇 PS 分别侧重什么，例如一篇学术导向、一篇职业导向；或者针对不同学校）
+   - 推荐人信息：两位推荐人的姓名、职位、与你的关系、他们可能了解你的哪些方面、你希望推荐信强调什么
+4. 每当我回答后，你要先简要总结你获得的信息，然后继续追问下一组问题。
+5. 当你认为信息已经足够齐全时，请告诉我"信息收集完毕"，并列出你整理出的完整信息清单，然后开始撰写文书。
+6. 最终产出：一份英文 CV、两篇英文 PS、两封英文推荐信草稿。写完后，请逐份发给我确认。
+
+现在，请开始你的第一个问题。</div>
+  </div>
+
+  <div class="sop-box" style="margin-top:12px;">
+    <div class="sop-title">💡 文书写作小贴士</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>PS 不要写成 CV 的扩写。</strong>PS 要讲一个故事，说明你为什么选这个专业、你为此做了什么准备、你未来想做什么。CV 是罗列事实，PS 是串联逻辑。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>两篇 PS 要有明显差异。</strong>如果申请不同专业，侧重点应不同；如果申请同一专业的不同学校，可以一篇偏学术、一篇偏实践，并针对学校特色做定制。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>推荐信要提前联系推荐人。</strong>至少提前 1 个月沟通，给推荐人提供你的 CV、PS 草稿和申请项目清单，方便他们写出有细节的推荐信。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>写完一定要检查。</strong>重点检查：学校名称拼写、专业名称、个人经历的时间线是否连贯、有没有语法错误。可以用 Grammarly 免费版做基础语法检查。</div>
+    </div>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num">6</div>
+    <div class="step-title">确认截止时间，开始申请</div>
+  </div>
+  <div class="step-desc">英国硕士采用分轮录取或滚动录取。首轮名额最多、竞争最公平，越往后门槛越高。</div>
+  <div class="deadline-box">
+    <strong>⏰ 截止时间参考</strong><br>
+    • 牛津 / 剑桥：多数项目 9 月初开放，首轮 10–11 月截止<br>
+    • 帝国理工 / UCL / LSE：9 月底–10 月中旬开放，商科首轮 11 月截止<br>
+    • 罗素集团其他院校：9–11 月开放，热门专业建议次年 1 月中旬前递交
+  </div>
+
+  <div class="sop-box" style="margin-top:14px;">
+    <div class="sop-title">📖 申请系统通用操作 SOP</div>
+    <div class="sop-step">
+      <div class="snum">1</div>
+      <div class="stext"><strong>找到申请入口</strong>：点击下方任意大学链接，进入该校硕士申请页面。页面上通常有一个明显的 <strong>"Apply Now"</strong>（立即申请）或 <strong>"How to Apply"</strong>（如何申请）按钮，点击它。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">2</div>
+      <div class="stext"><strong>注册账号</strong>：你会看到一个登录/注册页面。选择 <strong>"New User"</strong>（新用户）或 <strong>"Sign up"</strong>（注册），用常用邮箱注册，设置密码。注册后系统会发验证邮件，去邮箱点击链接激活。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">3</div>
+      <div class="stext"><strong>开始填写申请表</strong>：登录后点击 <strong>"Start New Application"</strong>（开始新申请）或 <strong>"New Application"</strong>（新申请），按照系统提示逐项填写。<strong>必填板块</strong>包括：个人基本信息（姓名、地址、联系方式）、教育背景（本科学校、专业、均分）、语言成绩（雅思/托福）、推荐人信息。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">4</div>
+      <div class="stext"><strong>上传材料</strong>：在 <strong>"Documents"</strong>（文件）或 <strong>"Upload"</strong>（上传）板块，上传成绩单、学位证/在读证明、雅思成绩单、个人陈述（Personal Statement）、推荐信（Reference）等 PDF 文件。单个文件一般不超过 10MB。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">5</div>
+      <div class="stext"><strong>检查并提交</strong>：所有板块填完后，系统会提示你 <strong>Review</strong>（检查）。逐项确认无误后，勾选 <strong>"I agree"</strong>（我同意）条款声明，点击 <strong>"Submit"</strong>（提交）提交。部分大学会在此步骤收取申请费（£50–£120），用信用卡在线支付即可。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum">6</div>
+      <div class="stext"><strong>提交后</strong>：你会收到确认邮件。之后可以随时登录申请系统查看进度，等待大学发 Offer。申请可以分次保存，不需要一次性填完，每次登录继续填即可。</div>
+    </div>
+  </div>
+
+  <div class="uni-grid">
+    <a class="uni-item" href="https://www.imperial.ac.uk/study/apply/postgraduate-taught/" target="_blank">
+      <span class="uni-name">帝国理工学院 <span class="uni-rank">QS 2</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.ox.ac.uk/admissions/graduate" target="_blank">
+      <span class="uni-name">牛津大学 <span class="uni-rank">QS 4</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.postgraduate.study.cam.ac.uk/apply" target="_blank">
+      <span class="uni-name">剑桥大学 <span class="uni-rank">QS 6</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.ucl.ac.uk/prospective-students/graduate/apply" target="_blank">
+      <span class="uni-name">伦敦大学学院 UCL <span class="uni-rank">QS 9</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://apply.kcl.ac.uk/" target="_blank">
+      <span class="uni-name">伦敦国王学院 KCL <span class="uni-rank">QS 31</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://study.ed.ac.uk/apply" target="_blank">
+      <span class="uni-name">爱丁堡大学 <span class="uni-rank">QS 34</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.manchester.ac.uk/study/masters/how-to-apply/" target="_blank">
+      <span class="uni-name">曼彻斯特大学 <span class="uni-rank">QS 35</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.bristol.ac.uk/study/postgraduate/apply/" target="_blank">
+      <span class="uni-name">布里斯托大学 <span class="uni-rank">QS 51</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.lse.ac.uk/study-at-lse/Graduate/Prospective-students" target="_blank">
+      <span class="uni-name">伦敦政治经济学院 LSE <span class="uni-rank">QS 56</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://warwick.ac.uk/study/postgraduate/apply/" target="_blank">
+      <span class="uni-name">华威大学 <span class="uni-rank">QS 74</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.birmingham.ac.uk/postgraduate/apply" target="_blank">
+      <span class="uni-name">伯明翰大学 <span class="uni-rank">QS 76</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.gla.ac.uk/postgraduate/apply/" target="_blank">
+      <span class="uni-name">格拉斯哥大学 <span class="uni-rank">QS 79</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.leeds.ac.uk/postgraduate-apply" target="_blank">
+      <span class="uni-name">利兹大学 <span class="uni-rank">QS 86</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.southampton.ac.uk/study/postgraduate/apply" target="_blank">
+      <span class="uni-name">南安普顿大学 <span class="uni-rank">QS 87</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.sheffield.ac.uk/postgraduate/apply" target="_blank">
+      <span class="uni-name">谢菲尔德大学 <span class="uni-rank">QS 92</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.durham.ac.uk/study/postgraduate/apply/" target="_blank">
+      <span class="uni-name">杜伦大学 <span class="uni-rank">QS 94</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.nottingham.ac.uk/pgstudy/apply/" target="_blank">
+      <span class="uni-name">诺丁汉大学 <span class="uni-rank">QS 97</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.qmul.ac.uk/postgraduate/apply/" target="_blank">
+      <span class="uni-name">伦敦玛丽女王大学 <span class="uni-rank">QS 110</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.st-andrews.ac.uk/study/apply/postgraduate/" target="_blank">
+      <span class="uni-name">圣安德鲁斯大学 <span class="uni-rank">QS 113</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.bath.ac.uk/study/pg/apply/" target="_blank">
+      <span class="uni-name">巴斯大学 <span class="uni-rank">QS 132</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.ncl.ac.uk/postgraduate/apply/" target="_blank">
+      <span class="uni-name">纽卡斯尔大学 <span class="uni-rank">QS 137</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.liverpool.ac.uk/study/postgraduate-taught/apply/" target="_blank">
+      <span class="uni-name">利物浦大学 <span class="uni-rank">QS 147</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.exeter.ac.uk/postgraduate/apply/" target="_blank">
+      <span class="uni-name">埃克塞特大学 <span class="uni-rank">QS 155</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.lancaster.ac.uk/study/postgraduate/apply/" target="_blank">
+      <span class="uni-name">兰卡斯特大学 <span class="uni-rank">QS 157</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.york.ac.uk/study/postgraduate-taught/apply/" target="_blank">
+      <span class="uni-name">约克大学 <span class="uni-rank">QS 169</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.cardiff.ac.uk/study/postgraduate/apply" target="_blank">
+      <span class="uni-name">卡迪夫大学 <span class="uni-rank">QS 181</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.reading.ac.uk/ready-to-study/study/how-to-apply" target="_blank">
+      <span class="uni-name">雷丁大学 <span class="uni-rank">QS 194</span></span>
+      <span class="arrow">→</span>
+    </a>
+    <a class="uni-item" href="https://www.qub.ac.uk/study/postgraduate/apply/" target="_blank">
+      <span class="uni-name">贝尔法斯特女王大学 <span class="uni-rank">QS 199</span></span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<div class="step" style="border-left-color: #f59e0b;">
+  <div class="step-header">
+    <div class="step-num" style="background:#f59e0b;">▶</div>
+    <div class="step-title">视频引导教程</div>
+  </div>
+  <div class="step-desc">跟着视频一步步操作，更快上手。</div>
+  <div class="video-list">
+    <a class="video-item" href="https://www.bilibili.com/video/BV1xZ4y1h7Ph/" target="_blank">
+      <span class="icon">🎬</span>
+      <div>
+        <div class="vtitle">避免秒拒｜英硕申请开始前请一定学会看官网！</div>
+        <div class="vlink">bilibili.com/video/BV1xZ4y1h7Ph</div>
+      </div>
+    </a>
+    <a class="video-item" href="https://www.bilibili.com/video/BV1iP4y1o7Mj/" target="_blank">
+      <span class="icon">🎬</span>
+      <div>
+        <div class="vtitle">英国硕士DIY指导视频，网申流程（曼大/UCL/爱丁堡）</div>
+        <div class="vlink">bilibili.com/video/BV1iP4y1o7Mj</div>
+      </div>
+    </a>
+    <a class="video-item" href="https://www.bilibili.com/video/BV16X4y1K72n/" target="_blank">
+      <span class="icon">🎬</span>
+      <div>
+        <div class="vtitle">我的全DIY留学申请经验！1个月申到英国G5干货+弯路总结</div>
+        <div class="vlink">bilibili.com/video/BV16X4y1K72n</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="step" style="border-left-color: #f97316;">
+  <div class="step-header">
+    <div class="step-num" style="background:#f97316;">🔧</div>
+    <div class="step-title">链接失效急救站（404 怎么办）</div>
+  </div>
+  <div class="step-desc">大学官网经常改版，之前整理的链接可能失效。遇到 404 不要慌，按下面步骤自己找到最新页面。</div>
+
+  <div class="warning-box" style="background:#fff7ed; border:1px solid #fed7aa; border-radius:10px; padding:12px 14px; margin-top:10px; font-size:12.5px; color:#9a3412; line-height:1.6;">
+    <strong>📌 说明：</strong>本页面所有链接均来自大学官网公开页面，但官网改版、课程调整、招生政策更新都可能导致链接失效。遇到 404 是正常现象，按以下 SOP 操作即可找到最新信息。
+  </div>
+
+  <div class="sop-box" style="background:#fff7ed; border-color:#fed7aa;">
+    <div class="sop-title" style="color:#c2410c;">📖 链接失效处理 SOP</div>
+    <div class="sop-step">
+      <div class="snum" style="background:#f97316;">1</div>
+      <div class="stext"><strong>判断是否真的失效。</strong>页面显示 "404 Not Found"（页面未找到）、"Page not found"（页面未找到）或自动跳转到首页，说明链接已过期。如果只是加载慢，先刷新或换浏览器试试。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#f97316;">2</div>
+      <div class="stext"><strong>回到大学官网首页。</strong>在浏览器地址栏删掉链接后面的路径，只保留主域名（例如 <strong>manchester.ac.uk</strong>），按回车进入官网首页。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#f97316;">3</div>
+      <div class="stext"><strong>用官网搜索框。</strong>大多数大学官网右上角都有搜索图标（🔍）。点击后输入你需要的 <strong>课程名称</strong> 或 <strong>关键词</strong>（如 "MSc Data Science"、"CAS"、"Accommodation"），按回车搜索。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#f97316;">4</div>
+      <div class="stext"><strong>用 Google 精准搜索。</strong>如果官网搜索不好用，在 Google 输入 <strong>site:大学域名 关键词</strong>。例如：<strong>site:manchester.ac.uk MSc Data Science</strong>。这样只搜该大学官网的内容，很快能找到最新页面。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#f97316;">5</div>
+      <div class="stext"><strong>通过导航菜单重新找。</strong>官网首页一般有 <strong>"Study"</strong>（学习/招生）、<strong>"Courses"</strong>（课程）、<strong>"International"</strong>（国际）等菜单。点击进入，再选 <strong>"Postgraduate"</strong>（研究生），然后按专业方向浏览，就能找到课程页面。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#f97316;">6</div>
+      <div class="stext"><strong>用互联网档案馆查看历史快照。</strong>打开 <strong>web.archive.org</strong>，把失效链接粘贴进去，可以查看该页面过去的存档，了解原来的内容，再根据关键词去官网找新页面。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#f97316;">7</div>
+      <div class="stext"><strong>直接联系学校。</strong>如果实在找不到，发邮件给大学招生办或国际办公室。邮件里写清楚你要找的课程名称或事项，他们通常会在 1–3 个工作日内回复。联系方式可在官网 <strong>"Contact us"</strong>（联系我们）页面找到。</div>
+    </div>
+  </div>
+
+  <div class="sop-box" style="background:#f0f9ff; border-color:#bae6fd; margin-top:12px;">
+    <div class="sop-title" style="color:#0369a1;">💡 预防链接失效的小技巧</div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">1</div>
+      <div class="stext">把重要页面<strong>保存为 PDF 或截图</strong>，存到本地，避免链接失效后找不到。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">2</div>
+      <div class="stext">用浏览器<strong>书签</strong>收藏关键页面，并定期检查是否还能打开。</div>
+    </div>
+    <div class="sop-step">
+      <div class="snum" style="background:#0ea5e9;">3</div>
+      <div class="stext">关注大学官方微信公众号或邮件订阅，重要通知会主动推送。</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  ⚠️ 第三方平台信息可能存在延迟，所有关键信息（截止日期、学费、语言要求）请务必以大学官网最终信息为准。<br>
+  祝申请顺利 🎓
+</div>
+
+<!-- 暗色模式切换 -->
+<button class="theme-toggle" id="themeToggle" title="切换明暗模式">🌙</button>
+
+<script>
+/* ============================================================
+   1. Prompt 一键复制
+   ============================================================ */
+(function initCopyButtons() {
+  document.querySelectorAll('.prompt-template').forEach(function (box) {
+    if (box.querySelector('.copy-btn')) return;
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = '📋 复制';
+    btn.onclick = function () {
+      const textEl = box.querySelector('.prompt-text');
+      if (!textEl) return;
+      const text = textEl.innerText;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = '✅ 已复制';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = '📋 复制';
+          btn.classList.remove('copied');
+        }, 1800);
+      }).catch(function () {
+        const range = document.createRange();
+        range.selectNode(textEl);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        try {
+          document.execCommand('copy');
+          btn.textContent = '✅ 已复制';
+          setTimeout(function () { btn.textContent = '📋 复制'; }, 1800);
+        } catch (e) {
+          btn.textContent = '❌ 复制失败';
+        }
+        window.getSelection().removeAllRanges();
+      });
+    };
+    box.appendChild(btn);
+  });
+})();
+
+/* ============================================================
+   2. 页面内搜索
+   ============================================================ */
+(function initSearch() {
+  const input = document.getElementById('searchInput');
+  const countEl = document.getElementById('searchCount');
+  const closeBtn = document.getElementById('searchClose');
+  if (!input) return;
+
+  let hits = [];
+  let current = -1;
+
+  function clearHits() {
+    document.querySelectorAll('.search-hit').forEach(function (el) {
+      const parent = el.parentNode;
+      parent.replaceChild(document.createTextNode(el.textContent), el);
+      parent.normalize();
+    });
+    hits = [];
+    current = -1;
+    countEl.textContent = '';
+  }
+
+  function highlight(keyword) {
+    clearHits();
+    if (!keyword) return;
+
+    const walker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: function (node) {
+          const tag = node.parentNode.nodeName;
+          if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'INPUT' ||
+              tag === 'TEXTAREA' || tag === 'BUTTON') {
+            return NodeFilter.FILTER_REJECT;
+          }
+          if (node.parentNode.classList &&
+              node.parentNode.classList.contains('search-hit')) {
+            return NodeFilter.FILTER_REJECT;
+          }
+          if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      }
+    );
+
+    const textNodes = [];
+    let n;
+    while ((n = walker.nextNode())) textNodes.push(n);
+
+    const kw = keyword.toLowerCase();
+    textNodes.forEach(function (node) {
+      const text = node.nodeValue;
+      const lower = text.toLowerCase();
+      let idx = lower.indexOf(kw);
+      if (idx === -1) return;
+
+      const frag = document.createDocumentFragment();
+      let last = 0;
+      while (idx !== -1) {
+        if (idx > last) {
+          frag.appendChild(document.createTextNode(text.slice(last, idx)));
+        }
+        const span = document.createElement('span');
+        span.className = 'search-hit';
+        span.textContent = text.slice(idx, idx + keyword.length);
+        frag.appendChild(span);
+        hits.push(span);
+        last = idx + keyword.length;
+        idx = lower.indexOf(kw, last);
+      }
+      if (last < text.length) {
+        frag.appendChild(document.createTextNode(text.slice(last)));
+      }
+      node.parentNode.replaceChild(frag, node);
+    });
+
+    countEl.textContent = hits.length ? hits.length + ' 处' : '无结果';
+    closeBtn.style.display = hits.length ? 'inline-block' : 'none';
+  }
+
+  function gotoNext() {
+    if (!hits.length) return;
+    if (current >= 0 && hits[current]) {
+      hits[current].classList.remove('search-hit-active');
+    }
+    current = (current + 1) % hits.length;
+    hits[current].classList.add('search-hit-active');
+    hits[current].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    countEl.textContent = (current + 1) + ' / ' + hits.length;
+  }
+
+  let timer = null;
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      highlight(input.value.trim());
+      if (hits.length) { current = -1; gotoNext(); }
+    }, 300);
+  });
+
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      gotoNext();
+    } else if (e.key === 'Escape') {
+      input.value = '';
+      clearHits();
+      closeBtn.style.display = 'none';
+    }
+  });
+
+  closeBtn.onclick = function () {
+    input.value = '';
+    clearHits();
+    closeBtn.style.display = 'none';
+  };
+})();
+
+/* ============================================================
+   3. 暗色模式切换
+   ============================================================ */
+(function initTheme() {
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+
+  const KEY = 'uk_guide_theme_a';
+  const saved = localStorage.getItem(KEY);
+
+  function applyTheme(dark) {
+    if (dark) {
+      document.body.classList.add('dark');
+      btn.textContent = '☀️';
+    } else {
+      document.body.classList.remove('dark');
+      btn.textContent = '🌙';
+    }
+  }
+
+  if (saved === 'dark') {
+    applyTheme(true);
+  } else if (saved === 'light') {
+    applyTheme(false);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    applyTheme(true);
+  } else {
+    applyTheme(false);
+  }
+
+  btn.onclick = function () {
+    const isDark = document.body.classList.contains('dark');
+    applyTheme(!isDark);
+    localStorage.setItem(KEY, !isDark ? 'dark' : 'light');
+  };
+})();
+</script>
+
+</body>
+</html>
