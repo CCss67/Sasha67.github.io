@@ -71,7 +71,7 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 
 ## ai学习产品的认识和对市场现有ai学习产品的分析
 
-针对市面上一些学习产品的调研，分析，并附上idea和技术落地
+针对市面上一些学习产品，如多邻国等app的调研，分析，并附上idea和技术落地方案
 
-- **代码仓库**：
+- **代码仓库**：https://github.com/CCss67/Sasha67.github.io/tree/main/ai-education-product-analysis
 
