@@ -1,9 +1,742 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>My Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sasha · 产品经理作品集</title>
+<meta name="description" content="Sasha 的产品经理作品集：教育科技、社交陪伴、工具效率方向的独立产品实践与思考。">
+<style>
+  *,
+  *::before,
+  *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #fbfbfd;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --muted: #6e6e73;
+    --accent: #5b5bd6;
+    --accent-2: #8b5cf6;
+    --border: rgba(0, 0, 0, .07);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 12px rgba(0, 0, 0, .04);
+    --shadow-md: 0 2px 4px rgba(0, 0, 0, .04), 0 16px 40px rgba(0, 0, 0, .08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* ---------- 背景光晕 ---------- */
+      .glow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(560px 380px at 12% -6%, rgba(91, 91, 214, .12), transparent 70%),
+      radial-gradient(520px 360px at 92% 4%, rgba(139, 92, 246, .12), transparent 70%),
+      radial-gradient(600px 400px at 50% 110%, rgba(56, 189, 248, .08), transparent 70%);
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- 导航 ---------- */
+    .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    background: rgba(251, 251, 253, .78);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(91, 91, 214, .3);
+  }
+
+  .nav-links { display: flex; gap: 26px; }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14.5px;
+    transition: color .2s ease;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 96px 0 72px; }
+
+  .avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 12px 32px rgba(91, 91, 214, .28);
+    margin-bottom: 26px;
+  }
+
+  .hero h1 {
+    font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.25;
+    letter-spacing: -.8px;
+    font-weight: 700;
+  }
+
+  .role {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    background: rgba(91, 91, 214, .08);
+    border: 1px solid rgba(91, 91, 214, .16);
+  }
+
+  .role::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(91, 91, 214, .16);
+  }
+
+  .quote {
+          margin-top: 30px;
+    padding-left: 20px;
+    border-left: 3px solid transparent;
+    border-image: linear-gradient(180deg, var(--accent), var(--accent-2)) 1;
+    font-size: clamp(17px, 2.4vw, 20px);
+    font-weight: 600;
+    color: #2c2c2e;
+    letter-spacing: .1px;
+  }
+
+  .bio {
+    margin-top: 24px;
+    max-width: 720px;
+    color: var(--muted);
+    font-size: 16px;
+  }
+
+  .actions { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 8px 22px rgba(91, 91, 214, .28);
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(91, 91, 214, .36); }
+
+  .btn-ghost {
+    color: var(--text);
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-ghost:hover { transform: translateY(-2px); background: #fff; }
+
+  /* ---------- 区块 ---------- */
+  section { padding: 64px 0; }
+
+  .section-head { margin-bottom: 36px; }
+
+  .section-head h2 {
+    font-size: clamp(23px, 3.4vw, 30px);
+    letter-spacing: -.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-head h2::before {
+    content: "";
+    width: 5px;
+    height: 26px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  }
+
+  .section-sub {
+    margin-top: 10px;
+    padding-left: 17px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  /* ---------- 项目卡片 ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 22px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 26px;
+    box-shadow: var(--shadow-sm);
+    transition: transform .28s cubic-bezier(.2, .7, .3, 1), box-shadow .28s ease, border-color .28s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(91, 91, 214, .22);
+  }
+
+  .card-head { display: flex; align-items: baseline; gap: 12px; }
+
+  .num {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .6px;
+    color: var(--accent);
+    background: rgba(91, 91, 214, .09);
+    border-radius: 7px;
+    padding: 2px 8px;
+    flex-shrink: 0;
+  }
+
+  .card h3 {
+    font-size: 18px;
+    font-weight: 650;
+    letter-spacing: -.2px;
+    line-height: 1.45;
+  }
+
+  .card h3 .sep { color: #c7c7cc; font-weight: 400; }
+
+  .desc {
+    margin-top: 14px;
+    font-size: 15px;
+    color: #48484a;
+  }
+
+  .insight {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border-left: 3px solid var(--accent);
+    background: linear-gradient(135deg, rgba(91, 91, 214, .06), rgba(139, 92, 246, .05));
+    font-size: 14.5px;
+    color: #3a3a3c;
+  }
+
+  .insight-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .tag {
+    font-size: 12.5px;
+    color: var(--muted);
+    background: #f2f2f5;
+    border-radius: 999px;
+    padding: 3px 11px;
+  }
+
+  .card-link {
+    margin-top: auto;
+    padding-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    align-self: flex-start;
+  }
+
+  .card-link span { transition: transform .2s ease; display: inline-block; }
+  .card-link:hover span { transform: translateX(4px); }
+
+  /* ---------- 方法论 ---------- */
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+  }
+
+  .method {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px 22px;
+    box-shadow: var(--shadow-sm);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+
+  .method:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+
+  .method-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 19px;
+    background: linear-gradient(135deg, rgba(91, 91, 214, .12), rgba(139, 92, 246, .12));
+    margin-bottom: 14px;
+  }
+
+  .method h3 { font-size: 16px; font-weight: 650; margin-bottom: 8px; }
+
+  .method p { font-size: 14.5px; color: var(--muted); }
+
+  /* ---------- 高亮卡片 ---------- */
+  .feature {
+    position: relative;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 34px 32px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .feature::after {
+    content: "";
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139, 92, 246, .16), transparent 68%);
+    pointer-events: none;
+  }
+
+  .feature h3 { font-size: 20px; font-weight: 650; letter-spacing: -.3px; }
+
+  .feature p { margin-top: 14px; color: #48484a; font-size: 15.5px; max-width: 720px; }
+
+  /* ---------- 页脚 ---------- */
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+    padding: 40px 0 56px;
+  }
+
+  .footer-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .footer-inner a { color: var(--accent); text-decoration: none; }
+  .footer-inner a:hover { text-decoration: underline; }
+
+  /* ---------- 出现动画 ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .7s cubic-bezier(.2, .7, .3, 1), transform .7s cubic-bezier(.2, .7, .3, 1);
+  }
+
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .hero { padding: 64px 0 40px; }
+    section { padding: 48px 0; }
+    .grid { grid-template-columns: 1fr; }
+    .card { padding: 24px 20px; }
+    .feature { padding: 26px 22px; }
+  }
+</style>
 </head>
 <body>
-    <h1>Hello, this is my AI + Education portfolio!</h1>
+<div class="glow" aria-hidden="true"></div>
+
+<!-- 导航 -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">S</span>
+      <span>Sasha</span>
+    </a>
+    <div class="nav-links">
+      <a href="#about">关于我</a>
+      <a href="#projects">代表项目</a>
+      <a href="#method">产品方法论</a>
+      <a href="#insight">AI 学习产品</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 关于我 -->
+<header class="hero wrap" id="top">
+  <div class="avatar">S</div>
+  <h1>你好，我是 Sasha</h1>
+  <div class="role">求职岗位 · 产品经理</div>
+
+  <p class="quote">好的产品不是功能堆砌，而是对用户需求深刻洞察后的精准回应。</p>
+
+  <p class="bio" id="about">
+    过去一段时间，我独立设计并开发了多个产品项目，涵盖教育科技、社交陪伴、工具效率等领域。
+    这些项目是我产品思维的实践载体，但并不完整，有些受限于我目前的技术或经济问题没有完全实现我的目的，
+    希望能和您进一步讨论。
+  </p>
+
+  <div class="actions">
+    <a class="btn btn-primary" href="#projects">浏览代表项目 <span aria-hidden="true">→</span></a>
+    <a class="btn btn-ghost" href="https://github.com/CCss67" target="_blank" rel="noopener noreferrer">
+      访问 GitHub
+    </a>
+  </div>
+</header>
+
+<!-- 代表项目 -->
+<section class="wrap" id="projects">
+  <div class="section-head reveal">
+    <h2>代表项目</h2>
+    <p class="section-sub">6 个从需求洞察到开发上线的独立产品实践</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- 01 -->
+    <article class="card reveal">
+      <div class="card-head">
+        <span class="num">01</span>
+        <h3>mbti-deeper <span class="sep">·</span> 人格探索向导</h3>
+      </div>
+      <p class="desc">
+        MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探索人格类型倾向并获得个性化发展建议。
+        项目经历了 V1（初始版）到 V4（优化版）四次完整迭代，逐步完善了
+        <strong>场景化提问、混合态解析、防带偏机制、「被看见」高光时刻</strong> 等核心产品机制。
+      </p>
+      <div class="insight">
+        <span class="insight-label">产品思考</span>
+        <p>从「做测试」到「做体验」——每次迭代都围绕用户心理模型做减法，降低认知负荷，让用户在对话中自然「被看见」。</p>
+      </div>
+      <div class="tags">
+        <span class="tag">对话式交互</span>
+        <span class="tag">用户心理模型</span>
+        <span class="tag">四次迭代</span>
+      </div>
+      <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/blob/main/mbti-deeper-v4/index.html" target="_blank" rel="noopener noreferrer">
+        查看代码仓库 <span aria-hidden="true">→</span>
+      </a>
+    </article>
+
+    <!-- 02 -->
+    <article class="card reveal">
+      <div class="card-head">
+        <span class="num">02</span>
+        <h3>english-practice <span class="sep">·</span> 英语口语陪练</h3>
+      </div>
+      <p class="desc">
+        模拟聊天界面的英语口语练习工具。设计了「打招呼 → 前置测试 → 评估 → 场景对话 → 复盘」五阶段学习路径，
+        支持语音输入和对话记忆系统，根据用户水平（起步 / 基础 / 进阶）动态调整对话难度。
+      </p>
+      <div class="insight">
+        <span class="insight-label">产品思考</span>
+        <p>语言学习的核心痛点是「不敢开口」——通过降低首次使用门槛（打招呼破冰）、即时正反馈（发音纠正 + 鼓励）、个性化路径（水平评估后定制内容）来解决。</p>
+      </div>
+      <div class="tags">
+        <span class="tag">学习路径设计</span>
+        <span class="tag">语音交互</span>
+        <span class="tag">难度自适应</span>
+      </div>
+      <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/english-practice" target="_blank" rel="noopener noreferrer">
+        查看代码仓库 <span aria-hidden="true">→</span>
+      </a>
+    </article>
+
+    <!-- 03 -->
+    <article class="card reveal">
+      <div class="card-head">
+        <span class="num">03</span>
+        <h3>ai-partner <span class="sep">·</span> AI 陪伴社交应用</h3>
+      </div>
+      <p class="desc">
+        移动端优先的 AI 陪伴社交平台。设计了 Luna（温柔陪伴型）、Kai（直接行动型）、叶叶（温暖长辈型）
+        三个差异化角色，实现发帖动态、私信聊天、情绪关键词识别与权重推荐算法等核心功能。
+      </p>
+      <div class="insight">
+        <span class="insight-label">产品思考</span>
+        <p>AI 产品的核心不是技术炫技，而是让用户感受到「被理解」——通过情绪识别 + 角色差异化人设 + 权重推荐，让每个用户都能找到适合自己的陪伴对象。</p>
+      </div>
+      <div class="tags">
+        <span class="tag">角色人设设计</span>
+        <span class="tag">情绪识别</span>
+        <span class="tag">推荐算法</span>
+      </div>
+      <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/ai-partner" target="_blank" rel="noopener noreferrer">
+        查看代码仓库 <span aria-hidden="true">→</span>
+      </a>
+    </article>
+
+    <!-- 04 -->
+    <article class="card reveal">
+      <div class="card-head">
+        <span class="num">04</span>
+        <h3>eplan <span class="sep">·</span> 幼儿园英文教案生成器</h3>
+      </div>
+      <p class="desc">
+        幼儿园英文教案一键生成工具。支持按小班 / 中班 / 大班切换生成差异化教案，内置 PPT 导出功能，
+        包含全英文教师稿件，帮助幼师快速完成备课流程。
+      </p>
+      <div class="insight">
+        <span class="insight-label">产品思考</span>
+        <p>ToB / ToE 产品的核心是「省时间」——幼师备课时间宝贵，工具必须做到「输入最少、输出最全」，一键生成 + PPT 导出覆盖从构思到上课的完整链路。</p>
+      </div>
+      <div class="tags">
+        <span class="tag">工具效率</span>
+        <span class="tag">一键生成</span>
+        <span class="tag">PPT 导出</span>
+      </div>
+      <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/e-plan" target="_blank" rel="noopener noreferrer">
+        查看代码仓库 <span aria-hidden="true">→</span>
+      </a>
+    </article>
+
+    <!-- 05 -->
+    <article class="card reveal">
+      <div class="card-head">
+        <span class="num">05</span>
+        <h3>infj-sea <span class="sep">·</span> 漂流瓶</h3>
+      </div>
+      <p class="desc">
+        一种温柔的情绪陪伴，和内耗的 INFJ 小老头似乎很合适。海洋主题交互式漂流瓶体验项目，
+        通过海浪动画、光影效果等视觉设计营造沉浸式海洋氛围。
+      </p>
+      <div class="insight">
+        <span class="insight-label">产品思考</span>
+        <p>体验型产品的核心是「氛围感」——用细腻的视觉和交互细节营造情绪价值，让用户在使用过程中获得愉悦感和探索欲。</p>
+      </div>
+      <div class="tags">
+        <span class="tag">情绪价值</span>
+        <span class="tag">沉浸式体验</span>
+        <span class="tag">视觉动效</span>
+      </div>
+      <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/infj-sea" target="_blank" rel="noopener noreferrer">
+        查看代码仓库 <span aria-hidden="true">→</span>
+      </a>
+    </article>
+
+    <!-- 06 -->
+    <article class="card reveal">
+      <div class="card-head">
+        <span class="num">06</span>
+        <h3>英国硕士 DIY 选校导航 &amp; Offer 后保姆级指南</h3>
+      </div>
+      <p class="desc">
+        针对英国留学细分场景（选校 → 申请 → Offer 后）提供全流程内容导航与实用指南，
+        把碎片化的留学信息整合为清晰可用的路径。
+      </p>
+      <div class="insight">
+        <span class="insight-label">产品思考</span>
+        <p>垂直内容产品的核心是「信息结构化」——留学申请流程复杂、信息碎片化严重，通过分阶段导航 + 工具化呈现，降低用户信息获取成本。</p>
+      </div>
+      <div class="tags">
+        <span class="tag">信息架构</span>
+        <span class="tag">内容导航</span>
+        <span class="tag">垂直场景</span>
+      </div>
+      <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/after-offer-in-uk" target="_blank" rel="noopener noreferrer">
+        查看代码仓库 <span aria-hidden="true">→</span>
+      </a>
+    </article>
+
+  </div>
+</section>
+
+<!-- 产品方法论 -->
+<section class="wrap" id="method">
+  <div class="section-head reveal">
+    <h2>产品方法论</h2>
+    <p class="section-sub">从洞察到落地的四个关键词</p>
+  </div>
+
+  <div class="method-grid">
+    <div class="method reveal">
+      <div class="method-icon" aria-hidden="true">🔍</div>
+      <h3>用户洞察</h3>
+      <p>擅长通过用户访谈、数据分析等手段挖掘真实需求，避免「自嗨式」产品决策。</p>
+    </div>
+    <div class="method reveal">
+      <div class="method-icon" aria-hidden="true">🧩</div>
+      <h3>MVP 迭代思维</h3>
+      <p>快速推出最小可用版本，根据用户反馈持续迭代优化，用小成本验证大假设。</p>
+    </div>
+    <div class="method reveal">
+      <div class="method-icon" aria-hidden="true">📊</div>
+      <h3>数据驱动决策</h3>
+      <p>关注核心指标变化（完成率、留存、NPS），用数据指导产品方向调整。</p>
+    </div>
+    <div class="method reveal">
+      <div class="method-icon" aria-hidden="true">🔗</div>
+      <h3>全链路能力</h3>
+      <p>从需求分析、交互设计到开发上线，具备产品全生命周期管理经验。</p>
+    </div>
+  </div>
+</section>
+
+<!-- AI 学习产品分析 -->
+<section class="wrap" id="insight">
+  <div class="section-head reveal">
+    <h2>AI 学习产品的认识与市场分析</h2>
+    <p class="section-sub">调研 · 分析 · idea 与技术落地方案</p>
+  </div>
+
+  <div class="feature reveal">
+    <h3>对市面现有 AI 学习产品的调研与分析</h3>
+    <p>
+      针对市面上一些学习产品（如多邻国等 App）进行调研与分析，梳理其在学习路径、激励机制、
+      内容供给上的设计逻辑与可借鉴之处，并附上自己的产品 idea 与技术落地方案。
+    </p>
+    <div class="tags" style="margin-top:20px;">
+      <span class="tag">竞品调研</span>
+      <span class="tag">学习动机设计</span>
+      <span class="tag">技术落地方案</span>
+    </div>
+    <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/ai-education-product-analysis" target="_blank" rel="noopener noreferrer">
+      查看分析文档与方案 <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer>
+  <div class="footer-inner">
+    <span>© <span id="year"></span> Sasha · 产品经理作品集</span>
+    <span>
+      更多内容请访问
+      <a href="https://github.com/CCss67" target="_blank" rel="noopener noreferrer">github.com/CCss67</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  // 年份
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // 滚动出现动画
+  (function () {
+    var items = document.querySelectorAll('.reveal');
+
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('visible'); });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        // 同组内元素错峰出现
+        var siblings = Array.prototype.slice.call(el.parentNode.children);
+        var index = Math.min(siblings.indexOf(el), 6);
+        el.style.transitionDelay = (index * 70) + 'ms';
+        el.classList.add('visible');
+        observer.unobserve(el);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    items.forEach(function (el) { observer.observe(el); });
+  })();
+</script>
 </body>
 </html>
