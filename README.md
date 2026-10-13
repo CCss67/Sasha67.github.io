@@ -14,7 +14,7 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 
 **产品思考**：从"做测试"到"做体验"——每次迭代都围绕用户心理模型做减法，降低认知负荷，让用户在对话中自然"被看见"。
 
-- **代码仓库**：[https://github.com/CCss67/Sasha67.github.io/blob/main/mbti-deeper-v4/index.html]
+- **代码仓库**：https://github.com/CCss67/Sasha67.github.io/blob/main/mbti-deeper-v4/index.html
 
 ### 2. english-practice · 英语口语陪练
 
@@ -30,7 +30,7 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 
 **产品思考**：AI 产品的核心不是技术炫技，而是让用户感受到"被理解"——通过情绪识别 + 角色差异化人设 + 权重推荐，让每个用户都能找到适合自己的陪伴对象。
 
-- **代码仓库**：[https://github.com/CCss67/Sasha67.github.io/tree/main/english-practice](https://github.com/CCss67/Sasha67.github.io/tree/main/english-practice)
+- **代码仓库**：https://github.com/CCss67/Sasha67.github.io/tree/main/ai-partner
 
 ### 4. eplan · 幼儿园英文教案生成器
 
@@ -38,7 +38,7 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 
 **产品思考**：ToB/ToE 产品的核心是"省时间"——幼师备课时间宝贵，工具必须做到"输入最少、输出最全"，一键生成 + PPT 导出覆盖从构思到上课的完整链路。
 
-- **代码仓库**：[点击查看源码](这里替换为 mbti-deeper 文件夹的 GitHub 链接)
+- **代码仓库**：https://github.com/CCss67/Sasha67.github.io/tree/main/e-plan
 
 ### 5. infj-sea · 漂流瓶
 
@@ -46,7 +46,7 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 
 **产品思考**：体验型产品的核心是"氛围感"——用细腻的视觉和交互细节营造情绪价值，让用户在使用过程中获得愉悦感和探索欲。
 
-- **代码仓库**：[点击查看源码](这里替换为 mbti-deeper 文件夹的 GitHub 链接)
+- **代码仓库**：https://github.com/CCss67/Sasha67.github.io/tree/main/infj-sea
 
 ### 6. 0-1how-to-apply&after-offer-in-uk · 英国硕士 DIY 选校导航 & Offer 后保姆级指南
 
@@ -54,9 +54,9 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 
 **产品思考**：垂直内容产品的核心是"信息结构化"——留学申请流程复杂、信息碎片化严重，通过分阶段导航 + 工具化呈现，降低用户信息获取成本。
 
-- **代码仓库**：[点击查看源码](这里替换为 mbti-deeper 文件夹的 GitHub 链接)
+- **代码仓库**：https://github.com/CCss67/Sasha67.github.io/tree/main/after-offer-in-uk
 
-- **代码仓库**：[点击查看源码](这里替换为 mbti-deeper 文件夹的 GitHub 链接)
+- **代码仓库**：https://github.com/CCss67/Sasha67.github.io/tree/main/after-offer-in-uk
   
 ---
 
@@ -68,4 +68,10 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 - **全链路能力**：从需求分析、交互设计到开发上线，具备产品全生命周期管理经验
 
 ---
+
+## ai学习产品的认识和对市场现有ai学习产品的分析
+
+针对市面上一些学习产品的调研，分析，并附上idea和技术落地
+
+- **代码仓库**：
 
