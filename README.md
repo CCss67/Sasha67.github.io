@@ -14,7 +14,7 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 
 **产品思考**：从"做测试"到"做体验"——每次迭代都围绕用户心理模型做减法，降低认知负荷，让用户在对话中自然"被看见"。
 
-- **代码仓库**：(https://raw.githubusercontent.com/CCss67/Sasha67.github.io/refs/heads/main/0-1how-to-apply-in-uk%3Aindex.html)
+- **代码仓库**：[https://github.com/CCss67/Sasha67.github.io/blob/main/mbti-deeper-v4/index.html]
 
 ### 2. english-practice · 英语口语陪练
 
@@ -22,7 +22,7 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 
 **产品思考**：语言学习的核心痛点是"不敢开口"——通过降低首次使用门槛（打招呼破冰）、即时正反馈（发音纠正+鼓励）、个性化路径（水平评估后定制内容）来解决。
 
-- **代码仓库**：[点击查看源码](这里替换为 mbti-deeper 文件夹的 GitHub 链接)
+- **代码仓库**：https://github.com/CCss67/Sasha67.github.io/tree/main/english-practice
 
 ### 3. ai-partner · AI 陪伴社交应用
 
@@ -30,7 +30,7 @@ MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探
 
 **产品思考**：AI 产品的核心不是技术炫技，而是让用户感受到"被理解"——通过情绪识别 + 角色差异化人设 + 权重推荐，让每个用户都能找到适合自己的陪伴对象。
 
-- **代码仓库**：[点击查看源码](这里替换为 mbti-deeper 文件夹的 GitHub 链接)
+- **代码仓库**：[https://github.com/CCss67/Sasha67.github.io/tree/main/english-practice](https://github.com/CCss67/Sasha67.github.io/tree/main/english-practice)
 
 ### 4. eplan · 幼儿园英文教案生成器
 
