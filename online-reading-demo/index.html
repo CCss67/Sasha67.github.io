@@ -156,7 +156,8 @@ header{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid
     </div>
     <div class="cards-pool" id="pool"></div>
     <div class="feedback" id="fb4"></div>
-    <div class="design-note">💡 画面复用 Fiction 册 P5「蹲---蹬---腾」三格分镜：同一个"跳"，从故事迁移到真实动物。</div>
+    <!-- 这里修改了教研标注 -->
+    <div class="design-note">💡 成品使用青蛙的真实图片，此处复用 Fiction 册 P5「蹲---蹬---腾」三格分镜，完成从故事到真实动物的迁移。</div>
     <button class="btn btn-primary" id="checkOrder" onclick="checkOrder()" style="display:none">检查</button>
   </div>
 
@@ -170,6 +171,10 @@ header{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid
       <button class="btn btn-outline" onclick="openCam()">📷 开摄像头</button>
       <button class="btn btn-primary" onclick="simulateAI()">🤖 模拟 AI 识别</button>
     </div>
+    
+    <!-- 下一步按钮，默认隐藏 -->
+    <button class="btn btn-primary" id="nextS5Btn" style="display:none; margin-top:20px; background:#FFD166; color:#333;" onclick="go(6)">查看我的成就 →</button>
+    
     <div class="design-note">💡 TPR 线上化：输出靠身体而非背诵；失败不扣分，可无限重试。</div>
   </div>
 
@@ -214,8 +219,6 @@ function speak(text) {
 }
 
 /* ===== 数据 ===== */
-// 请确保同级目录下有 images 文件夹，并按以下名称放置图片
-// 如果没有图片，代码会自动降级显示 emoji
 const PAGES = [
   { e: '🐶', img: 'images/dog.jpg', t: 'A dog runs.', core: ['dog', 'runs'] },
   { e: '🐸', img: 'images/frog.jpg', t: 'A frog jumps.', core: ['frog', 'jumps'] },
@@ -231,7 +234,7 @@ const WORDS = ['jump', 'swim', 'slide', 'hop']; // 徽章词
 
 let cur = 0, picked = null, audioBlob = null, recorder = null, chunks = [];
 let mistakes = new Set(), correctCount = 0, totalAttempts = 0;
-let aiIndex = 0; // 修复AI模拟永远显示 run 的问题
+let aiIndex = 0; 
 
 /* ===== 导航 ===== */
 function go(n) {
@@ -264,14 +267,12 @@ function renderPage() {
   const p = PAGES[cur];
   const imgBox = document.getElementById('pageImg');
   
-  // 渲染图片 + 兜底 Emoji
   imgBox.innerHTML = `
     <span class="tag">真实摄影</span>
     <img src="${p.img}" onerror="this.style.display='none';document.getElementById('pageEmoji').style.display='block';" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;z-index:1;">
     <span id="pageEmoji" style="display:none;font-size:64px;">${p.e}</span>
   `;
 
-  // 渲染文字（带点击发音）
   const sentenceBox = document.getElementById('sentence');
   sentenceBox.innerHTML = p.t.split(/\s+/).map(w => {
     const clean = w.replace(/[^a-zA-Z]/g, '').toLowerCase();
@@ -279,14 +280,13 @@ function renderPage() {
     return `<span class="word" data-core="${isCore}" onclick="tapWord(this,'${clean}')">${w}</span>`;
   }).join(' ');
 
-  // 渲染进度点
   const d = document.getElementById('dots');
   d.innerHTML = PAGES.map((_, i) => `<span class="${i === cur ? 'on' : ''}"></span>`).join('');
 }
 
 function tapWord(el, w) {
   el.classList.toggle('lit');
-  speak(w); // 点击朗读单词
+  speak(w);
 }
 
 function replaySentence() {
@@ -351,7 +351,6 @@ function quiz3(el, right) {
       el.dataset.done = '1';
       correctCount++;
     }
-    // 【修复】原来错写为 go(5)，导致跳过屏 4
     setTimeout(() => go(4), 900);
   } else {
     el.classList.add('wrong');
@@ -361,8 +360,8 @@ function quiz3(el, right) {
   }
 }
 
-/* 屏4 排序（修复核心 bug） */
-const ORDER_ANS = [0, 1, 2]; // 蹲 -> 蹬 -> 腾
+/* 屏4 排序 */
+const ORDER_ANS = [0, 1, 2];
 const CARDS = ['🦵蹲', '🚀蹬', '✨腾'];
 let order = [null, null, null];
 let selIdx = null;
@@ -405,17 +404,11 @@ function renderSlots() {
     }
   });
   
-  // 如果三个格子都填满了，显示检查按钮
   document.getElementById('checkOrder').style.display = order.every(v => v !== null) ? 'block' : 'none';
 }
 
 function slotClick(i) {
   if (selIdx === null) return;
-  
-  // 如果点击的槽位已经有卡片了，先把之前的卡片退回池子
-  if (order[i] !== null) {
-    // 可以设计为直接替换
-  }
   order[i] = selIdx;
   selIdx = null;
   renderSlots();
@@ -454,11 +447,12 @@ function simulateAI() {
   el.textContent = '识别中...';
   setTimeout(() => {
     el.textContent = '✅ ' + acts[aiIndex % 3];
+    // 显示解锁动画
     document.getElementById('unlockVideo').style.display = 'block';
-    setTimeout(() => {
-      document.getElementById('unlockVideo').style.display = 'none';
-      el.textContent = '';
-    }, 2500);
+    
+    // 识别成功后，显示“下一步”按钮
+    document.getElementById('nextS5Btn').style.display = 'block';
+    
     aiIndex++;
   }, 1200);
 }
@@ -492,7 +486,6 @@ function switchTab(i) {
 }
 
 function factAns(el, right) {
-  // 【修复】恢复所有按钮透明度
   document.querySelectorAll('#s6 .btn-outline').forEach(b => b.style.opacity = '1');
   el.style.opacity = '.6';
   document.getElementById('factOk').style.display = right ? 'block' : 'none';
