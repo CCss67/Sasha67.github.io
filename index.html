@@ -4,22 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sasha · 产品经理作品集</title>
-<meta name="description" content="Sasha 的产品经理作品集：教育科技、社交陪伴、工具效率方向的独立产品实践与思考。">
+<meta name="description" content="Sasha 的产品经理作品集：聚焦 AI 教育产品设计、教研效能提升与用户心理洞察。">
 <style>
   *,
   *::before,
   *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #fbfbfd;
+    --bg: #f8fafc; /* 干净的极浅灰底色 */
     --card: #ffffff;
-    --text: #1d1d1f;
-    --muted: #6e6e73;
-    --accent: #5b5bd6;
-    --accent-2: #8b5cf6;
-    --border: rgba(0, 0, 0, .07);
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 12px rgba(0, 0, 0, .04);
-    --shadow-md: 0 2px 4px rgba(0, 0, 0, .04), 0 16px 40px rgba(0, 0, 0, .08);
+    --text: #0f172a;
+    --muted: #64748b;
+    --accent: #1d4ed8; /* 专业的深蓝色 */
+    --accent-light: #eff6ff;
+    --border: rgba(0, 0, 0, .08);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, .05), 0 4px 12px rgba(0, 0, 0, .03);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, .04), 0 12px 28px rgba(0, 0, 0, .06);
   }
 
   html { scroll-behavior: smooth; }
@@ -35,34 +35,21 @@
     overflow-x: hidden;
   }
 
-  /* ---------- 背景光晕 ---------- */
-      .glow {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(560px 380px at 12% -6%, rgba(91, 91, 214, .12), transparent 70%),
-      radial-gradient(520px 360px at 92% 4%, rgba(139, 92, 246, .12), transparent 70%),
-      radial-gradient(600px 400px at 50% 110%, rgba(56, 189, 248, .08), transparent 70%);
-  }
-
   .wrap {
     position: relative;
-    z-index: 1;
     max-width: 1080px;
     margin: 0 auto;
     padding: 0 24px;
   }
 
   /* ---------- 导航 ---------- */
-    .nav {
+  .nav {
     position: sticky;
     top: 0;
     z-index: 100;
     backdrop-filter: saturate(180%) blur(16px);
     -webkit-backdrop-filter: saturate(180%) blur(16px);
-    background: rgba(251, 251, 253, .78);
+    background: rgba(248, 250, 252, .85);
     border-bottom: 1px solid var(--border);
   }
 
@@ -88,14 +75,13 @@
   .brand-mark {
     width: 28px;
     height: 28px;
-    border-radius: 9px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-radius: 8px;
+    background: var(--accent);
     color: #fff;
     display: grid;
     place-items: center;
     font-size: 14px;
     font-weight: 700;
-    box-shadow: 0 4px 12px rgba(91, 91, 214, .3);
   }
 
   .nav-links { display: flex; gap: 26px; }
@@ -115,16 +101,15 @@
   .avatar {
     width: 72px;
     height: 72px;
-    border-radius: 24px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    color: #fff;
+    border-radius: 20px;
+    background: var(--accent-light);
+    color: var(--accent);
     display: grid;
     place-items: center;
     font-size: 30px;
     font-weight: 700;
-    letter-spacing: 1px;
-    box-shadow: 0 12px 32px rgba(91, 91, 214, .28);
     margin-bottom: 26px;
+    border: 1px solid rgba(29, 78, 216, 0.1);
   }
 
   .hero h1 {
@@ -144,8 +129,7 @@
     font-size: 14px;
     font-weight: 500;
     color: var(--accent);
-    background: rgba(91, 91, 214, .08);
-    border: 1px solid rgba(91, 91, 214, .16);
+    background: var(--accent-light);
   }
 
   .role::before {
@@ -154,23 +138,20 @@
     height: 6px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(91, 91, 214, .16);
   }
 
   .quote {
-          margin-top: 30px;
+    margin-top: 30px;
     padding-left: 20px;
-    border-left: 3px solid transparent;
-    border-image: linear-gradient(180deg, var(--accent), var(--accent-2)) 1;
+    border-left: 3px solid var(--accent);
     font-size: clamp(17px, 2.4vw, 20px);
     font-weight: 600;
-    color: #2c2c2e;
-    letter-spacing: .1px;
+    color: #1e293b;
   }
 
   .bio {
     margin-top: 24px;
-    max-width: 720px;
+    max-width: 760px;
     color: var(--muted);
     font-size: 16px;
   }
@@ -182,29 +163,29 @@
     align-items: center;
     gap: 8px;
     padding: 11px 22px;
-    border-radius: 999px;
+    border-radius: 10px;
     font-size: 15px;
     font-weight: 500;
     text-decoration: none;
-    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    transition: all .2s ease;
   }
 
   .btn-primary {
     color: #fff;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    box-shadow: 0 8px 22px rgba(91, 91, 214, .28);
+    background: var(--accent);
+    box-shadow: 0 4px 12px rgba(29, 78, 216, .2);
   }
 
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(91, 91, 214, .36); }
+  .btn-primary:hover { background: #1e40af; transform: translateY(-2px); }
 
   .btn-ghost {
     color: var(--text);
-    background: rgba(255, 255, 255, .7);
+    background: #fff;
     border: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
   }
 
-  .btn-ghost:hover { transform: translateY(-2px); background: #fff; }
+  .btn-ghost:hover { background: #f1f5f9; transform: translateY(-2px); }
 
   /* ---------- 区块 ---------- */
   section { padding: 64px 0; }
@@ -225,7 +206,7 @@
     width: 5px;
     height: 26px;
     border-radius: 3px;
-    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    background: var(--accent);
   }
 
   .section-sub {
@@ -238,8 +219,8 @@
   /* ---------- 项目卡片 ---------- */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-    gap: 22px;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
   }
 
   .card {
@@ -247,16 +228,15 @@
     flex-direction: column;
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px 26px;
+    border-radius: 16px;
+    padding: 30px 28px;
     box-shadow: var(--shadow-sm);
-    transition: transform .28s cubic-bezier(.2, .7, .3, 1), box-shadow .28s ease, border-color .28s ease;
+    transition: transform .25s ease, box-shadow .25s ease;
   }
 
   .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
     box-shadow: var(--shadow-md);
-    border-color: rgba(91, 91, 214, .22);
   }
 
   .card-head { display: flex; align-items: baseline; gap: 12px; }
@@ -264,37 +244,37 @@
   .num {
     font-size: 13px;
     font-weight: 700;
-    letter-spacing: .6px;
     color: var(--accent);
-    background: rgba(91, 91, 214, .09);
-    border-radius: 7px;
+    background: var(--accent-light);
+    border-radius: 6px;
     padding: 2px 8px;
     flex-shrink: 0;
   }
 
   .card h3 {
-    font-size: 18px;
-    font-weight: 650;
+    font-size: 19px;
+    font-weight: 700;
     letter-spacing: -.2px;
-    line-height: 1.45;
+    line-height: 1.4;
   }
 
-  .card h3 .sep { color: #c7c7cc; font-weight: 400; }
+  .card h3 .sep { color: #cbd5e1; font-weight: 400; }
 
   .desc {
-    margin-top: 14px;
+    margin-top: 16px;
     font-size: 15px;
-    color: #48484a;
+    color: #475569;
+    line-height: 1.7;
   }
 
   .insight {
-    margin-top: 18px;
-    padding: 14px 16px;
-    border-radius: 12px;
-    border-left: 3px solid var(--accent);
-    background: linear-gradient(135deg, rgba(91, 91, 214, .06), rgba(139, 92, 246, .05));
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     font-size: 14.5px;
-    color: #3a3a3c;
+    color: #334155;
   }
 
   .insight-label {
@@ -303,32 +283,32 @@
     font-weight: 700;
     letter-spacing: .5px;
     color: var(--accent);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
 
   .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 18px;
+    margin-top: 20px;
   }
 
   .tag {
     font-size: 12.5px;
-    color: var(--muted);
-    background: #f2f2f5;
+    color: #475569;
+    background: #f1f5f9;
     border-radius: 999px;
-    padding: 3px 11px;
+    padding: 4px 12px;
   }
 
   .card-link {
     margin-top: auto;
-    padding-top: 20px;
+    padding-top: 24px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
     font-size: 14.5px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--accent);
     text-decoration: none;
     align-self: flex-start;
@@ -341,61 +321,44 @@
   .method-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 18px;
+    gap: 20px;
   }
 
   .method {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 24px 22px;
+    border-radius: 16px;
+    padding: 26px 24px;
     box-shadow: var(--shadow-sm);
-    transition: transform .25s ease, box-shadow .25s ease;
   }
-
-  .method:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
 
   .method-icon {
     width: 40px;
     height: 40px;
-    border-radius: 12px;
+    border-radius: 10px;
     display: grid;
     place-items: center;
-    font-size: 19px;
-    background: linear-gradient(135deg, rgba(91, 91, 214, .12), rgba(139, 92, 246, .12));
-    margin-bottom: 14px;
+    font-size: 20px;
+    background: var(--accent-light);
+    margin-bottom: 16px;
   }
 
-  .method h3 { font-size: 16px; font-weight: 650; margin-bottom: 8px; }
+  .method h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
 
   .method p { font-size: 14.5px; color: var(--muted); }
 
   /* ---------- 高亮卡片 ---------- */
   .feature {
-    position: relative;
-    overflow: hidden;
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 22px;
-    padding: 34px 32px;
+    border-radius: 16px;
+    padding: 36px 32px;
     box-shadow: var(--shadow-sm);
   }
 
-  .feature::after {
-    content: "";
-    position: absolute;
-    top: -60px;
-    right: -60px;
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(139, 92, 246, .16), transparent 68%);
-    pointer-events: none;
-  }
+  .feature h3 { font-size: 20px; font-weight: 700; letter-spacing: -.3px; }
 
-  .feature h3 { font-size: 20px; font-weight: 650; letter-spacing: -.3px; }
-
-  .feature p { margin-top: 14px; color: #48484a; font-size: 15.5px; max-width: 720px; }
+  .feature p { margin-top: 14px; color: #475569; font-size: 15.5px; max-width: 780px; line-height: 1.8; }
 
   /* ---------- 页脚 ---------- */
   footer {
@@ -417,38 +380,21 @@
     font-size: 14px;
   }
 
-  .footer-inner a { color: var(--accent); text-decoration: none; }
+  .footer-inner a { color: var(--accent); text-decoration: none; font-weight: 500; }
   .footer-inner a:hover { text-decoration: underline; }
 
-  /* ---------- 出现动画 ---------- */
-  .reveal {
-    opacity: 0;
-    transform: translateY(22px);
-    transition: opacity .7s cubic-bezier(.2, .7, .3, 1), transform .7s cubic-bezier(.2, .7, .3, 1);
-  }
-
-  .reveal.visible { opacity: 1; transform: none; }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .reveal { opacity: 1; transform: none; transition: none; }
-  }
-
-  /* ---------- 响应式 ---------- */
   @media (max-width: 720px) {
     .nav-links { display: none; }
     .hero { padding: 64px 0 40px; }
     section { padding: 48px 0; }
     .grid { grid-template-columns: 1fr; }
     .card { padding: 24px 20px; }
-    .feature { padding: 26px 22px; }
+    .feature { padding: 28px 22px; }
   }
 </style>
 </head>
 <body>
-<div class="glow" aria-hidden="true"></div>
 
-<!-- 导航 -->
 <nav class="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">
@@ -464,18 +410,15 @@
   </div>
 </nav>
 
-<!-- 关于我 -->
 <header class="hero wrap" id="top">
   <div class="avatar">S</div>
   <h1>你好，我是 Sasha</h1>
-  <div class="role">求职岗位 · 产品经理</div>
+  <div class="role">求职岗位 · AI 教育产品经理 / 教研产品经理</div>
 
-  <p class="quote">好的产品不是功能堆砌，而是对用户需求深刻洞察后的精准回应。</p>
+  <p class="quote">好的教育产品不是功能堆砌，而是对学习痛点与底层错因深刻洞察后的精准回应。</p>
 
   <p class="bio" id="about">
-    过去一段时间，我独立设计并开发了多个产品项目，涵盖教育科技、社交陪伴、工具效率等领域。
-    这些项目是我产品思维的实践载体，但并不完整，有些受限于我目前的技术或经济问题没有完全实现我的目的，
-    希望能和您进一步讨论。
+    我拥有海外儿童研究硕士学位，并具备 500+ 小时一线教研与教学经验。我一直致力于探索“AI 与教育的深度融合”，擅长设计精细化的教学闭环，并习惯用 AI 工具重构教研流程。这些项目是我产品思维的实践载体，希望我的教研洞察与产品落地能力，能为下一代 AI 教育产品创造价值。
   </p>
 
   <div class="actions">
@@ -486,211 +429,155 @@
   </div>
 </header>
 
-<!-- 代表项目 -->
 <section class="wrap" id="projects">
-  <div class="section-head reveal">
+  <div class="section-head">
     <h2>代表项目</h2>
-    <p class="section-sub">6 个从需求洞察到开发上线的独立产品实践</p>
+    <p class="section-sub">从教研洞察到 AI 产品落地的实践</p>
   </div>
 
   <div class="grid">
 
     <!-- 01 -->
-    <article class="card reveal">
+    <article class="card">
       <div class="card-head">
         <span class="num">01</span>
-        <h3>mbti-deeper <span class="sep">·</span> 人格探索向导</h3>
+        <h3>mbti-deeper <span class="sep">·</span> 对话式探索向导</h3>
       </div>
       <p class="desc">
-        MBTI 人格测试工具的迭代版本展示。通过多轮对话帮助用户探索人格类型倾向并获得个性化发展建议。
-        项目经历了 V1（初始版）到 V4（优化版）四次完整迭代，逐步完善了
-        <strong>场景化提问、混合态解析、防带偏机制、「被看见」高光时刻</strong> 等核心产品机制。
+        一个基于大模型对话的深度探索工具。项目经历了 V1 到 V4 的四次迭代，通过多轮对话引导用户探索倾向，最终沉淀出<strong>场景化提问、混合态解析、防带偏机制</strong>等核心产品交互逻辑。
       </p>
       <div class="insight">
         <span class="insight-label">产品思考</span>
-        <p>从「做测试」到「做体验」——每次迭代都围绕用户心理模型做减法，降低认知负荷，让用户在对话中自然「被看见」。</p>
+        <p>从“做测试”到“做体验”。这四次迭代的核心是<strong>“约束大模型的对话边界”</strong>与<strong>“降低用户认知负荷”</strong>——如何通过设计，让 AI 在不跑题的前提下，为用户提供有温度、深度的反馈。</p>
       </div>
       <div class="tags">
         <span class="tag">对话式交互</span>
-        <span class="tag">用户心理模型</span>
+        <span class="tag">大模型约束</span>
         <span class="tag">四次迭代</span>
       </div>
       <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/blob/main/mbti-deeper-v4/index.html" target="_blank" rel="noopener noreferrer">
-        查看代码仓库 <span aria-hidden="true">→</span>
+        查看 README 文档 <span aria-hidden="true">→</span>
       </a>
     </article>
 
     <!-- 02 -->
-    <article class="card reveal">
+    <article class="card">
       <div class="card-head">
         <span class="num">02</span>
         <h3>english-practice <span class="sep">·</span> 英语口语陪练</h3>
       </div>
       <p class="desc">
-        模拟聊天界面的英语口语练习工具。设计了「打招呼 → 前置测试 → 评估 → 场景对话 → 复盘」五阶段学习路径，
-        支持语音输入和对话记忆系统，根据用户水平（起步 / 基础 / 进阶）动态调整对话难度。
+        针对语言学习痛点的 AI 练习工具。设计了“破冰-评估-场景对话-复盘”的完整学习闭环，并深度探索了 AI 交互时的<strong>四象限纠错判定机制</strong>，以平衡用户的开口压力与学习效果。
       </p>
       <div class="insight">
         <span class="insight-label">产品思考</span>
-        <p>语言学习的核心痛点是「不敢开口」——通过降低首次使用门槛（打招呼破冰）、即时正反馈（发音纠正 + 鼓励）、个性化路径（水平评估后定制内容）来解决。</p>
+        <p>语言学习的核心是“低压力的有效输出”。在对话中，AI 不能一味迎合，也不能频繁打断。我通过设计场景锚点与 recast（重述）机制，让 AI 在提供正确输入的同时，保护用户的学习自信心。</p>
       </div>
       <div class="tags">
-        <span class="tag">学习路径设计</span>
+        <span class="tag">学习闭环</span>
+        <span class="tag">纠错机制</span>
         <span class="tag">语音交互</span>
-        <span class="tag">难度自适应</span>
       </div>
       <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/english-practice" target="_blank" rel="noopener noreferrer">
-        查看代码仓库 <span aria-hidden="true">→</span>
+        查看 README 文档 <span aria-hidden="true">→</span>
       </a>
     </article>
 
     <!-- 03 -->
-    <article class="card reveal">
+    <article class="card">
       <div class="card-head">
         <span class="num">03</span>
-        <h3>ai-partner <span class="sep">·</span> AI 陪伴社交应用</h3>
+        <h3>eplan <span class="sep">·</span> 幼儿园英文教案生成器</h3>
       </div>
       <p class="desc">
-        移动端优先的 AI 陪伴社交平台。设计了 Luna（温柔陪伴型）、Kai（直接行动型）、叶叶（温暖长辈型）
-        三个差异化角色，实现发帖动态、私信聊天、情绪关键词识别与权重推荐算法等核心功能。
+        面向一线幼师的 B 端教研提效工具。支持按小/中/大班切换，一键生成符合儿童认知特点的差异化英文教案，包含全英文教师逐字稿及 PPT 导出功能。
       </p>
       <div class="insight">
         <span class="insight-label">产品思考</span>
-        <p>AI 产品的核心不是技术炫技，而是让用户感受到「被理解」——通过情绪识别 + 角色差异化人设 + 权重推荐，让每个用户都能找到适合自己的陪伴对象。</p>
+        <p>教研工具的核心是“极致的提效”。通过拆解备课的底层流程，我用 AI 将碎片化的大纲转化为结构化、可复用的教案，覆盖了从构思到上课的完整链路，直接减少了教师的机械性工作。</p>
       </div>
       <div class="tags">
-        <span class="tag">角色人设设计</span>
-        <span class="tag">情绪识别</span>
-        <span class="tag">推荐算法</span>
+        <span class="tag">教研提效</span>
+        <span class="tag">一键生成</span>
+        <span class="tag">ToB 工具</span>
       </div>
-      <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/ai-partner" target="_blank" rel="noopener noreferrer">
-        查看代码仓库 <span aria-hidden="true">→</span>
+      <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/e-plan" target="_blank" rel="noopener noreferrer">
+        查看 README 文档 <span aria-hidden="true">→</span>
       </a>
     </article>
 
     <!-- 04 -->
-    <article class="card reveal">
+    <article class="card">
       <div class="card-head">
         <span class="num">04</span>
-        <h3>eplan <span class="sep">·</span> 幼儿园英文教案生成器</h3>
+        <h3>英国硕士 DIY 选校导航 &amp; Offer 后指南</h3>
       </div>
       <p class="desc">
-        幼儿园英文教案一键生成工具。支持按小班 / 中班 / 大班切换生成差异化教案，内置 PPT 导出功能，
-        包含全英文教师稿件，帮助幼师快速完成备课流程。
+        针对英国留学细分场景（选校 → 申请 → Offer 后）提供全流程内容导航与实用指南，把碎片化的留学信息整合为清晰可用的路径。
       </p>
       <div class="insight">
         <span class="insight-label">产品思考</span>
-        <p>ToB / ToE 产品的核心是「省时间」——幼师备课时间宝贵，工具必须做到「输入最少、输出最全」，一键生成 + PPT 导出覆盖从构思到上课的完整链路。</p>
-      </div>
-      <div class="tags">
-        <span class="tag">工具效率</span>
-        <span class="tag">一键生成</span>
-        <span class="tag">PPT 导出</span>
-      </div>
-      <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/e-plan" target="_blank" rel="noopener noreferrer">
-        查看代码仓库 <span aria-hidden="true">→</span>
-      </a>
-    </article>
-
-    <!-- 05 -->
-    <article class="card reveal">
-      <div class="card-head">
-        <span class="num">05</span>
-        <h3>infj-sea <span class="sep">·</span> 漂流瓶</h3>
-      </div>
-      <p class="desc">
-        一种温柔的情绪陪伴，和内耗的 INFJ 小老头似乎很合适。海洋主题交互式漂流瓶体验项目，
-        通过海浪动画、光影效果等视觉设计营造沉浸式海洋氛围。
-      </p>
-      <div class="insight">
-        <span class="insight-label">产品思考</span>
-        <p>体验型产品的核心是「氛围感」——用细腻的视觉和交互细节营造情绪价值，让用户在使用过程中获得愉悦感和探索欲。</p>
-      </div>
-      <div class="tags">
-        <span class="tag">情绪价值</span>
-        <span class="tag">沉浸式体验</span>
-        <span class="tag">视觉动效</span>
-      </div>
-      <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/infj-sea" target="_blank" rel="noopener noreferrer">
-        查看代码仓库 <span aria-hidden="true">→</span>
-      </a>
-    </article>
-
-    <!-- 06 -->
-    <article class="card reveal">
-      <div class="card-head">
-        <span class="num">06</span>
-        <h3>英国硕士 DIY 选校导航 &amp; Offer 后保姆级指南</h3>
-      </div>
-      <p class="desc">
-        针对英国留学细分场景（选校 → 申请 → Offer 后）提供全流程内容导航与实用指南，
-        把碎片化的留学信息整合为清晰可用的路径。
-      </p>
-      <div class="insight">
-        <span class="insight-label">产品思考</span>
-        <p>垂直内容产品的核心是「信息结构化」——留学申请流程复杂、信息碎片化严重，通过分阶段导航 + 工具化呈现，降低用户信息获取成本。</p>
+        <p>针对复杂的留学申请场景，核心是“信息结构化与路径导航”。把碎片化的信息整合成清晰的阶段和工具，降低用户的认知门槛，这也是教研做课程大纲架构的核心能力。</p>
       </div>
       <div class="tags">
         <span class="tag">信息架构</span>
         <span class="tag">内容导航</span>
-        <span class="tag">垂直场景</span>
+        <span class="tag">路径规划</span>
       </div>
       <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/after-offer-in-uk" target="_blank" rel="noopener noreferrer">
-        查看代码仓库 <span aria-hidden="true">→</span>
+        查看 README 文档 <span aria-hidden="true">→</span>
       </a>
     </article>
 
   </div>
 </section>
 
-<!-- 产品方法论 -->
 <section class="wrap" id="method">
-  <div class="section-head reveal">
+  <div class="section-head">
     <h2>产品方法论</h2>
     <p class="section-sub">从洞察到落地的四个关键词</p>
   </div>
 
   <div class="method-grid">
-    <div class="method reveal">
-      <div class="method-icon" aria-hidden="true">🔍</div>
-      <h3>用户洞察</h3>
-      <p>擅长通过用户访谈、数据分析等手段挖掘真实需求，避免「自嗨式」产品决策。</p>
+    <div class="method">
+      <div class="method-icon" aria-hidden="true">🧠</div>
+      <h3>底层错因拆解</h3>
+      <p>能从词汇、语法结构、时态等维度精准定位学生薄弱点，输出个性化提升方案，用教研深度驱动产品设计。</p>
     </div>
-    <div class="method reveal">
-      <div class="method-icon" aria-hidden="true">🧩</div>
-      <h3>MVP 迭代思维</h3>
-      <p>快速推出最小可用版本，根据用户反馈持续迭代优化，用小成本验证大假设。</p>
+    <div class="method">
+      <div class="method-icon" aria-hidden="true">🤖</div>
+      <h3>AI 落地实践</h3>
+      <p>独立搭建过 AI Agent，能通过 Prompt 调优与规则约束，将 AI 能力深度融入真实教学场景，避免大模型“瞎编”。</p>
     </div>
-    <div class="method reveal">
-      <div class="method-icon" aria-hidden="true">📊</div>
-      <h3>数据驱动决策</h3>
-      <p>关注核心指标变化（完成率、留存、NPS），用数据指导产品方向调整。</p>
+    <div class="method">
+      <div class="method-icon" aria-hidden="true">📚</div>
+      <h3>教研与闭环设计</h3>
+      <p>熟悉 K12 认知规律与家长诉求，擅长将教学目标转化为游戏化、互动式的完整学习闭环，提升学习留存。</p>
     </div>
-    <div class="method reveal">
-      <div class="method-icon" aria-hidden="true">🔗</div>
-      <h3>全链路能力</h3>
-      <p>从需求分析、交互设计到开发上线，具备产品全生命周期管理经验。</p>
+    <div class="method">
+      <div class="method-icon" aria-hidden="true">⚙️</div>
+      <h3>全链路交付</h3>
+      <p>具备从需求调研、PRD 撰写到协同研发上线的完整项目管理经验，曾在 1 个月内推动停滞项目重新上线。</p>
     </div>
   </div>
 </section>
 
-<!-- AI 学习产品分析 -->
 <section class="wrap" id="insight">
-  <div class="section-head reveal">
+  <div class="section-head">
     <h2>AI 学习产品的认识与市场分析</h2>
-    <p class="section-sub">调研 · 分析 · idea 与技术落地方案</p>
+    <p class="section-sub">调研 · 分析 · 机制设计与落地方案</p>
   </div>
 
-  <div class="feature reveal">
-    <h3>对市面现有 AI 学习产品的调研与分析</h3>
+  <div class="feature">
+    <h3>《AI 口语纠错与互动机制设计》及竞品调研</h3>
     <p>
-      针对市面上一些学习产品（如多邻国等 App）进行调研与分析，梳理其在学习路径、激励机制、
-      内容供给上的设计逻辑与可借鉴之处，并附上自己的产品 idea 与技术落地方案。
+      深度调研了多邻国、豆包等主流 AI 学习产品，并结合一线教学中的用户洞察，独立输出了一套 AI 互动机制文档。文档定义了 AI 在对话中的“四象限”判定标准与 RAG 约束逻辑。AI 教育产品不仅要“能聊”，更要“懂教学”。产品经理需要把模糊的用户需求，转化为可落地的 AI 规则与 Prompt 约束。
     </p>
     <div class="tags" style="margin-top:20px;">
       <span class="tag">竞品调研</span>
-      <span class="tag">学习动机设计</span>
-      <span class="tag">技术落地方案</span>
+      <span class="tag">四象限判定</span>
+      <span class="tag">Prompt 约束</span>
+      <span class="tag">技术落地</span>
     </div>
     <a class="card-link" href="https://github.com/CCss67/Sasha67.github.io/tree/main/ai-education-product-analysis" target="_blank" rel="noopener noreferrer">
       查看分析文档与方案 <span aria-hidden="true">→</span>
@@ -698,7 +585,6 @@
   </div>
 </section>
 
-<!-- 页脚 -->
 <footer>
   <div class="footer-inner">
     <span>© <span id="year"></span> Sasha · 产品经理作品集</span>
@@ -710,33 +596,7 @@
 </footer>
 
 <script>
-  // 年份
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  // 滚动出现动画
-  (function () {
-    var items = document.querySelectorAll('.reveal');
-
-    if (!('IntersectionObserver' in window)) {
-      items.forEach(function (el) { el.classList.add('visible'); });
-      return;
-    }
-
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var el = entry.target;
-        // 同组内元素错峰出现
-        var siblings = Array.prototype.slice.call(el.parentNode.children);
-        var index = Math.min(siblings.indexOf(el), 6);
-        el.style.transitionDelay = (index * 70) + 'ms';
-        el.classList.add('visible');
-        observer.unobserve(el);
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    items.forEach(function (el) { observer.observe(el); });
-  })();
 </script>
 </body>
 </html>
