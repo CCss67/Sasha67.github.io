@@ -23,9 +23,9 @@
 
 ## 在线体验
 
-https://Sasha67.github.io/uk-master-guide/after-offer-in-UK.html
+https://Sasha67.github.io/after-offer-in-uk.html
 
-> 建议先把文件名改成 `after-offer.html`，避免 URL 里出现空格编码。
+https://Sasha67.github.io/0-1how-to-apply-in-ukk.html
 
 ---
 
