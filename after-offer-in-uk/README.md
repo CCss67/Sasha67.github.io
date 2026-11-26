@@ -23,7 +23,7 @@
 
 ## 在线体验
 
-https://你的用户名.github.io/uk-master-guide/after%20offer%20in%20UK.html
+https://Sasha67.github.io/uk-master-guide/after-offer-in-UK.html
 
 > 建议先把文件名改成 `after-offer.html`，避免 URL 里出现空格编码。
 
